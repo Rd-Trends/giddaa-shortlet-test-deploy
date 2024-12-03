@@ -39,8 +39,12 @@ const Input = React.forwardRef<HTMLInputElement, FormInputProps>(
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-      <div className={cn(" space-y-1", wrapperClassName)}>
-        <label className=" space-y-1">
+      <div
+        className={cn(
+          "flex flex-col items-start w-full space-y-1",
+          wrapperClassName
+        )}>
+        <label className=" flex flex-col space-y-1 w-full ">
           {label && (
             <FieldLabelText label={label} info={info} required={required} />
           )}

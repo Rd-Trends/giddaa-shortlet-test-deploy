@@ -23,6 +23,10 @@ class AxiosBase {
     this.defaultHeaders.Authorization = `Bearer ${accessToken}`;
   }
 
+  removeAuth() { 
+    this.defaultHeaders.Authorization = "";
+  }
+
   get<T, R = T>(
     path: string,
     options?: Record<never, never>,

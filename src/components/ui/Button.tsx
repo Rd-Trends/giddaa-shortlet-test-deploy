@@ -5,9 +5,9 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { TbLoader3 } from "react-icons/tb";
 import { cn } from "@/utils/classname";
 
-const buttonVariants = cva(
+export const buttonVariants = cva(
   // Base styles
-  "inline-flex items-center justify-center rounded-full gap-4",
+  "inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-full transition-colors duration-200 ease-in-out focus-visible:outline-none outline-none ",
   {
     variants: {
       variant: {
@@ -15,12 +15,16 @@ const buttonVariants = cva(
           "bg-[#346633] hover:bg-primary text-white w-fit hover:shadow-[0px_1px_2px_0px_#10182808]",
         outline:
           "bg-transparent border-2 border-[#346633] text-[#346633] hover:border-primary hover:text-primary hover:shadow-[0px_4px_4px_0px_#335F3240] w-fit",
+        ghost: "hover:bg-light-grey hover:text-deep-black",
+        "outline-danger":
+          "bg-transparent border-2 border-danger text-danger hover:border-danger hover:text-danger hover:shadow-[0px_4px_4px_0px_#335F3240] w-fit",
       },
       size: {
-        small: "h-[30px] px-4 py-[10px] body-sm font-bold",
-        medium: "h-[40px] px-4 py-[10px] body-sm font-semibold",
-        large: "h-[50px] py-[10px] px-[18px] body-md font-semibold",
-        xLarge: "h-[60px] py-[10px] px-[18px] body-md font-semibold",
+        small: "h-[30px] px-4 py-[10px] text-body-sm font-bold",
+        medium: "h-[40px] px-4 py-[10px] text-body-sm font-bold",
+        large: "h-[50px] py-[10px] px-[18px] text-body-md font-bold",
+        xLarge: "h-[60px] py-[10px] px-[18px] text-body-md font-bold",
+        icon: "size-10 rounded-sm",
       },
       disabled: {
         true: "cursor-not-allowed",
@@ -44,14 +48,6 @@ const buttonVariants = cva(
     },
   }
 );
-
-type ButtonVariant =
-  | "googleSocial"
-  | "loginHandler"
-  | "facebookSocial"
-  | "registerHandler";
-type ButtonVariation = "filled" | "outline";
-type ButtonSize = "small" | "medium" | "large" | "xLarge";
 
 interface ButtonProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "disabled">,
@@ -92,25 +88,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}>
         {icon && icon}
         {children}
-        {isLoading && <TbLoader3 className="animate-spin size-5" aria-hidden="true" />}
+        {isLoading && (
+          <TbLoader3 className="animate-spin size-5" aria-hidden="true" />
+        )}
       </button>
     );
   }
 );
 
 Button.displayName = "Button";
-
-// Constant for variant options (useful for form libraries or prop validation)
-export const BUTTON_VARIANTS = {
-  variants: [
-    "googleSocial",
-    "loginHandler",
-    "facebookSocial",
-    "registerHandler",
-  ],
-  variations: ["filled", "outline"],
-  sizes: ["small", "medium", "large", "xLarge"],
-} as const;
-
-// Type helper for external usage
-export type { ButtonProps, ButtonVariant, ButtonVariation, ButtonSize };

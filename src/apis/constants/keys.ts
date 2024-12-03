@@ -8,3 +8,13 @@ export const VERIFY_EMAIL_KEY = "VERIFY EMAIL";
 
 // short-lets
 export const GET_ALL_SHORT_LETS_KEY = "GET ALL SHORT LETS";
+export const GET_SHORT_LETS_IN_A_CITY_KEY = "GET SHORT LETS IN A CITY";
+
+// news letter
+export const JOIN_NEWSLETTER_KEY = "JOIN NEWSLETTER KEY";
+
+// locations
+export const GET_CITIES_IN_A_STATE_KEY = "GET CITIES IN A STATE";
+
+// google maps
+export const GET_COORDINATES_KEY = "GET COORDINATES";

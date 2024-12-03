@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Red_Hat_Display } from "next/font/google";
-import "./globals.css";
 import Providers from "./provider";
 import { AuthenticationProvider } from "@/context/AuthContext";
 import { getSession } from "@/server-actions/get-session";
+import { ToastContainer } from "react-toastify";
+
+import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const redHatDisplay = Red_Hat_Display({
   variable: "--font-red-hat-display",
@@ -28,10 +31,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { token, isLoggedIn } = await getSession();
+  const { token } = await getSession();
 
   return (
-    <html lang="en">
+    <html lang="en" className=" scroll-smooth">
       <body
         className={`${redHatDisplay.variable} ${millik.variable}  font-sans antialiased bg-primary-gradient`}>
         <Providers>
@@ -39,6 +42,7 @@ export default async function RootLayout({
             {children}
           </AuthenticationProvider>
         </Providers>
+        <ToastContainer />
       </body>
     </html>
   );

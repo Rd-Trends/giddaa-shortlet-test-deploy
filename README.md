@@ -23,7 +23,6 @@
 │   ├── hooks/
         └── useAuth.tsx
 │   ├── lib/
-│   │   ├── auth.ts
 │   │   └── session.ts
 │   ├── middleware.ts
 │   └── server-actions/

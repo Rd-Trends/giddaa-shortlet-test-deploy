@@ -52,7 +52,7 @@ export default {
         danger: "#F22424",
         "danger-light": "#FFEDED",
         cream: "#f9f9f9",
-        background: "#fffeed",
+        background: "#FFFEED",
       },
       backgroundImage: {
         "primary-gradient": `linear-gradient(270deg, #335F32 42%, #EAA315 100%), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))`,
@@ -93,5 +93,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;

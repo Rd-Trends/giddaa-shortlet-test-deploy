@@ -24,7 +24,7 @@ export default async function customRequest<T, R = T>(
     if (!axios.isAxiosError(err)) throw err;
     if (err?.response?.status == 401) {
       await deleteToken();
-      sessionStorage.removeItem(StorageKeys.USER);
+      localStorage.removeItem(StorageKeys.USER);
       window.location.reload();
     }
 

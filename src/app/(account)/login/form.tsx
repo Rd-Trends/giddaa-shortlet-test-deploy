@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { AppRoutes } from "@/constants/routes";
 import useAuth from "@/hooks/useAuth";
+import { toast } from "@/lib/toast";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -32,6 +33,16 @@ const LoginForm = () => {
         onSuccess: (data) => {
           setAuth(data);
           router.replace(AppRoutes.Home);
+          toast.success({
+            title: "Success",
+            description: "Login successful",
+          });
+        },
+        onError(error) {
+          toast.error({
+            title: "Login Failed",
+            description: error.message,
+          });
         },
       }
     );

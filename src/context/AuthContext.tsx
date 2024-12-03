@@ -10,6 +10,7 @@ import {
   useState,
   ReactNode,
   useCallback,
+  useEffect,
 } from "react";
 
 interface AuthContextValue {
@@ -33,10 +34,9 @@ export const getUser = () => {
     return null;
   }
 
-  const user = sessionStorage.getItem(StorageKeys.USER);
+  const user = localStorage.getItem(StorageKeys.USER);
   const parsedUser = user ? JSON.parse(user) : null;
-  if (parsedUser) http.setAuth(parsedUser.token);
-  return parsedUser;
+  return { user: parsedUser };
 };
 
 export const AuthenticationProvider = ({
@@ -46,9 +46,21 @@ export const AuthenticationProvider = ({
   children: ReactNode;
   value?: { token?: string | null };
 }) => {
-  const [user, setUser] = useState<User | null>(() => getUser()?.user || null);
+  const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(value?.token || null);
   const [isAuthenticated, setIsAuthenticated] = useState(!!value?.token);
+
+  useEffect(() => {
+    const user = localStorage.getItem(StorageKeys.USER);
+    const parsedUser = user ? JSON.parse(user) : null;
+    setUser(parsedUser);
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      http.setAuth(token);
+    }
+  }, [token]);
 
   const setAuthUserHandler = useCallback(
     (value: { user: User; token: string }) => {
@@ -62,9 +74,10 @@ export const AuthenticationProvider = ({
   );
 
   const removeAuthUserHandler = useCallback(() => {
-    sessionStorage.removeItem(StorageKeys.USER);
+    localStorage.removeItem(StorageKeys.USER);
     setUser(null);
     setToken(null);
+    http.removeAuth();
     setIsAuthenticated(false);
   }, []);
 
@@ -77,7 +90,7 @@ export const AuthenticationProvider = ({
       token,
     }),
     [
-      JSON.stringify(user),
+      user,
       setAuthUserHandler,
       removeAuthUserHandler,
       token,

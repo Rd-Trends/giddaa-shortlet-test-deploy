@@ -16,7 +16,6 @@ import {
 } from "../constants/endpoints";
 import { customFetch } from "../customFetch";
 import http from "../http";
-import { RESET_PASSWORD_KEY } from "../constants/keys";
 
 export const registerUser = (data: RegisterUserPayload) => {
   return http.post(SIGNUP, data, {}, (res: LoginResponse) => res.value.value);
@@ -48,7 +47,7 @@ export const verifyResetPassword = (data: VerifyResetPasswordPayload) => {
 
 export const resetPassword = (data: ResetPasswordPayload) => {
   return http.post(
-    RESET_PASSWORD_KEY,
+    RESET_PASSWORD,
     data,
     {},
     (res: GenerateResetPasswordResponse) => res

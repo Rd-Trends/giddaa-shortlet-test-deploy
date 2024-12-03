@@ -33,11 +33,12 @@ const SignUpForm = () => {
 
   const isLoading = registerUser.isPending;
   const handleSubmit = form.handleSubmit((data) => {
-    const { confirmPassword, terms, ...payload } = data;
+    delete data.confirmPassword;
+    delete data.terms;
 
     registerUser.mutate(
       {
-        ...payload,
+        ...data,
         roleId: "CUSTOMER_ROLE",
         organizationId: "giddaa_organization",
       },
