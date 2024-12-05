@@ -14,7 +14,6 @@ import {
   SIGNUP,
   VERIFY_EMAIL,
 } from "../constants/endpoints";
-import { customFetch } from "../customFetch";
 import http from "../http";
 
 export const registerUser = (data: RegisterUserPayload) => {
@@ -56,18 +55,17 @@ export const resetPassword = (data: ResetPasswordPayload) => {
 
 // handle cookies
 export const saveToken = async (token: string) => {
-  await customFetch("/api/session", {
+  await fetch("/api/session", {
     method: "POST",
     body: JSON.stringify({ token }),
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 };
 
 export const deleteToken = async () => {
-  await customFetch("/api/session", {
+  await fetch("/api/session", {
     method: "DELETE",
   });
-};
-
-export const getToken = async () => {
-  return customFetch("/api/session");
 };

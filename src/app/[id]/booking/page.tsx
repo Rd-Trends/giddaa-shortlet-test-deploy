@@ -1,5 +1,5 @@
 import { getShortletById } from "@/apis/services/short-lets";
-import ReservationForm from "./_components/RenderReservation";
+import ReservationForm from "@/screens/shortlet-reservation";
 
 export default async function Page({
   params,

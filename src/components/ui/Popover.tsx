@@ -68,7 +68,7 @@ PopoverArrow.displayName = PopoverPrimitive.Arrow.displayName;
 
 const CustomPopoverClose = () => {
   return (
-    <PopoverClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none hover:ring-2 focus:ring-2 focus:ring-primary hover:ring-primary hover:ring-offset-2 focus:ring-offset-2 disabled:pointer-events-none bg-white data-[state=open]:text-black p-0.5">
+    <PopoverClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none hover:ring-2 focus:ring-2 focus:ring-primary hover:ring-primary hover:ring-offset-2 focus:ring-offset-2 disabled:pointer-events-none bg-white data-[state=open]:text-black p-0.5 z-10">
       <IoMdClose strokeWidth={10} className="size-4" />
       <span className="sr-only">Close</span>
     </PopoverClose>

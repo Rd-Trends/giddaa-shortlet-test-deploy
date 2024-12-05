@@ -9,6 +9,9 @@ export const VERIFY_EMAIL_KEY = "VERIFY EMAIL";
 // short-lets
 export const GET_ALL_SHORT_LETS_KEY = "GET ALL SHORT LETS";
 export const GET_SHORT_LETS_IN_A_CITY_KEY = "GET SHORT LETS IN A CITY";
+export const RESERVE_SHORT_LET_KEY = "RESERVE SHORT LET";
+export const GET_CONTACT_AGENTS_FOR_SHORTLET_KEY =
+  "GET ORGANIZATION CONTACT STAFF";
 
 // news letter
 export const JOIN_NEWSLETTER_KEY = "JOIN NEWSLETTER KEY";
@@ -18,3 +21,6 @@ export const GET_CITIES_IN_A_STATE_KEY = "GET CITIES IN A STATE";
 
 // google maps
 export const GET_COORDINATES_KEY = "GET COORDINATES";
+
+// exchange rate
+export const GET_EXCHANGE_RATES_KEY = "GET EXCHANGES RATE";

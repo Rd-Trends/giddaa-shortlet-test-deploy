@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Carousel,
   CarouselContent,
@@ -7,22 +9,20 @@ import {
   CarouselPrevious,
 } from "@/components/ui/Carousel";
 import { ShortLet } from "@/types/short-let";
-import React from "react";
 import { formatCurrency } from "@/utils/format-currency";
 import { FaWhatsapp } from "react-icons/fa6";
 import { BsTelephone } from "react-icons/bs";
 import { cn } from "@/utils/classname";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  PopoverArrow,
-  CustomPopoverClose,
-} from "@/components/ui/Popover";
 import Link from "next/link";
 import HeartIcon from "@/svgs/HeartIcon";
+import SkeletonLoader from "@/components/ui/Skeleton";
+import { useGetExchangeRates } from "@/apis/queries/exchange-rate";
+import ContactStaffsPopover from "../popovers/ContactStaffsPopover";
 
 const ShortLetCard = ({ shortLet }: { shortLet: ShortLet }) => {
+  const { data: exchangeRates, isLoading: isLoadingExchangeRates } =
+    useGetExchangeRates();
+
   return (
     <div className="space-y-2 relative">
       {shortLet.images.length === 1 && (
@@ -30,6 +30,7 @@ const ShortLetCard = ({ shortLet }: { shortLet: ShortLet }) => {
           <img
             src={shortLet.images[0].document}
             className=" rounded-2xl border border-mid-grey h-[273px] w-full object-cover "
+            alt={shortLet.name}
           />
         </Link>
       )}
@@ -42,6 +43,7 @@ const ShortLetCard = ({ shortLet }: { shortLet: ShortLet }) => {
                   <img
                     src={image.document}
                     className=" rounded-2xl border border-mid-grey h-[273px] w-full object-cover "
+                    alt={shortLet.name}
                   />
                 </Link>
               </CarouselItem>
@@ -74,71 +76,47 @@ const ShortLetCard = ({ shortLet }: { shortLet: ShortLet }) => {
         <h3 className=" text-body-md font-bold">
           {shortLet.name}, {shortLet.city?.state?.name}
         </h3>
-        <p className=" text-body-sm ">{shortLet.description}</p>
+        <p className=" text-body-sm ">Book the entire 2 bedroom apartment</p>
         <p>
           <b className=" text-body-md font-bold text-primary">
             {formatCurrency(shortLet.listingPrice)}
           </b>{" "}
           <span className=" text-body-xs">Per night</span>
         </p>
+        {isLoadingExchangeRates && (
+          <SkeletonLoader className=" h-4 w-12 rounded-md" />
+        )}
+        {exchangeRates && (
+          <p className=" text-body-sm font-semibold">
+            {formatCurrency(shortLet.listingPrice / exchangeRates.dollar, {
+              currency: "USD",
+            })}
+          </p>
+        )}
 
-        <Popover>
-          <PopoverTrigger className=" flex items-center space-x-4 text-secondary pt-1">
+        <ContactStaffsPopover shortLetId={shortLet.id}>
+          <button className=" border-none outline-none bg-transparent flex items-center space-x-4 text-secondary pt-1">
             <BsTelephone className=" size-5" />
             <FaWhatsapp className=" size-5" />
-          </PopoverTrigger>
-
-          <PopoverContent align="start" className=" p-0">
-            <div className="flex flex-col gap-4 divide-y divide-mid-grey pb-4">
-              <div className=" flex items-start space-x-4 pt-4 px-4">
-                <img
-                  src="/images/contact_image.png"
-                  className=" w-14 h-16 rounded-2xl object-cover"
-                />
-                <div>
-                  <h3 className=" text-body-sm font-bold text-black">
-                    Jonathan Anakson
-                  </h3>
-                  <p className=" text-body-xs">08129293840</p>
-                  <div className=" flex items-center space-x-4">
-                    <button className="inline-flex items-center text-xs outline-none border-none text-primary font-bold">
-                      <BsTelephone className=" size-5 mr-2" /> Call
-                    </button>
-                    <button className="inline-flex items-center text-xs outline-none border-none text-primary font-bold">
-                      <FaWhatsapp className=" size-5 mr-2" /> Whatsapp
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className=" flex items-start space-x-4 pt-4 px-4">
-                <img
-                  src="/images/contact_image.png"
-                  className=" w-14 h-16 rounded-2xl object-cover"
-                />
-                <div>
-                  <h3 className=" text-body-sm font-bold text-black">
-                    Jimmy Bones
-                  </h3>
-                  <p className=" text-body-xs">08129293840</p>
-                  <div className=" flex items-center space-x-4 mt-0.5">
-                    <button className="inline-flex items-center text-xs outline-none border-none text-primary font-bold">
-                      <BsTelephone className=" size-5 mr-2" /> Call
-                    </button>
-                    <button className="inline-flex items-center text-xs outline-none border-none text-primary font-bold">
-                      <FaWhatsapp className=" size-5 mr-2" /> Whatsapp
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <PopoverArrow />
-            <CustomPopoverClose />
-          </PopoverContent>
-        </Popover>
+          </button>
+        </ContactStaffsPopover>
       </div>
     </div>
   );
 };
 
 export default ShortLetCard;
+
+export const ShortLetCardLoader = () => {
+  return (
+    <div className="space-y-2 relative">
+      <SkeletonLoader className="h-[273px] w-full rounded-2xl border border-mid-grey" />
+      <div className=" animate-pulse space-y-2">
+        <SkeletonLoader className="h-4 w-full rounded-lg" />
+        <SkeletonLoader className="h-3 w-full rounded-md" />
+        <SkeletonLoader className="h-3 w-3/4 rounded-md" />
+        <SkeletonLoader className="h-5 w-1/4 rounded-md" />
+      </div>
+    </div>
+  );
+};

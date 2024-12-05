@@ -5,7 +5,6 @@ import {
   Modal,
   ModalContent,
   ModalFooter,
-  ModalHeader,
   ModalTitle,
 } from "@/components/ui/Modal";
 import {
@@ -15,6 +14,7 @@ import {
   PopoverTrigger,
   CustomPopoverClose,
 } from "@/components/ui/Popover";
+import { useMediaQuery } from "@/hooks/useMediaQueries";
 import GirlWithMicIcon from "@/svgs/GirlWithMicIcon";
 import Logo from "@/svgs/Logo";
 import MoneyStackIcon from "@/svgs/MoneyStackIcon";
@@ -25,11 +25,28 @@ import { BiCaretDown } from "react-icons/bi";
 import { BsTelephone } from "react-icons/bs";
 import { FaWhatsapp } from "react-icons/fa6";
 
+const tags = [
+  "Your Next Weekend Getaway",
+  "Your Next Special Event",
+  "Your Next Content Creation",
+  "Your Next Staycation",
+];
+
 const WelcomeModal = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeTag, setActiveTag] = useState(0);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
     setIsOpen(true);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTag((prev) => (prev + 1) % tags.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -37,19 +54,19 @@ const WelcomeModal = () => {
       <ModalContent
         className=" rounded-[20px] max-w-full p-0"
         wrapperClassName=" rounded-[22px] w-full max-w-[calc(100vw-2rem)] lg:max-w-[911px] ">
-        <ModalHeader className=" p-4 items-start">
-          <Logo className=" h-[55.8px] w-auto" />
-        </ModalHeader>
-
-        <div className=" p-4 space-y-6 ">
+        <div className=" p-4 relative ">
+          <span className="absolute top-8 left-8 bg-background p-2 rounded-md">
+            <Logo className=" h-[55.8px] w-auto " />
+          </span>
           <img
             src="/images/welcome-modal-image.png"
             className=" w-full h-auto"
+            alt=""
           />
 
-          <ModalTitle className=" font-secondary text-heading-3 leading-tight md:text-heading-1 md:leading-[60px] font-bold md:text-center text-black max-w-[644px] mx-auto ">
+          <ModalTitle className=" py-6 font-secondary text-heading-3 leading-tight md:text-heading-1 md:leading-[60px] font-bold md:text-center text-black max-w-[644px] mx-auto ">
             Book A Short Let For{" "}
-            <span className=" text-secondary">Your Next Weekend Getaway</span>.
+            <span className=" text-secondary">{tags[activeTag]}</span>.
           </ModalTitle>
 
           <div className=" flex flex-wrap justify-between space-y-4 md:space-y-0">
@@ -86,10 +103,10 @@ const WelcomeModal = () => {
           </div>
         </div>
 
-        <ModalFooter className=" p-4 border-t-2 border-mid-grey !justify-center mt-6 space-x-4">
+        <ModalFooter className=" p-4 border-t-2 flex flex-row items-center border-mid-grey !justify-center mt-6 space-x-4">
           <Button
-            size={"large"}
-            className=" font-bold px-8"
+            size={isMobile ? "medium" : "large"}
+            className=" font-bold md:px-8"
             onClick={() => setIsOpen(false)}>
             Explore Stays
           </Button>
@@ -97,10 +114,11 @@ const WelcomeModal = () => {
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                size={"large"}
+                size={isMobile ? "medium" : "large"}
                 variant={"outline"}
                 className="gap-3 group">
-                <TelephoneRingingIcon /> <span>Contact Us</span>{" "}
+                <TelephoneRingingIcon className=" size-6 md:szie-8" />{" "}
+                <span>Contact Us</span>{" "}
                 <BiCaretDown className="size-5 -ml-2 -mt-0.5 group-data-[state=open]:rotate-180 transition-transform duration-300" />
               </Button>
             </PopoverTrigger>
@@ -111,6 +129,7 @@ const WelcomeModal = () => {
                   <img
                     src="/images/contact_image.png"
                     className=" w-14 h-16 rounded-2xl object-cover"
+                    alt=""
                   />
                   <div>
                     <h3 className=" text-body-sm font-bold text-black">
@@ -132,6 +151,7 @@ const WelcomeModal = () => {
                   <img
                     src="/images/contact_image.png"
                     className=" w-14 h-16 rounded-2xl object-cover"
+                    alt=""
                   />
                   <div>
                     <h3 className=" text-body-sm font-bold text-black">

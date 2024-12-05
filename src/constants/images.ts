@@ -3,4 +3,6 @@ export const DEFAULT_IMAGES = {
 
   modal_cancel_icon: `/icons/cancel-schedule.png`,
   reservation_success: `/icons/reservation-success.gif`,
+  share_icon: `/icons/share-icon.gif`,
+  not_logged_in_modal_icon: `/icons/not_logged_in_modal_icon.png`,
 };

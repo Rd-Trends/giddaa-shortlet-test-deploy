@@ -2,7 +2,17 @@
  * Options for customizing currency formatting
  */
 interface CurrencyFormatOptions {
-  currency?: string;
+  currency?:
+    | "USD"
+    | "EUR"
+    | "GBP"
+    | "JPY"
+    | "CNY"
+    | "AUD"
+    | "CAD"
+    | "CHF"
+    | "INR"
+    | "NGN";
   symbol?: boolean;
   thousandsSeparator?: string;
   decimalSeparator?: string;
@@ -16,6 +26,7 @@ interface CurrencyFormatOptions {
  * @param options Formatting options
  * @returns Formatted currency string
  */
+
 function formatCurrency(
   amount: number,
   options: CurrencyFormatOptions = {}
@@ -26,7 +37,7 @@ function formatCurrency(
     symbol = true,
     thousandsSeparator = ",",
     decimalSeparator = ".",
-    decimalPlaces = 2,
+    decimalPlaces = 0,
     locale = "en-NG",
   } = options;
 

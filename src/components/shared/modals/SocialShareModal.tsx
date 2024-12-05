@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BiCopy } from "react-icons/bi";
-import { BsShareFill, BsTwitterX } from "react-icons/bs";
-import { FaFacebookF, FaLinkedinIn, FaRedditAlien } from "react-icons/fa6";
-import { MdMail } from "react-icons/md";
-import { SiWhatsapp } from "react-icons/si";
-import { toast } from "react-toastify";
+import { BsShareFill } from "react-icons/bs";
 import {
   Modal,
   ModalContent,
@@ -14,6 +9,13 @@ import {
   ModalTrigger,
 } from "@/components/ui/Modal";
 import { DEFAULT_IMAGES } from "@/constants/images";
+import XIcon from "@/svgs/XIcon";
+import LinkedInIcon from "@/svgs/LinkedInIcon";
+import WhatsappIcon from "@/svgs/WhatsAppIcon";
+import FacebookIcon from "@/svgs/FacebookIcon";
+import MailIcon from "@/svgs/MailIcon";
+import SnapchatIcon from "@/svgs/SnapchatIcon";
+import { toast } from "@/lib/toast";
 
 interface SocialShareModalProps {
   url: string;
@@ -76,11 +78,18 @@ const SocialShareModal = ({
     window.open(facebookUrl, "_blank", "noopener,noreferrer");
   };
 
-  const shareOnReddit = () => {
-    const redditUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(
+  // const shareOnReddit = () => {
+  //   const redditUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(
+  //     url
+  //   )}&title=${encodeURIComponent(title)}`;
+  //   window.open(redditUrl, "_blank", "noopener,noreferrer");
+  // };
+
+  const shareOnSnapchat = () => {
+    const snapchatUrl = `https://www.snapchat.com/share?url=${encodeURIComponent(
       url
-    )}&title=${encodeURIComponent(title)}`;
-    window.open(redditUrl, "_blank", "noopener,noreferrer");
+    )}`;
+    window.open(snapchatUrl, "_blank", "noopener,noreferrer");
   };
 
   const shareViaEmail = () => {
@@ -109,7 +118,10 @@ const SocialShareModal = ({
   const copyToClipboard = () => {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(url);
-      toast.success("Copied to clipboard");
+      toast.success({
+        // title: "Link Copied",
+        description: "Link copied to clipboard",
+      });
     }
   };
 
@@ -117,103 +129,90 @@ const SocialShareModal = ({
     <Modal open={isOpen} onOpenChange={setIsOpen}>
       {children && <ModalTrigger asChild>{children}</ModalTrigger>}
       <ModalContent
-        className=" rounded-[20px] p-0"
-        wrapperClassName="w-full max-w-[calc(100vw-2rem)] md:max-w-sm rounded-[22px]">
+        className=" rounded-[20px] p-4"
+        wrapperClassName="w-full max-w-[calc(100vw-2rem)] md:max-w-[323px] rounded-[22px]">
         <ModalHeader className="py-4 px-8">
           <img
-            src={DEFAULT_IMAGES.reservation_success}
+            src={DEFAULT_IMAGES.share_icon}
             alt="Reservation Success"
-            className="size-[133px] mx-auto -mt-4"
+            className="size-[76px] mx-auto"
           />
-          <ModalTitle className="text-body-md font-bold text-center !-mt-5">
+          <ModalTitle className="text-body-md font-bold text-center ">
             {modalTitle}
           </ModalTitle>
         </ModalHeader>
 
         {description && (
-          <ModalDescription className=" text-body-sm font-normal text-center">
+          <ModalDescription className=" text-body-sm font-normal text-center px-4">
             {description}
           </ModalDescription>
         )}
 
-        <div className=" space-y-6">
-          <div className=" flex items-center justify-between space-x-2 md:space-x-4 outline-none border-none overflow-x-auto">
-            <button
-              onClick={shareOnTwitter}
-              className=" flex flex-col text-center items-center space-y-1">
-              <div className=" flex items-center justify-center size-12 md:size-14 rounded-full bg-[#000000] text-white">
-                <BsTwitterX className=" size-5 md:size-7" />
-              </div>
-              <span className=" text-xs font-medium">X</span>
-            </button>
-
-            <button
-              onClick={shareOnLinkedIn}
-              className=" flex flex-col text-center items-center space-y-1 outline-none border-none">
-              <div className=" flex items-center justify-center size-12 md:size-14 rounded-full bg-[#0077b5] text-white">
-                <FaLinkedinIn className=" size-6 md:size-8" />
-              </div>
-              <span className=" text-xs font-medium">LinkedIn</span>
-            </button>
-
+        <div className=" mt-6 border-t border-mid-grey pt-6 mb-2 space-y-6">
+          <div className=" flex items-center justify-between space-x-0 outline-none border-none overflow-x-auto">
             <button
               onClick={shareOnWhatsApp}
-              className=" flex flex-col text-center items-center space-y-1 outline-none border-none">
-              <div className=" flex items-center justify-center size-12 md:size-14 rounded-full bg-[#25d366] text-white">
-                <SiWhatsapp className=" size-6 md:size-8" />
-              </div>
-              <span className=" text-xs font-medium">WhatsApp</span>
+              className=" flex flex-col text-center items-center text-primary space-y-1 outline-none border-none">
+              <WhatsappIcon />
+              <span className="sr-only">Share on WhatsApp</span>
+            </button>
+
+            <button
+              onClick={shareOnTwitter}
+              className=" flex flex-col text-center text-primary items-center space-y-1">
+              <XIcon />
+              <span className="sr-only">Share on X</span>
             </button>
 
             <button
               onClick={shareOnFacebook}
-              className=" flex flex-col text-center items-center space-y-1 outline-none border-none">
-              <div className=" flex items-center justify-center size-12 md:size-14 rounded-full bg-[#0866ff] text-white">
-                <FaFacebookF className=" size-6 md:size-8" />
-              </div>
-              <span className=" text-xs font-medium">Facebook</span>
+              className=" flex flex-col text-center items-center text-primary space-y-1 outline-none border-none">
+              <FacebookIcon />
+              <span className="sr-only">Share on Facebook</span>
             </button>
 
             <button
-              onClick={shareOnReddit}
-              className=" flex flex-col text-center items-center space-y-1 outline-none border-none">
-              <div className=" flex items-center justify-center outline-none border-none size-12 md:size-14 rounded-full bg-[#ff4500] text-[#fefff]">
-                <FaRedditAlien fill="#feffff" className=" size-6 md:size-8" />
-              </div>
-              <span className=" text-xs font-medium">Reddit</span>
+              onClick={shareOnSnapchat}
+              className=" flex flex-col text-center items-center text-primary space-y-1 outline-none border-none">
+              <SnapchatIcon />
+              <span className=" sr-only">Share on LinkedIn</span>
+            </button>
+
+            <button
+              onClick={shareOnLinkedIn}
+              className=" flex flex-col text-center items-center text-primary space-y-1 outline-none border-none">
+              <LinkedInIcon />
+              <span className="sr-only">Share on LinkedIn</span>
             </button>
 
             <button
               onClick={shareViaEmail}
-              className=" flex flex-col text-center items-center space-y-1 outline-none border-none">
-              <div className=" flex items-center justify-center size-12 md:size-14 rounded-full bg-[#c2c2c2] text-white">
-                <MdMail className=" size-6 md:size-8" />
-              </div>
-              <span className=" text-xs font-medium">Email</span>
+              className=" flex flex-col text-center items-center text-primary space-y-1 outline-none border-none">
+              <MailIcon className=" size-6 md:size-8" />
+              <span className="sr-only">Share on Email</span>
             </button>
 
             {canUseWebShare && (
               <button
                 onClick={share}
-                className=" flex flex-col text-center items-center space-y-1 outline-none border-none">
-                <div className=" flex items-center justify-center size-12 md:size-14 rounded-full bg-[#c2c2c2] text-white">
-                  <BsShareFill />
-                </div>
-                <span className=" text-xs font-medium">Share</span>
+                className=" flex flex-col text-center text-primary items-center space-y-1 outline-none border-none">
+                <BsShareFill />
+                <span className="sr-only"> Share</span>
               </button>
             )}
           </div>
 
           <div
             className={
-              "border border-midGrey flex flex-row rounded-lg p-container w-full max-w-full space-x-4 justify-between"
+              "border-2 border-primary flex flex-row rounded-full p-container w-full max-w-full  justify-between"
             }>
-            <p className="p-2 text-sm truncate text-ellipsis ">{url}</p>
+            <p className="p-2 px-4 text-body-sm text-primary font-medium truncate text-ellipsis ">
+              {url}
+            </p>
             <button
               onClick={copyToClipboard}
-              className="flex shrink-0 items-center space-x-2 bg-offBlack text-white p-2 rounded-lg">
-              <BiCopy />
-              <span className=" text-white text-sm">Copy</span>
+              className="flex shrink-0 items-center space-x-2 bg-primary text-body-sm font-semibold text-white px-4 py-1 h-[33px] my-1 mr-1 rounded-full">
+              Copy Link
             </button>
           </div>
         </div>

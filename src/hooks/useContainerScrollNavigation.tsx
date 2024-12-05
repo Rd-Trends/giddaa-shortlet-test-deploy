@@ -29,7 +29,7 @@ export const useScrollableContainerNavigation = ({
         });
       }
     },
-    [sectionRefs, offset, containerRef]
+    [sectionRefs]
   );
 
   useEffect(() => {
