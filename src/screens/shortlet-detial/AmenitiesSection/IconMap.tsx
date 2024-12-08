@@ -51,6 +51,13 @@ import TaxiIcon from "@/svgs/TaxiIcon";
 import PetFriendlyNeighbourhoodIcon from "@/svgs/PetFriendlyNeighbourhoodIcon";
 import NearbyTrailsIcon from "@/svgs/NearbyTrailsIcon";
 import PrivateParkingSpaceIcon from "@/svgs/PrivateParkingSpaceIcon";
+import { TbCooker, TbMicrowave, TbWashMachine } from "react-icons/tb";
+import { BiFridge, BiSolidDryer } from "react-icons/bi";
+import SteamIronIcon from "@/svgs/SteamIronIcon";
+import TelevisionIcon from "@/svgs/TelevisionIcon";
+import { FaJugDetergent } from "react-icons/fa6";
+import BathTubIcon from "@/svgs/BathTubIcon";
+import { IoWaterSharp } from "react-icons/io5";
 
 export const AmmenitiesIconMap = {
   hasEnsuite: <EnsuiteIcon />,
@@ -61,6 +68,7 @@ export const AmmenitiesIconMap = {
   hasWineCeller: <WineCellerIcon />,
   hasFurnished: <SofaIcon />,
   hasWifi: <WifiIcon />,
+  hasHighSpeedInternet: <HighSpeedInternetIcon />,
   hasFibreOptics: <FibreOpticsIcon />,
   hasSatelliteTV: <SateliteIcon />,
   hasElevator: <ElevatorIcon />,
@@ -69,12 +77,26 @@ export const AmmenitiesIconMap = {
   hasUpgradedBathroomFeatures: <ClassicBathTubIcon />,
   hasSpaLikeFeatures: <SpaCenterIcon />,
   hasTileOrMarbleFeatures: <TiledFloorIcon />,
+  hasWashingMachine: <TbWashMachine />, //no icon
+  hasDryer: <BiSolidDryer className=" size-6" />, //no icon
+  hasPresingIron: <SteamIronIcon className=" w-7 h-6" />,
+  hasTelevision: <TelevisionIcon className="w-6" />,
 
   hasFullyEquippedKitcken: <KitchenIcon />,
   hasModernAppliances: <ModernApplianceIcon />,
   hasGraniteCountertops: <GraniteCounterTopsIcon />,
   hasBreakfastBar: <BreakfastBarIcon />,
   HasStorageRoom: <StorageRoomIcon />,
+  hasKettle: <FaJugDetergent className=" size-6" />, //no icon
+  hasRefrigerator: <BiFridge className=" size-6"/>,
+  hasCookingGas: <TbCooker className=" size-6"/>, //no icon
+  hasMicrowave: <TbMicrowave className=" size-6"/>, //no icon
+  hasOven: <TbCooker className=" size-6"/>, //no icon
+
+  hasBathtub: <BathTubIcon className=" h-6 w-6" />, //no icon
+  hasStandingShower: <ClassicBathTubIcon className=" size-6"/>, //no icon
+  hasHeaterAndHotWater: <IoWaterSharp className=" size-6"/>, //no icon
+  hasMarbleWalls: <TbCooker className=" size-6"/>, //no icon
 
   hasOpenFloorPlan: <OpenFloorPlanIcon />,
   hasLargeWindwos: <LargeWindowIcon />,
@@ -84,17 +106,19 @@ export const AmmenitiesIconMap = {
   hasPatioOrDarkSpace: <PatioIcon />,
   hasLandscapedGarden: <LandscapeIcon />,
   hasSwimmingPool: <SwimmingPoolLadderIcon />,
+  hasPoolOrSnookerTable: <SwimmingPoolLadderIcon />, //no icon
 
   hasHomeOfficeSpace: <HomeOfficeSpaceIcon />,
   hasBuiltInShelfOrBookSpace: <BookShelfIcon />,
   hasAmpleNaturalLight: <AmpleNaturalLightIcon />,
 
   hasSecuritySystem: <CCTVIcon />,
-  hasBulletProofDoors: <DoorOpenIcon />,
+  hasBulletProofDoors: <DoorOpenIcon className=" w-[20] h-[26px]" />,
   hasGatedCompound: <GatedIcon className=" w-6 h-7" />,
   hasReinforcedDoorsAndWindows: <WindowIcon />,
-  hasGaurdedCommunity: <ArmedGuardIcon />,
-  hasUniformedSecurity: <ArmedGuardIcon />,
+  hasGaurdedCommunity: <ArmedGuardIcon className=" w-4 h-6" />,
+  hasUniformedSecurity: <ArmedGuardIcon className=" w-4 h-6" />,
+  hasArmedGuards: <ArmedGuardIcon className=" w-4 h-6" />,
 
   hasParkingGarage: <GarageIcon />,
   hasDriveWaySpace: <DriveWaySpaceIcon />,

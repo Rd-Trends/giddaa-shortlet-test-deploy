@@ -4,6 +4,7 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/classname";
+import { use100vh } from "react-div-100vh";
 
 const Drawer = DialogPrimitive.Root;
 
@@ -35,7 +36,7 @@ const drawerVariants = cva(
       side: {
         top: "inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
         bottom:
-          "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom h-[95vh]",
+          "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
         left: "inset-y-0 left-0 h-full w-full xl:w-[45%] xl:min-w-[500px] xl:max-w-[720px] border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left",
         right:
           "inset-y-0 right-0 h-full data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right w-full xl:w-[45%] xl:min-w-[500px] xl:max-w-[720px]",
@@ -47,24 +48,52 @@ const drawerVariants = cva(
   }
 );
 
-interface DrawerContentProps
-  extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
-    VariantProps<typeof drawerVariants> {}
+type DrawerContentProps = React.ComponentPropsWithoutRef<
+  typeof DialogPrimitive.Content
+> & { preventAutoFocusOnOPen?: boolean } & VariantProps<typeof drawerVariants>;
 
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DrawerContentProps
->(({ side = "bottom", className, children, ...props }, ref) => (
-  <DrawerPortal>
-    <DrawerOverlay />
-    <DialogPrimitive.Content
-      ref={ref}
-      className={cn(drawerVariants({ side }), "bg-background", className)}
-      {...props}>
-      {children}
-    </DialogPrimitive.Content>
-  </DrawerPortal>
-));
+>(
+  (
+    {
+      side = "bottom",
+      className,
+      children,
+      style,
+      preventAutoFocusOnOPen,
+      ...props
+    },
+    ref
+  ) => {
+    const height = use100vh() || "700";
+
+    return (
+      <DrawerPortal>
+        <DrawerOverlay />
+        <DialogPrimitive.Content
+          ref={ref}
+          style={
+            side === "bottom"
+              ? { height: `calc(${height}px - 2rem)`, ...style }
+              : { height, ...style }
+          }
+          {...(preventAutoFocusOnOPen
+            ? {
+                onOpenAutoFocus: (e) => {
+                  e.preventDefault();
+                },
+              }
+            : {})}
+          className={cn(drawerVariants({ side }), "bg-background", className)}
+          {...props}>
+          {children}
+        </DialogPrimitive.Content>
+      </DrawerPortal>
+    );
+  }
+);
 DrawerContent.displayName = DialogPrimitive.Content.displayName;
 
 const DrawerHeader = ({

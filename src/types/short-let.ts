@@ -114,14 +114,13 @@ export type ShortLetFeatures = {
 };
 
 export type ReserveShortLetPayload = {
-  guestId: string;
   guest: {
-    type: string;
+    type?: string;
     firstName: string;
-    withInNigeria: boolean;
-    address: string;
-    occupation: string;
-    contactMethod: string;
+    withInNigeria?: boolean;
+    address?: string;
+    occupation?: string;
+    contactMethod?: string;
     lastName: string;
     email: string;
     phoneNumber: string;

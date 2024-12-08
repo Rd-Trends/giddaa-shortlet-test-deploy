@@ -13,7 +13,7 @@ const BookingPoliciesAndHouseRulesSection = ({
   shortLet: ShortLet;
 }) => {
   return (
-    <div className=" grid grid-cols-1 gap-8 md:grid-cols-2">
+    <div className=" grid grid-cols-1 gap-10 md:grid-cols-2">
       <div className=" space-y-4">
         <ClockIcon className=" size-6" />
         <div className=" space-y-2">
@@ -60,13 +60,10 @@ const BookingPoliciesAndHouseRulesSection = ({
           <IoMdCloseCircleOutline strokeWidth={0} className=" size-6" />
           <div className=" space-y-2">
             <p className=" text-body-lg font-bold">Cancellation Policy</p>
-            <div className=" flex items-start gap-2">
-              <BsCaretRightFill className=" size-2.5 mt-1.5" />
-              <RenderInnerHtml
-                html={shortLet.cancellationPolicy}
-                className="prose-p:my-1 prose-ul:-ml-2 text-black"
-              />
-            </div>
+            <RenderInnerHtml
+              html={shortLet.cancellationPolicy}
+              className="prose-p:my-1 prose-ul:-ml-2 text-black"
+            />
           </div>
         </div>
       )}
@@ -76,13 +73,10 @@ const BookingPoliciesAndHouseRulesSection = ({
           <MoneyReverseIcon className=" size-6" />
           <div className=" space-y-2">
             <p className=" text-body-lg font-bold">Refund Policy</p>
-            <div className=" flex items-start gap-2">
-              <BsCaretRightFill className=" size-2.5 mt-1.5" />
-              <RenderInnerHtml
-                html={shortLet.refundPolicy}
-                className="prose-p:my-1 prose-ul:-ml-2 text-black"
-              />
-            </div>
+            <RenderInnerHtml
+              html={shortLet.refundPolicy}
+              className="prose-p:my-1 prose-ul:-ml-2 text-black list"
+            />
           </div>
         </div>
       )}

@@ -1,9 +1,5 @@
 "use client";
 
-import useAuth from "@/hooks/useAuth";
-import { CommonModal } from "../modals/CommonModal";
-import { useRouter } from "next/navigation";
-import { AppRoutes } from "@/constants/routes";
 import { useGetContactAgentsForShortLet } from "@/apis/queries/short-lets";
 import {
   Popover,
@@ -23,10 +19,7 @@ const ContactStaffsPopover = ({
   shortLetId: string;
   children: React.ReactNode;
 }) => {
-  const router = useRouter();
-  const { isAuthenticated } = useAuth();
   const [showContactStaffs, setShowContactStaffs] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
   const { data: contactAgentsData, isLoading: isLoadingContactStaffs } =
     useGetContactAgentsForShortLet(
       {
@@ -53,16 +46,7 @@ const ContactStaffsPopover = ({
   return (
     <>
       <Popover open={showContactStaffs} onOpenChange={setShowContactStaffs}>
-        <PopoverTrigger
-          onClick={(e) => {
-            if (!isAuthenticated) {
-              e.preventDefault();
-              setShowLoginModal(true);
-            }
-          }}
-          asChild>
-          {children}
-        </PopoverTrigger>
+        <PopoverTrigger asChild>{children}</PopoverTrigger>
 
         <PopoverContent align="start" className=" p-0">
           <div className="flex flex-col divide-y divide-mid-grey max-h-[199px] overflow-y-auto">
@@ -84,9 +68,7 @@ const ContactStaffsPopover = ({
                       <h3 className=" text-body-sm font-bold text-black">
                         {agent.name}
                       </h3>
-                      {isAuthenticated && (
-                        <p className=" text-body-xs">{agent.phoneNumber}</p>
-                      )}
+                      <p className=" text-body-xs">{agent.phoneNumber}</p>
                       <div className=" flex items-center space-x-4">
                         <button
                           onClick={() => handlePhoneClick(agent.phoneNumber)}
@@ -108,7 +90,7 @@ const ContactStaffsPopover = ({
         </PopoverContent>
       </Popover>
 
-      <CommonModal
+      {/* <CommonModal
         title="You’re Not Logged In"
         subHeader="Register or Login to Contact to a Staff"
         description="You need to be logged in to contact a staff, register or login to continue"
@@ -126,7 +108,7 @@ const ContactStaffsPopover = ({
             alt=""
           />
         }
-      />
+      /> */}
     </>
   );
 };

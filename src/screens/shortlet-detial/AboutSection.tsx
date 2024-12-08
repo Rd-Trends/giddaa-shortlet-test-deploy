@@ -7,19 +7,27 @@ import {
   ModalTitle,
 } from "@/components/ui/Modal";
 import RenderInnerHtml from "@/components/ui/RenderInnerHtml";
+import { getWordCount } from "@/utils/get-word-count";
 import React from "react";
 
 const AboutSection = ({ description }: { description: string }) => {
   const [showMore, setShowMore] = React.useState(false);
+  const wordCount = getWordCount(description);
+  const showMoreButton = wordCount > 60;
 
   return (
     <div className=" space-y-4">
-      <RenderInnerHtml html={description} className="line-clamp-3 text-black" />
-      <button
-        className="text-secondary text-body-md font-bold outline-none border-none"
-        onClick={() => setShowMore(true)}>
-        Show More
-      </button>
+      <RenderInnerHtml
+        html={description}
+        className="!line-clamp-6 md:line-clamp-4 xl:line-clamp-3  text-black"
+      />
+      {showMoreButton && (
+        <button
+          className="text-secondary text-body-md font-bold outline-none border-none "
+          onClick={() => setShowMore(true)}>
+          Show More
+        </button>
+      )}
 
       <AboutShortLetModal
         isOpen={showMore}

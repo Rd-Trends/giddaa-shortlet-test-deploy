@@ -10,7 +10,7 @@ import React from "react";
 const SafetyAndSecuritySection = ({ shortLet }: { shortLet: ShortLet }) => {
   const features = shortLet.features[0];
   return (
-    <div className=" grid grid-cols-1 gap-8 md:grid-cols-2 xl:gap-10">
+    <div className=" grid grid-cols-1 gap-10 md:grid-cols-2">
       {features.hasCCTVSurveillanceSystem && (
         <div className=" space-y-4">
           <CCTVIcon className=" w-[31px] h-[30px] " />

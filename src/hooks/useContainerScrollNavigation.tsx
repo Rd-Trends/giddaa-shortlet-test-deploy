@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 type Section = {
   id: string;
@@ -7,14 +7,11 @@ type Section = {
 
 type UseScrollNavigationProps = {
   sections: Array<Section>;
-  offset?: number;
 };
 
 export const useScrollableContainerNavigation = ({
   sections,
-  offset = 120,
 }: UseScrollNavigationProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
@@ -32,52 +29,39 @@ export const useScrollableContainerNavigation = ({
     [sectionRefs]
   );
 
-  useEffect(() => {
-    const checkActiveSection = () => {
-      if (!containerRef.current) return; // Check if container ref exists
-
-      const container = containerRef.current;
-      const containerHeight = container.clientHeight;
-      const scrollY = container.scrollTop;
-
-      // Find the section that has its bottom 50% in the viewport
-      const activeId = sections.find((section) => {
-        const element = container.querySelector(`#${section.id}`);
-
-        console.log(element);
-
-        if (!element) return false;
+  const handleScroll = useCallback(
+    (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+      console.log("scrolling");
+      // const scrollPosition = e.currentTarget.scrollTop;
+      const selected = sections.find(({ id }) => {
+        const element = sectionRefs.current[id];
+        if (!element) return null;
 
         const rect = element.getBoundingClientRect();
-        const elementTop = rect.top;
+        const elementTop = rect.top + scrollY;
         const elementBottom = elementTop + rect.height;
 
-        // Check if bottom 50% of the section is in the container's viewport
+        // Check if bottom 50% of the section is in the viewport
         const bottomHalfStart = elementTop + rect.height / 2;
         const bottomHalfEnd = elementBottom;
 
         return (
-          bottomHalfStart >= scrollY &&
-          bottomHalfEnd <= scrollY + containerHeight / 2
+          bottomHalfStart <= scrollY + e.currentTarget.clientHeight / 2 &&
+          bottomHalfEnd >= scrollY + e.currentTarget.clientHeight / 2
         );
-      })?.id;
+      });
 
-      if (activeId) {
-        setActiveSection(activeId);
+      if (selected) {
+        setActiveSection(selected.id);
       }
-    };
-
-    console.log(containerRef.current);
-
-    containerRef.current?.addEventListener("scroll", checkActiveSection);
-    return () =>
-      containerRef.current?.removeEventListener("scroll", checkActiveSection); // Cleanup
-  }, [sections, offset, containerRef]);
+    },
+    [sections, sectionRefs]
+  );
 
   return {
-    containerRef,
     sectionRefs,
     activeSection,
     handleClick,
+    handleScroll,
   };
 };

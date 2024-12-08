@@ -21,7 +21,11 @@ import { IoMdClose } from "react-icons/io";
 import PhotoIcon from "@/svgs/PhotoIcon";
 import { getImageType } from "@/utils/get-image-type";
 
-const ImageSection = ({ images }: { images: ShortLet["images"] }) => {
+const ImageSection = ({
+  images,
+  name,
+  city,
+}: Pick<ShortLet, "images" | "name" | "city">) => {
   const [showImageGallery, setShowImageGallery] = React.useState(false);
   const hasTwoImages = images.length >= 2;
   const hasThreeImages = images.length === 3;
@@ -29,14 +33,17 @@ const ImageSection = ({ images }: { images: ShortLet["images"] }) => {
 
   return (
     <Container className="px-0  pt-44">
-      <div className="flex gap-4 h-[498px] relative">
+      <div className="flex gap-4 md:h-[498px] relative">
         <img
           src={images[0].document}
           alt=""
-          className={cn("w-full h-full object-cover md:rounded-2xl", {
-            "md:w-[60%]": hasTwoImages,
-            "md:w-[45%]": hasThreeImages || hasFourImages,
-          })}
+          className={cn(
+            "w-full h-[235px] md:h-full object-cover md:rounded-2xl",
+            {
+              "md:w-[60%]": hasTwoImages,
+              "md:w-[45%]": hasThreeImages || hasFourImages,
+            }
+          )}
         />
 
         {hasTwoImages && (
@@ -65,7 +72,7 @@ const ImageSection = ({ images }: { images: ShortLet["images"] }) => {
         {hasFourImages && (
           <div
             className={cn(
-              " w-full md:w-[25%] h-full flex flex-col gap-4 justify-between"
+              " w-full md:w-[25%] h-full hidden md:flex flex-col gap-4 justify-between"
             )}>
             <img
               src={images[2].document}
@@ -94,6 +101,8 @@ const ImageSection = ({ images }: { images: ShortLet["images"] }) => {
         isOpen={showImageGallery}
         seIsOpen={setShowImageGallery}
         images={images}
+        name={name}
+        city={city}
       />
     </Container>
   );
@@ -105,20 +114,23 @@ const ImageGalleryDrawer = ({
   isOpen,
   seIsOpen,
   images,
+  city,
+  name,
 }: {
   isOpen: boolean;
   seIsOpen: (value: boolean) => void;
-  images: ShortLet["images"];
-}) => {
+} & Pick<ShortLet, "images" | "name" | "city">) => {
   return (
     <Drawer open={isOpen} onOpenChange={seIsOpen}>
-      <DrawerContent className=" flex flex-col overflow-y-auto">
+      <DrawerContent
+        preventAutoFocusOnOPen
+        className=" flex flex-col overflow-y-auto">
         <DrawerHeader className={"border-b border-midGrey"}>
           <DrawerTitle className=" text-center text-heading-3 font-secondary text-primary">
             Photos
           </DrawerTitle>
           <DrawerDescription className=" text-center text-body-md text-charcoal-grey pt-1">
-            Photos of the [Entire Home] located in [city and state]
+            Photos of the {name} located in {city.name} and {city.state?.name}
           </DrawerDescription>
 
           <Tooltip>

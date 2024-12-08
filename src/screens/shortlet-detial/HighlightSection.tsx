@@ -18,7 +18,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
   return (
     <div className=" space-y-8 divide-y divide-mid-grey">
       <div className=" grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-8 xl:gap-8">
-        <div className=" flex items-start space-x-4 pr-4 xl:pr-8 border-r border-mid-grey">
+       <div className=" flex flex-col md:flex-row items-start gap-4 pr-4 xl:pr-8 border-r border-mid-grey">
           <span className="w-11 flex-shrink-0">
             <MoneyStackIcon className="w-[41px] h-[30px]" />
           </span>
@@ -30,7 +30,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
           </div>
         </div>
 
-        <div className=" flex items-start space-x-4 md:border-r border-mid-grey md:pr-4 xl:pr-8">
+       <div className=" flex flex-col md:flex-row items-start gap-4 md:border-r border-mid-grey md:pr-4 xl:pr-8">
           <span className="w-11 flex-shrink-0">
             <BedIcon className="w-[37px] h-[24px] shrink-0" />
           </span>
@@ -42,7 +42,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
           </div>
         </div>
 
-        <div className=" flex items-start space-x-4 pr-4 md:pr-0 xl:pr-8 border-r md:border-r-0 xl:border-r border-mid-grey">
+       <div className=" flex flex-col md:flex-row items-start gap-4 pr-4 md:pr-0 xl:pr-8 border-r md:border-r-0 xl:border-r border-mid-grey">
           <span className="w-11 flex-shrink-0">
             <BathTubIcon className="w-[32px] h-[29px] shrink-0" />
           </span>
@@ -54,7 +54,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
           </div>
         </div>
 
-        <div className=" flex items-start space-x-4">
+       <div className=" flex flex-col md:flex-row items-start gap-4">
           <span className="w-11 flex-shrink-0">
             <LocationIcon className="w-[25px] h-[31px] shrink-0" />
           </span>
@@ -68,7 +68,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
       </div>
 
       <div className=" grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-8 xl:gap-8 pt-8">
-        <div className=" flex items-start space-x-4 pr-4 xl:pr-8 border-r border-mid-grey">
+        <div className=" flex flex-col md:flex-row items-start gap-4 pr-4 xl:pr-8 border-r border-mid-grey">
           <span className="w-11 flex-shrink-0">
             <PropertyIcon color="#000" className="w-[42px] h-[30px] shrink-0" />
           </span>
@@ -80,7 +80,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
           </div>
         </div>
 
-        <div className=" flex items-start space-x-4 md:border-r border-mid-grey md:pr-4 xl:pr-8">
+       <div className=" flex flex-col md:flex-row items-start gap-4 md:border-r border-mid-grey md:pr-4 xl:pr-8">
           <span className="w-11 flex-shrink-0">
             <CalendarIcon color="#000" className="w-[27px] h-[30px] shrink-0" />
           </span>
@@ -95,7 +95,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
           </div>
         </div>
 
-        <div className=" flex items-start space-x-4 pr-4 md:pr-0 xl:pr-8 border-r md:border-r-0 xl:border-r border-mid-grey">
+       <div className=" flex flex-col md:flex-row items-start gap-4 pr-4 md:pr-0 xl:pr-8 border-r md:border-r-0 xl:border-r border-mid-grey">
           <span className="w-11 flex-shrink-0">
             <ClockIcon className="w-[30px] h-[30px] shrink-0" />
           </span>
@@ -116,7 +116,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
           </div>
         </div>
 
-        <div className=" flex items-start space-x-4">
+       <div className=" flex flex-col md:flex-row items-start gap-4">
           <span className="w-11 flex-shrink-0">
             <DoorOpenIcon className="w-[31px] h-[37px] shrink-0" />
           </span>
@@ -132,7 +132,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
       </div>
 
       <div className=" grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-8 xl:gap-8 pt-8">
-        <div className=" flex items-start space-x-4 pr-4 xl:pr-8 border-r border-mid-grey">
+       <div className=" flex flex-col md:flex-row items-start gap-4 pr-4 xl:pr-8 border-r border-mid-grey">
           <span className="w-11 flex-shrink-0">
             <CautionIcon className="w-[38px] h-[33px] shrink-0" />
           </span>
@@ -148,7 +148,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
           </div>
         </div>
 
-        <div className=" flex items-start space-x-4 md:border-r border-mid-grey md:pr-4 xl:pr-8">
+       <div className=" flex flex-col md:flex-row items-start gap-4 md:border-r border-mid-grey md:pr-4 xl:pr-8">
           <span className="w-11 flex-shrink-0">
             <PeopleIcon className="w-[37px] h-[28px] shrink-0" />
           </span>

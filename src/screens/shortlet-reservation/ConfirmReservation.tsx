@@ -11,8 +11,8 @@ import { useGetExchangeRates } from "@/apis/queries/exchange-rate";
 import SkeletonLoader from "@/components/ui/Skeleton";
 import { ReservationSuccessModal } from "./ReservationSuccessModal";
 import { useState } from "react";
-// import { useReserveShortLet } from "@/apis/mutations/short-let";
-// import { toast } from "@/lib/toast";
+import { useReserveShortLet } from "@/apis/mutations/short-let";
+import { toast } from "@/lib/toast";
 
 const ConfirmReservation = ({
   changeStep,
@@ -24,7 +24,7 @@ const ConfirmReservation = ({
   shortLet: ShortLet;
 }) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  // const reserveShortLet = useReserveShortLet(shortLet.id);
+  const reserveShortLet = useReserveShortLet(shortLet.id);
 
   const { data: exchangeRates, isLoading: isLoadingExchangeRates } =
     useGetExchangeRates();
@@ -47,38 +47,37 @@ const ConfirmReservation = ({
   const grandTotal = bookingFee + cautionFee;
 
   const handleConfirmReservation = () => {
-    // reserveShortLet.mutate(
-    //   {
-    //     // @ts-expect-error
-    //     guest: {
-    //       firstName: formDetails.firstName,
-    //       lastName: formDetails.lastName,
-    //       email: formDetails.email,
-    //       phoneNumber: formDetails.phoneNumber,
-    //     },
-    //     checkInDate: formDetails.checkInDate,
-    //     checkOutDate: formDetails.checkOutDate,
-    //     numberOfGuests: formDetails.numberOfGuests,
-    //     cautionFee,
-    //     bookingFee,
-    //     numberOfDays: nights,
-    //     shortletId: shortLet.id,
-    //     isPaid: false,
-    //     contactMethod: "EMAIL",
-    //     parentBookingId: "",
-    //   },
-    //   {
-    //     onSuccess: () => {
-    //       setShowSuccessModal(true);
-    //     },
-    //     onError: (error) => {
-    //       toast.error({
-    //         title: "Error",
-    //         description: error.message ?? "Failed to reserve short let",
-    //       });
-    //     },
-    //   }
-    // );
+    reserveShortLet.mutate(
+      {
+        guest: {
+          firstName: formDetails.firstName,
+          lastName: formDetails.lastName,
+          email: formDetails.email,
+          phoneNumber: formDetails.phoneNumber,
+        },
+        checkInDate: formDetails.checkInDate,
+        checkOutDate: formDetails.checkOutDate,
+        numberOfGuests: formDetails.numberOfGuests,
+        cautionFee,
+        bookingFee,
+        numberOfDays: nights,
+        shortletId: shortLet.id,
+        isPaid: false,
+        contactMethod: "EMAIL",
+        parentBookingId: "",
+      },
+      {
+        onSuccess: () => {
+          setShowSuccessModal(true);
+        },
+        onError: (error) => {
+          toast.error({
+            title: "Error",
+            description: error.message ?? "Failed to reserve short let",
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -209,19 +208,19 @@ const ConfirmReservation = ({
 
       <div className=" flex items-center justify-center p-4 space-x-4 border-t border-mid-grey">
         <Button
-          variant="outline-danger"
+          variant="outline"
           onClick={() => changeStep(1)}
           className=" font-bold"
           type="button">
           <BiChevronLeft className=" size-5" /> Booking Details
         </Button>
         <Button
-          // isLoading={reserveShortLet.isPending}
+          isLoading={reserveShortLet.isPending}
           onClick={handleConfirmReservation}
           variant="filled"
           className=" font-bold">
-          {/* {reserveShortLet.isPending ? "Reserving..." : "Confirm Reservation"} */}
-          Confirm Reservation
+          {reserveShortLet.isPending ? "Reserving..." : "Confirm Reservation"}
+          {/* Confirm Reservation */}
         </Button>
       </div>
 

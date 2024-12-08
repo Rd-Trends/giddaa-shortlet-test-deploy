@@ -14,6 +14,7 @@ import {
   PopoverTrigger,
   CustomPopoverClose,
 } from "@/components/ui/Popover";
+import { StorageKeys } from "@/constants/storage-keys";
 import { useMediaQuery } from "@/hooks/useMediaQueries";
 import GirlWithMicIcon from "@/svgs/GirlWithMicIcon";
 import Logo from "@/svgs/Logo";
@@ -21,15 +22,17 @@ import MoneyStackIcon from "@/svgs/MoneyStackIcon";
 import PropertyIcon from "@/svgs/PropertyIcon";
 import TelephoneRingingIcon from "@/svgs/TelephoneRingingIcon";
 import React, { useEffect, useState } from "react";
+import { use100vh } from "react-div-100vh";
 import { BiCaretDown } from "react-icons/bi";
 import { BsTelephone } from "react-icons/bs";
 import { FaWhatsapp } from "react-icons/fa6";
 
 const tags = [
   "Your Next Weekend Getaway",
-  "Your Next Special Event",
-  "Your Next Content Creation",
   "Your Next Staycation",
+  // "Your Next Special Event",
+  "your bridal shower, and other wedding preparations",
+  "Your Next Business Trip",
 ];
 
 const WelcomeModal = () => {
@@ -38,7 +41,14 @@ const WelcomeModal = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
-    setIsOpen(true);
+    const ssShowModal = sessionStorage.getItem(StorageKeys.SHOW_WELCOME_MODAL);
+    if (ssShowModal === null) {
+      setIsOpen(true);
+      sessionStorage.setItem(
+        StorageKeys.SHOW_WELCOME_MODAL,
+        JSON.stringify({ show: false })
+      );
+    }
   }, []);
 
   useEffect(() => {
@@ -49,12 +59,15 @@ const WelcomeModal = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const maxHeight = use100vh() || "700";
+
   return (
     <Modal open={isOpen} onOpenChange={setIsOpen}>
       <ModalContent
-        className=" rounded-[20px] max-w-full p-0"
-        wrapperClassName=" rounded-[22px] w-full max-w-[calc(100vw-2rem)] lg:max-w-[911px] ">
-        <div className=" p-4 relative ">
+        style={{ maxHeight: `calc(${maxHeight}px - 2rem)` }}
+        className=" rounded-[20px] max-w-full p-0 flex flex-col overflow-y-auto flex-1"
+        wrapperClassName=" rounded-[22px] w-full max-w-[calc(100vw-2rem)] lg:max-w-[911px] flex flex-col overflow-y-auto ">
+        <div className=" flex-1 overflow-y-auto p-4 relative z-0">
           <span className="absolute top-8 left-8 bg-background p-2 rounded-md">
             <Logo className=" h-[55.8px] w-auto " />
           </span>

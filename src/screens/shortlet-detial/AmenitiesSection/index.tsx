@@ -44,8 +44,10 @@ const AmenitiesSection = ({ shortLet }: { shortLet: ShortLet }) => {
       <div className=" grid grid-cols-2 gap-4 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
         {firstTenAvailableAmenities.map((amenity) => (
           <div key={amenity} className=" flex items-start space-x-4">
-            {AmmenitiesIconMap[amenity as keyof typeof AmmenitiesIconMap]}
-            <p className=" text-body-md ">
+            <span className=" w-7 flex-shrink-0">
+              {AmmenitiesIconMap[amenity as keyof typeof AmmenitiesIconMap]}
+            </span>
+            <p className=" text-body-sm md:text-body-md ">
               {convertCamelCaseToTitleCase(amenity)}
             </p>
           </div>
@@ -114,15 +116,16 @@ const TourASectionDrawer = ({
       .filter((data) => data.amenities.length > 0);
   }, [features]);
 
-  const { activeSection, containerRef, sectionRefs, handleClick } =
+  const { activeSection, sectionRefs, handleClick, handleScroll } =
     useScrollableContainerNavigation({
       sections,
-      offset: 170,
     });
 
   return (
     <Drawer open={isOpen} onOpenChange={seIsOpen}>
-      <DrawerContent className=" flex flex-col overflow-y-auto">
+      <DrawerContent
+        preventAutoFocusOnOPen
+        className=" flex flex-col overflow-y-auto">
         <DrawerHeader className={"border-b border-midGrey"}>
           <DrawerTitle className=" text-center text-heading-3 font-secondary text-primary">
             Amenities
@@ -166,7 +169,7 @@ const TourASectionDrawer = ({
         </Container>
 
         <Container
-          ref={containerRef}
+          onScroll={handleScroll}
           className="flex-1 overflow-y-auto grid grid-cols-1 gap-10 md:grid-cols-2 ">
           {sections.map((section) => (
             <div
@@ -180,14 +183,16 @@ const TourASectionDrawer = ({
                 {section.label.split("_").join(" ")}
               </p>
 
-              <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 pb-4">
+              <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 pb-4">
                 {section.amenities.map((amenity) => (
                   <div key={amenity} className=" flex items-start space-x-4">
-                    {
-                      AmmenitiesIconMap[
-                        amenity as keyof typeof AmmenitiesIconMap
-                      ]
-                    }
+                    <span className=" w-7 flex-shrink-0">
+                      {
+                        AmmenitiesIconMap[
+                          amenity as keyof typeof AmmenitiesIconMap
+                        ]
+                      }
+                    </span>
                     <p className=" text-body-sm font-normal ">
                       {convertCamelCaseToTitleCase(amenity)}
                     </p>
@@ -210,10 +215,15 @@ const categoryMappings = {
     "hasAirConditioning",
     "hasSpeedInternet",
     "hasWineCeller",
+    "hasWashingMachine",
+    "hasDryer",
     "hasFurnished",
     "hasWifi",
+    "hasHighSpeedInternet",
+    "hasPresingIron",
     "hasFibreOptics",
     "hasSatelliteTV",
+    "hasTelevision",
     "hasElevator",
     "hasBoysQuarters",
     "hasSmartHomeTechnology",
@@ -227,6 +237,17 @@ const categoryMappings = {
     "hasGraniteCountertops",
     "hasBreakfastBar",
     "HasStorageRoom",
+    "hasKettle",
+    "hasRefrigerator",
+    "hasCookingGas",
+    "hasMicrowave",
+    "hasOven",
+  ],
+  Bathroom_Features: [
+    "hasBathtub",
+    "hasStandingShower",
+    "hasHeaterAndHotWater",
+    "hasMarbleWalls",
   ],
   Living_Room_Features: [
     "hasOpenFloorPlan",
@@ -238,6 +259,7 @@ const categoryMappings = {
     "hasPatioOrDarkSpace",
     "hasLandscapedGarden",
     "hasSwimmingPool",
+    "hasPoolOrSnookerTable",
   ],
   Home_Office_Features: [
     "hasHomeOfficeSpace",
@@ -251,6 +273,7 @@ const categoryMappings = {
     "hasReinforcedDoorsAndWindows",
     "hasGaurdedCommunity",
     "hasUniformedSecurity",
+    "hasArmedGuards",
   ],
   Parking_Features: [
     "hasParkingGarage",

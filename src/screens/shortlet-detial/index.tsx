@@ -16,13 +16,10 @@ import UsesSection from "./UsesSection";
 import ServicesSection from "./ServicesSection";
 import ShortletsNearBy from "./ShortletsNearBy";
 import Footer from "@/components/layouts/Footer";
-import { Button, buttonVariants } from "@/components/ui/Button";
-import TelephoneRingingIcon from "@/svgs/TelephoneRingingIcon";
-import { BiCaretDown } from "react-icons/bi";
-import Link from "next/link";
 import TakeATour from "./TakeATour";
 import AmenitiesSection from "./AmenitiesSection";
-import ContactStaffsPopover from "@/components/shared/popovers/ContactStaffsPopover";
+import HouseLocation from "./Location";
+import StickyFooter from "./StickyFooter";
 
 const dummyImages = [
   {
@@ -97,6 +94,52 @@ const dummyImages = [
   },
 ];
 
+const dummyFeatures = {
+  id: "example_id",
+  name: "Luxurious Villa",
+  icon: "villa_icon.png",
+  hasWashingMachine: true,
+  hasPoPCeiling: true,
+  hasDryer: true,
+  hasAirConditioning: true,
+  hasHighSpeedInternet: true,
+  hasWineCeller: true,
+  hasEnsuite: true,
+  hasWifi: true,
+  hasSmartHomeTechnology: true,
+  hasPresingIron: true,
+  hasOpenFloorPlan: true,
+  hasLargeWindwos: true,
+  hasBuiltInHouseTheater: true,
+  hasTelevision: true,
+  hasPoolOrSnookerTable: true,
+  hasKettle: true,
+  hasRefrigerator: true,
+  hasGrantieCountertops: true,
+  hasBreakfastBar: true,
+  hasCookingGas: true,
+  hasMicrowave: true,
+  hasOven: true,
+  hasMarbleWalls: true,
+  hasBathtub: true,
+  hasStandingShower: true,
+  hasHeaterAndHotWater: true,
+  hasPrivateBackyard: true,
+  hasPatioOrDarkSpace: true,
+  hasLandscapedGarden: true,
+  hasSwimmingPool: true,
+  hasSnokerArea: true,
+  hasHomeOfficeSpace: true,
+  hasBuiltInShelfOrBookSpace: true,
+  hasAmpleNaturalLight: true,
+  hasCCTVSurveillanceSystem: true,
+  hasGatedCompound: true,
+  hasHighBrowArea: true,
+  hasArmedGuards: true,
+  hasBulletProofDoors: true,
+  hasBurglaryProofWindows: true,
+};
+
 const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
   const sections = useMemo(() => {
     return [
@@ -115,7 +158,11 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
         id: "Amenities",
         label: "Amenities",
         pageTitle: "Amenities",
-        content: <AmenitiesSection shortLet={shortLet} />,
+        content: (
+          <AmenitiesSection
+            shortLet={{ ...shortLet, features: [dummyFeatures] }}
+          />
+        ),
       },
       {
         id: "Take-A-Tour",
@@ -131,14 +178,14 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
           />
         ),
       },
-      // {
-      //   id: "Location",
-      //   label: "Location",
-      //   pageTitle: "Where you will stay",
-      //   content: (
-      //     <HouseLocation city={shortLet.city} address={shortLet.address} />
-      //   ),
-      // },
+      {
+        id: "Location",
+        label: "Location",
+        pageTitle: "Where you will stay",
+        content: (
+          <HouseLocation city={shortLet.city} address={shortLet.address} />
+        ),
+      },
       {
         id: "Policies-And-House-Rules",
         label: "Policies & Rules",
@@ -179,8 +226,6 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
     }
   );
 
-  console.log(shortLet);
-
   return (
     <div className="container px-0 bg-background min-h-screen h-full">
       <Container className="!px-0 fixed left-0 right-0 top-0 w-screen bg-background pt-6 space-y-4 z-10">
@@ -196,7 +241,11 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
         />
       </Container>
 
-      <ImageSection images={dummyImages} />
+      <ImageSection
+        images={dummyImages}
+        name={shortLet.name}
+        city={shortLet.city}
+      />
 
       <Container className="px-4 md:px-6 space-y-20 pt-20 pb-8 ">
         {sections.map((section, index) => {
@@ -218,24 +267,7 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
         })}
       </Container>
 
-      <div className=" fixed bottom-10 left-1/2 -translate-x-1/2  mx-auto z-10 p-0.5 bg-primary-gradient rounded-full shadow-[0px_4px_4px_3px_#00000040]">
-        <div className=" bg-background p-4 rounded-full flex items-center gap-4">
-          <Link
-            href={`/${shortLet.id}/booking`}
-            className={cn(
-              buttonVariants({ size: "large" }),
-              " font-bold px-8"
-            )}>
-            Reserve Now
-          </Link>
-          <ContactStaffsPopover shortLetId={shortLet.id}>
-            <Button size={"large"} variant={"outline"} className="gap-3 group">
-              <TelephoneRingingIcon /> <span>Contact Us</span>{" "}
-              <BiCaretDown className="size-5 -ml-2 -mt-0.5 group-data-[state=open]:rotate-180 transition-transform duration-300" />
-            </Button>
-          </ContactStaffsPopover>
-        </div>
-      </div>
+      <StickyFooter shortletId={shortLet.id} />
 
       <Footer />
     </div>

@@ -51,15 +51,18 @@ const ReservationForm = ({ shortLet }: { shortLet: ShortLet }) => {
   return (
     <div>
       <Navbar />
-      <Container className="pt-20 bg-background min-h-screen">
+      <Container className="pt-20 bg-background min-h-screen pb-8">
         <div className=" text-center py-6">
           <h1 className=" text-heading-2 font-secondary text-primary">
             Make a Reservation
           </h1>
           <p className=" text-body-sm mt-1">
-            Reserve the entire apartment in {shortLet.city.name},{" "}
-            {shortLet.city.state.name}. Once we confirm availability and your
-            booking, you then pay.
+            Reserve <b>{shortLet.name}</b> in{" "}
+            <b>
+              {shortLet.address}, {shortLet.city.name},{" "}
+              {shortLet.city.state.name}
+            </b>
+            . Once we confirm availability and your booking, you then pay.
           </p>
 
           <div className="relative flex items-center justify-center gap-4 mt-6">
@@ -106,7 +109,7 @@ const ReservationForm = ({ shortLet }: { shortLet: ShortLet }) => {
                         "bg-mid-grey": step !== index && step < index,
                       }
                     )}>
-                    {index}
+                    {index + 1}
                   </span>
                   {step > index && (
                     <CheckCircleFillIcon className="size-[13px] absolute -top-0.5 -right-1 z-10 fill-charcoal-grey stroke-background" />

@@ -63,12 +63,9 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
             <img
               src={images[0].document}
               alt=""
-              className={cn(
-                "w-full h-auto md:h-[264px] object-cover rounded-2xl",
-                {
-                  "lg:h-full": images?.length === 1 && !!videoUrl,
-                }
-              )}
+              className={cn("w-full h-[264px] object-cover rounded-2xl", {
+                "lg:h-full": images?.length === 1 && !!videoUrl,
+              })}
             />
             <p className=" text-body-md font-semibold capitalize">
               {getImageType(images[0].optionId)}
@@ -83,9 +80,7 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
               <img
                 src={images[1].document}
                 alt=""
-                className={cn(
-                  "w-full h-full md:h-[264px] object-cover rounded-2xl "
-                )}
+                className={cn("w-full h-[264px] object-cover rounded-2xl")}
               />
               <p className=" text-body-md font-semibold capitalize">
                 {getImageType(images[1].optionId)}
@@ -98,9 +93,7 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
               <img
                 src={images[2].document}
                 alt=""
-                className={cn(
-                  "w-full h-auto md:h-[264px] object-cover rounded-2xl"
-                )}
+                className={cn("w-full h-[264px] object-cover rounded-2xl")}
               />
               <p className=" text-body-md font-semibold capitalize">
                 {getImageType(images[2].optionId)}
@@ -113,9 +106,7 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
               <img
                 src={images[3].document}
                 alt=""
-                className={cn(
-                  "w-full h-auto md:h-[264px] object-cover rounded-2xl"
-                )}
+                className={cn("w-full h-[264px] object-cover rounded-2xl")}
               />
               <p className=" text-body-md font-semibold capitalize">
                 {getImageType(images[3].optionId)}
@@ -134,15 +125,13 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
         <ArrowOpenIcon className="w-4 h-4 ml-2 absolute right-6 md:static" />
       </Button>
 
-      {isDrawerOpen && (
-        <TourASectionDrawer
-          isOpen={isDrawerOpen}
-          seIsOpen={setIsDrawerOpen}
-          images={images}
-          name={name}
-          city={city}
-        />
-      )}
+      <TourASectionDrawer
+        isOpen={isDrawerOpen}
+        seIsOpen={setIsDrawerOpen}
+        images={images}
+        name={name}
+        city={city}
+      />
     </div>
   );
 };
@@ -182,10 +171,9 @@ const TourASectionDrawer = ({
     }));
   }, [groupedImages]);
 
-  const { activeSection, containerRef, sectionRefs, handleClick } =
+  const { activeSection, handleScroll, sectionRefs, handleClick } =
     useScrollableContainerNavigation({
       sections,
-      offset: 170,
     });
 
   return (
@@ -233,7 +221,7 @@ const TourASectionDrawer = ({
           </div>
         </Container>
 
-        <Container ref={containerRef} className="flex-1 overflow-y-auto ">
+        <Container onScroll={handleScroll} className="flex-1 overflow-y-auto ">
           {sections.map((section) => (
             <div
               id={section.id}
@@ -255,7 +243,7 @@ const TourASectionDrawer = ({
                     key={image.id}
                     src={image.document}
                     alt=""
-                    className="w-full h-auto md:h-[393px] object-cover rounded-2xl"
+                    className="w-full h-[264px] md:h-[393px] object-cover rounded-2xl"
                   />
                 ))}
               </div>

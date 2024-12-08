@@ -11,14 +11,7 @@ import Link from "next/link";
 import React from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
-const Nav = ({
-  name,
-  price,
-}: {
-  name: string;
-  id: string;
-  price: number;
-}) => {
+const Nav = ({ name, price }: { name: string; id: string; price: number }) => {
   return (
     <Container className=" bg-background">
       <nav className=" px-4 md:px-6 border border-light-grey bg-white py-1.5 rounded-full flex items-center justify-between space-x-4">
@@ -46,8 +39,6 @@ export default Nav;
 
 const NavButtons = ({ title }: { title: string }) => {
   const [showShare, setShowShare] = React.useState(false);
-
-  console.log(showShare);
 
   return (
     <>

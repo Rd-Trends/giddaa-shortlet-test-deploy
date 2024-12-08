@@ -19,8 +19,10 @@ export const JOIN_NEWSLETTER_KEY = "JOIN NEWSLETTER KEY";
 // locations
 export const GET_CITIES_IN_A_STATE_KEY = "GET CITIES IN A STATE";
 
-// google maps
-export const GET_COORDINATES_KEY = "GET COORDINATES";
-
 // exchange rate
 export const GET_EXCHANGE_RATES_KEY = "GET EXCHANGES RATE";
+
+// google maps
+export const GET_COORDINATES_KEY = "GET COORDINATES";
+export const GET_PLACE_DETAILS_KEY = "GET PLACE DETAILS";
+export const GET_TRAFFIC_DATA_KEY = "GET TRAFFIC DATA";

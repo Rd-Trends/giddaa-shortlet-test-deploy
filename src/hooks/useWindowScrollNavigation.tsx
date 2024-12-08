@@ -10,12 +10,14 @@ type UseWindowScrollNavigationProps = {
   sections: Array<Section>;
   offset?: number;
   queryKey?: string;
+  delay?: number; // Optional delay in milliseconds for updating state
 };
 
 export const useWindowScrollNavigation = ({
   sections,
   offset = 120,
   queryKey = "Tab",
+  delay = 100, // Default no delay
 }: UseWindowScrollNavigationProps) => {
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
   const searchParams = useSearchParams();
@@ -25,6 +27,9 @@ export const useWindowScrollNavigation = ({
   const [activeSection, setActiveSection] = useState<string>(
     queryValue || sections[0].id
   );
+
+  // Timeout reference for debounced state update
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Smooth scroll to section
   const handleClick = useCallback(
@@ -64,14 +69,28 @@ export const useWindowScrollNavigation = ({
         );
       })?.id;
 
-      if (activeId) {
-        setActiveSection(activeId);
+      // Debounced state update with delay
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
       }
+
+      timeoutRef.current = setTimeout(() => {
+        if (activeId) {
+          setActiveSection(activeId);
+        }
+        timeoutRef.current = null;
+      }, delay);
     };
 
     window.addEventListener("scroll", checkActiveSection);
-    return () => window.removeEventListener("scroll", checkActiveSection);
-  }, [sections, offset]);
+
+    return () => {
+      window.removeEventListener("scroll", checkActiveSection);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [sections, offset, delay]);
 
   return {
     sectionRefs,

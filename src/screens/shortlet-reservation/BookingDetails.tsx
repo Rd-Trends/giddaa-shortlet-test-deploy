@@ -195,7 +195,7 @@ const BookingDetails = ({
 
       <div className=" flex items-center justify-center p-4 space-x-4 border-t border-mid-grey">
         <Button
-          variant="outline-danger"
+          variant="outline"
           onClick={() => changeStep(0)}
           className=" font-bold"
           type="button">
