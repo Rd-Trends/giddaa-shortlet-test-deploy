@@ -84,7 +84,7 @@ export const headerNavItems: NavItem[] = [
     icon: (
       <ShortLetIcon width={26} color="currentColor" className=" shrink-0" />
     ),
-    paths: ["/home"],
+    paths: ["/"],
     dropdownItems: [
       {
         id: "stay",

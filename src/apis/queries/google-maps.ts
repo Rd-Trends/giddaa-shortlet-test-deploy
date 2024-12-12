@@ -47,6 +47,7 @@ export const useGetGMapNearbyPlaces = (location?: {
     queryFn: async () => {
       if (!location) return {};
       if (!window.google || !window.google.maps || !window.google.maps.places) {
+        console.log("Google Maps JavaScript API not loaded");
         return {};
       }
       const resultdata = {} as Record<string, GooglePlaceDetails[]>;
@@ -89,7 +90,11 @@ export const useGetGMapNearbyPlaces = (location?: {
         return {};
       }
     },
-    enabled: !!location?.lat && !!location?.lng && !!key,
+    enabled:
+      !!location?.lat &&
+      !!location?.lng &&
+      !!key &&
+      !!window?.google?.maps?.places,
   });
 };
 
@@ -132,7 +137,7 @@ export const useGetGMapPlaceOpeningHours = (placeId: string) => {
         return null; // Indicate error
       }
     },
-    enabled: !!placeId,
+    enabled: !!placeId && !!window?.google?.maps?.places,
   });
 };
 

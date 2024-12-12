@@ -11,8 +11,11 @@ import {
 import {
   GET_ALL_SHORT_LETS,
   GET_CONTACT_AGENTS_FOR_SHORTLET,
+  GET_FAVORITE_SHORT_LETS,
   GET_SHORT_LET_BY_ID,
   GET_SHORT_LETS_IN_A_CITY,
+  MARK_SHORT_LET_AS_FAVORITE,
+  REMOVE_SHORT_LET_FROM_FAVORITE,
   RESERVE_SHORT_LET,
 } from "../constants/endpoints";
 import { ReserveShortLetPayload, ShortLet } from "@/types/short-let";
@@ -72,4 +75,22 @@ export const getContactAgentsForShortLet = (
     { params },
     (res: PaginatedResponseType<User>) => transformPaginatedResponse(res)
   );
+};
+
+export const getUserFavoriteShortLets = async (
+  params: GetRequestParamsType
+) => {
+  return http.get(
+    GET_FAVORITE_SHORT_LETS,
+    { params },
+    (res: PaginatedResponseType<ShortLet>) => transformPaginatedResponse(res)
+  );
+};
+
+export const markShortLetAsFavorite = async (id: string) => {
+  return http.get(MARK_SHORT_LET_AS_FAVORITE(id));
+};
+
+export const removeShortLetFromFavorite = async (id: string) => {
+  return http.get(REMOVE_SHORT_LET_FROM_FAVORITE(id));
 };

@@ -3,30 +3,36 @@
 import Container from "@/components/layouts/Container";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/Drawer";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/Tooltip";
 import { ShortLet } from "@/types/short-let";
 import { cn } from "@/utils/classname";
 import React from "react";
-import { IoMdClose } from "react-icons/io";
 import PhotoIcon from "@/svgs/PhotoIcon";
 import { getImageType } from "@/utils/get-image-type";
+import ArrowUpRightIcon from "@/svgs/ArrowUpRightIcon";
+import { BiCaretRight } from "react-icons/bi";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalTitle,
+} from "@/components/ui/Modal";
+import { displayShortLetType } from "@/utils/short-let";
 
 const ImageSection = ({
   images,
-  name,
+
   city,
-}: Pick<ShortLet, "images" | "name" | "city">) => {
+  videoUrl = "",
+  type,
+}: Pick<ShortLet, "images" | "city" | "videoUrl" | "type">) => {
   const [showImageGallery, setShowImageGallery] = React.useState(false);
+  const [showVideoModal, setShowVideoModal] = React.useState(false);
+
   const hasTwoImages = images.length >= 2;
   const hasThreeImages = images.length === 3;
   const hasFourImages = images.length >= 4;
@@ -87,13 +93,38 @@ const ImageSection = ({
           </div>
         )}
 
+        {videoUrl && (
+          <button
+            onClick={() => setShowVideoModal(true)}
+            className={cn(
+              " bg-black/50 text-white md:text-primary md:bg-background",
+              "border border-white md:border-2 md:border-primary px-2 md:px-4",
+              "inline-flex items-center h-9 md:h-[50px] rounded-full absolute bottom-4 left-4",
+              " text-body-xs md:text-body-md font-bold gap-2 md:gap-3"
+            )}>
+            <span className=" bg-white md:bg-transparent border-[3px] border-white md:border-primary size-6 md:size-fit inline-flex items-center justify-center rounded-full">
+              <BiCaretRight className="size-5 fill-primary" />
+            </span>
+            Play Video
+          </button>
+        )}
+
         <button
           onClick={() => setShowImageGallery(true)}
-          className=" text-primary bg-background px-4 inline-flex items-center text-body-md font-bold h-[50px] border-2 border-primary rounded-full absolute bottom-4 right-4">
-          <PhotoIcon className=" mr-3 size-6" />
+          className={cn(
+            " bg-black/50 text-white md:text-primary md:bg-background",
+            "border border-white md:border-2 md:border-primary px-2",
+            "inline-flex items-center h-9 md:h-[50px] rounded-full absolute bottom-4 right-4",
+            " text-body-xs md:text-body-md font-bold gap-2 md:gap-3"
+          )}>
+          <span className=" bg-white md:bg-transparent size-6 md:size-fit inline-flex items-center justify-center rounded-full">
+            <PhotoIcon className="size-4 md:size-7" />
+          </span>
           {images?.length > 1
             ? `View all ${images.length} photos`
             : "View photo"}
+
+          <ArrowUpRightIcon className=" size-2 md:hidden" />
         </button>
       </div>
 
@@ -101,9 +132,17 @@ const ImageSection = ({
         isOpen={showImageGallery}
         seIsOpen={setShowImageGallery}
         images={images}
-        name={name}
+        type={type}
         city={city}
       />
+
+      {videoUrl && (
+        <VideoModal
+          videoUrl={videoUrl}
+          isOpen={showVideoModal}
+          setIsOpen={setShowVideoModal}
+        />
+      )}
     </Container>
   );
 };
@@ -115,39 +154,26 @@ const ImageGalleryDrawer = ({
   seIsOpen,
   images,
   city,
-  name,
+  type,
 }: {
   isOpen: boolean;
   seIsOpen: (value: boolean) => void;
-} & Pick<ShortLet, "images" | "name" | "city">) => {
+} & Pick<ShortLet, "images" | "type" | "city">) => {
   return (
     <Drawer open={isOpen} onOpenChange={seIsOpen}>
       <DrawerContent
-        preventAutoFocusOnOPen
+        preventAutoFocusOnOpen
         className=" flex flex-col overflow-y-auto">
-        <DrawerHeader className={"border-b border-midGrey"}>
+        <DrawerHeader className={"border-b border-mid-grey"}>
           <DrawerTitle className=" text-center text-heading-3 font-secondary text-primary">
             Photos
           </DrawerTitle>
-          <DrawerDescription className=" text-center text-body-md text-charcoal-grey pt-1">
-            Photos of the {name} located in {city.name} and {city.state?.name}
+          <DrawerDescription className=" text-center text-body-sm text-charcoal-grey pt-1">
+            Photos of the {displayShortLetType(type)} located in{" "}
+            <b>
+              {city.name}, {city.state?.name}
+            </b>
           </DrawerDescription>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <DrawerClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none hover:ring-2 focus:ring-2 focus:ring-primary hover:ring-primary hover:ring-offset-2 focus:ring-offset-2 disabled:pointer-events-none bg-white data-[state=open]:text-black p-0.5">
-                <IoMdClose strokeWidth={10} className="size-4" />
-                <span className="sr-only">Close</span>
-              </DrawerClose>
-            </TooltipTrigger>
-            <TooltipContent
-              sideOffset={8}
-              side="bottom"
-              align="end"
-              className="text-xs">
-              Close
-            </TooltipContent>
-          </Tooltip>
         </DrawerHeader>
 
         <Container className=" pt-6 px-4 grid grid-cols-1 gap-4 md:grid-cols-2 flex-auto overflow-y-auto pb-4">
@@ -156,7 +182,7 @@ const ImageGalleryDrawer = ({
               <img
                 src={image.document}
                 alt=""
-                className="w-full h-auto md:h-[393px] object-cover rounded-2xl"
+                className="w-full h-[264px] md:h-[393px] object-cover rounded-2xl"
               />
               <div className=" absolute bottom-4 left-4 bg-cream border border-r-primary rounded-full text-primary text-body-xs capitalize font-bold px-4 py-1 min-h-[30px] inline-flex items-center">
                 {getImageType(image.optionId)}
@@ -166,5 +192,39 @@ const ImageGalleryDrawer = ({
         </Container>
       </DrawerContent>
     </Drawer>
+  );
+};
+
+const VideoModal = ({
+  videoUrl,
+  isOpen,
+  setIsOpen,
+}: {
+  videoUrl: string;
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
+}) => {
+  return (
+    <Modal open={isOpen} onOpenChange={setIsOpen}>
+      <ModalContent
+        className=" rounded-[20px] max-w-full p-0 flex flex-col max-h-[90vh] overflow-y-auto"
+        wrapperClassName=" rounded-[22px] w-full max-w-[calc(100vw-2rem)] lg:max-w-[759px] ">
+        <ModalHeader className=" p-4 items-center py-4 text-center border-b border-mid-grey">
+          <ModalTitle className=" font-secondary text-heading-3 leading-tight font-bold md:text-center text-primary ">
+            Video
+          </ModalTitle>
+        </ModalHeader>
+        <div className=" px-0 py-0 space-y-6 ">
+          <iframe
+            className="w-full h-[345px] md:h-[420px] lg:h-[593px]] rounded-b-2xl"
+            src={videoUrl}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        </div>
+      </ModalContent>
+    </Modal>
   );
 };

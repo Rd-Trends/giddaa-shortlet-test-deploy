@@ -6,6 +6,7 @@ import Input from "@/components/ui/Input";
 import { AppRoutes } from "@/constants/routes";
 import useAuth from "@/hooks/useAuth";
 import { toast } from "@/lib/toast";
+import Logo from "@/svgs/Logo";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -52,11 +53,7 @@ const LoginForm = () => {
     <div className="min-h-screen w-full flex flex-row bg-background container">
       <div className="w-full  flex-col justify-center relative hidden lg:flex space-y-8 xl:w-2/5 xl:pl-[60px]">
         <Link href="/" className="">
-          <img
-            src="//s3.amazonaws.com/appforest_uf/f1675031132769x885606220423525500/GiddaaLogoGreen.svg"
-            alt=""
-            className=" w-[48px] h-auto object-cover"
-          />
+          <Logo />
         </Link>
         <img
           src={"/bg-image/auth-bg.svg"}
@@ -67,11 +64,7 @@ const LoginForm = () => {
 
       <div className="flex flex-col xl:justify-center flex-1 overflow-y-auto py-10 px-6 lg:px-[60px]">
         <Link href="/" className="lg:hidden pb-8">
-          <img
-            src="//s3.amazonaws.com/appforest_uf/f1675031132769x885606220423525500/GiddaaLogoGreen.svg"
-            alt=""
-            className=" w-[48px] h-auto object-cover"
-          />
+          <Logo />
         </Link>
         <div className="mb-5">
           <h1 className="font-secondary text-heading-1">

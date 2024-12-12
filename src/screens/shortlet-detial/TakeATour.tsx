@@ -5,18 +5,11 @@ import { cn } from "@/utils/classname";
 import { getImageType } from "@/utils/get-image-type";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/Drawer";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/Tooltip";
-import { IoMdClose } from "react-icons/io";
 import Container from "@/components/layouts/Container";
 import { useMemo, useState } from "react";
 import { useScrollableContainerNavigation } from "@/hooks/useContainerScrollNavigation";
@@ -45,26 +38,27 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen></iframe>
+            allowFullScreen
+          />
         )}
         <div
-          className={cn("w-full flex-1 grid-cols-1", {
-            "grid grid-cols-1 md:grid-cols-2 gap-4":
-              hasJustTwoImages && !videoUrl,
-            "grid md:grid-cols-2 lg:grid-cols-1 gap-4":
-              hasJustTwoImages && videoUrl,
-            "grid md:grid-cols-2 gap-4": hasJustThreeImages || hasFourImages,
-            "!h-[593px]": !!videoUrl,
+          className={cn("w-full flex-1 grid grid-cols-1 md:h-[593px]", {
+            "md:grid-cols-2 gap-4": images.length > 1,
+            "md:grid-cols-4 gap-4":
+              !videoUrl && (hasFourImages || hasJustThreeImages),
           })}>
           <div
-            className={cn("space-y-1 h-full flex flex-col", {
-              "md:col-span-2": hasJustThreeImages,
+            className={cn("space-y-1 h-full w-full flex flex-col", {
+              "md:col-span-2":
+                !!videoUrl && (hasJustTwoImages || hasJustThreeImages),
+              "md:row-span-2 md:col-span-2":
+                !videoUrl && (hasFourImages || hasJustThreeImages),
             })}>
             <img
               src={images[0].document}
               alt=""
               className={cn("w-full h-[264px] object-cover rounded-2xl", {
-                "lg:h-full": images?.length === 1 && !!videoUrl,
+                "md:h-[573px]": !videoUrl,
               })}
             />
             <p className=" text-body-md font-semibold capitalize">
@@ -74,13 +68,17 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
 
           {images.length >= 2 && (
             <div
-              className={cn("space-y-1 flex flex-col", {
-                "lg:col-span-2": hasJustTwoImages && !!videoUrl,
+              className={cn("space-y-1", {
+                "md:col-span-2 ": !!videoUrl && hasJustTwoImages,
+                " md:col-span-2":
+                  !videoUrl && (hasFourImages || hasJustThreeImages),
               })}>
               <img
                 src={images[1].document}
                 alt=""
-                className={cn("w-full h-[264px] object-cover rounded-2xl")}
+                className={cn("w-full h-[264px] object-cover rounded-2xl", {
+                  "md:h-[573px]": !videoUrl && hasJustTwoImages,
+                })}
               />
               <p className=" text-body-md font-semibold capitalize">
                 {getImageType(images[1].optionId)}
@@ -89,7 +87,10 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
           )}
 
           {images.length >= 3 && (
-            <div className="space-y-1 flex flex-col">
+            <div
+              className={cn("space-y-1 flex flex-col", {
+                "md:col-span-2": hasJustThreeImages && !videoUrl,
+              })}>
               <img
                 src={images[2].document}
                 alt=""
@@ -119,7 +120,7 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
       <Button
         variant={"outline"}
         size={"large"}
-        className=" text-body-sm w-full md:w-fit relative"
+        className=" text-body-sm w-full md:w-fit relative font-bold"
         onClick={() => setIsDrawerOpen(true)}>
         Tour the Entire Space
         <ArrowOpenIcon className="w-4 h-4 ml-2 absolute right-6 md:static" />
@@ -178,33 +179,19 @@ const TourASectionDrawer = ({
 
   return (
     <Drawer open={isOpen} onOpenChange={seIsOpen}>
-      <DrawerContent className=" flex flex-col overflow-y-auto">
+      <DrawerContent
+        preventAutoFocusOnOpen
+        className=" flex flex-col overflow-y-auto">
         <DrawerHeader className={"border-b border-midGrey"}>
           <DrawerTitle className=" text-center text-heading-3 font-secondary text-primary">
             Tour This Place
           </DrawerTitle>
-          <DrawerDescription className=" text-center text-body-md text-charcoal-grey pt-1">
-            Take of tour of <b>{name}</b> located at{" "}
+          <DrawerDescription className=" text-center text-body-sm text-charcoal-grey pt-1">
+            Take a tour of <b>{name}</b> located at{" "}
             <b>
               {city.state?.name}, {city.name}
             </b>
           </DrawerDescription>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <DrawerClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none hover:ring-2 focus:ring-2 focus:ring-primary hover:ring-primary hover:ring-offset-2 focus:ring-offset-2 disabled:pointer-events-none bg-white data-[state=open]:text-black p-0.5">
-                <IoMdClose strokeWidth={10} className="size-4" />
-                <span className="sr-only">Close</span>
-              </DrawerClose>
-            </TooltipTrigger>
-            <TooltipContent
-              sideOffset={8}
-              side="bottom"
-              align="end"
-              className="text-xs">
-              Close
-            </TooltipContent>
-          </Tooltip>
         </DrawerHeader>
         <Container className="border-b border-mid-grey !px-0 ">
           <div className="flex md:justify-center space-x-4 overflow-x-auto p-4">
@@ -226,7 +213,7 @@ const TourASectionDrawer = ({
             <div
               id={section.id}
               key={section.id}
-              className="pt-6 md:pt-10"
+              className="pt-6 md:pt-10 text-black"
               ref={(el) => {
                 sectionRefs.current[section.id] = el;
               }}>

@@ -129,13 +129,14 @@ const SocialShareModal = ({
     <Modal open={isOpen} onOpenChange={setIsOpen}>
       {children && <ModalTrigger asChild>{children}</ModalTrigger>}
       <ModalContent
+        preventAutoFocusOnOpen
         className=" rounded-[20px] p-4"
         wrapperClassName="w-full max-w-[calc(100vw-2rem)] md:max-w-[323px] rounded-[22px]">
         <ModalHeader className="py-4 px-8">
           <img
             src={DEFAULT_IMAGES.share_icon}
             alt="Reservation Success"
-            className="size-[76px] mx-auto"
+            className="size-[76px] mx-auto rotate-[89.473deg]"
           />
           <ModalTitle className="text-body-md font-bold text-center ">
             {modalTitle}

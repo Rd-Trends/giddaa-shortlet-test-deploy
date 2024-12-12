@@ -12,9 +12,9 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         filled:
-          "bg-[#346633] hover:bg-primary text-white w-fit hover:shadow-[0px_1px_2px_0px_#10182808]",
+          "bg-primary hover:opacity-90 text-white w-fit hover:shadow-[0px_1px_2px_0px_#10182808]",
         outline:
-          "bg-transparent border-2 border-[#346633] text-[#346633] hover:border-primary hover:text-primary hover:shadow-[0px_4px_4px_0px_#335F3240] w-fit",
+          "bg-transparent border-2 border-primary text-primary hover:border-primary hover:text-primary hover:shadow-[0px_4px_4px_0px_#335F3240] w-fit",
         ghost: "hover:bg-light-grey hover:text-deep-black",
         "outline-danger":
           "bg-transparent border-2 border-danger text-danger hover:border-danger hover:text-danger hover:shadow-[0px_4px_4px_0px_#335F3240] w-fit",

@@ -16,6 +16,11 @@ export const RESERVE_SHORT_LET = (shortletId: string) =>
   `/public/short-let/${shortletId}/reserve`;
 export const GET_CONTACT_AGENTS_FOR_SHORTLET = (shortletId: string) =>
   `/public/short-let/${shortletId}/contact-agents/get-all`;
+export const GET_FAVORITE_SHORT_LETS = `/public/short-let/favorite/get-all`;
+export const MARK_SHORT_LET_AS_FAVORITE = (shortletId: string) =>
+  `/public/short-let/${shortletId}/favorite-shortlet`;
+export const REMOVE_SHORT_LET_FROM_FAVORITE = (shortletId: string) =>
+  `/public/short-let/${shortletId}/unfavorite-shortlet`;
 
 // news letter
 export const JOIN_NEWSLETTER = `/public/join-newsletter`;

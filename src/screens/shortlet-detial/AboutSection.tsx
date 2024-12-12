@@ -19,7 +19,7 @@ const AboutSection = ({ description }: { description: string }) => {
     <div className=" space-y-4">
       <RenderInnerHtml
         html={description}
-        className="!line-clamp-6 md:line-clamp-4 xl:line-clamp-3  text-black"
+        className="!line-clamp-6 md:line-clamp-4 xl:line-clamp-3 text-black"
       />
       {showMoreButton && (
         <button

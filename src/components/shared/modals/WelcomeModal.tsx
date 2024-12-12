@@ -64,6 +64,7 @@ const WelcomeModal = () => {
   return (
     <Modal open={isOpen} onOpenChange={setIsOpen}>
       <ModalContent
+        preventAutoFocusOnOpen
         style={{ maxHeight: `calc(${maxHeight}px - 2rem)` }}
         className=" rounded-[20px] max-w-full p-0 flex flex-col overflow-y-auto flex-1"
         wrapperClassName=" rounded-[22px] w-full max-w-[calc(100vw-2rem)] lg:max-w-[911px] flex flex-col overflow-y-auto ">

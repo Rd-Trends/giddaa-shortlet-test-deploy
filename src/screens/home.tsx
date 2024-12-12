@@ -8,6 +8,7 @@ import ShortLetCard, {
   ShortLetCardLoader,
 } from "@/components/shared/Cards/ShortLetCard";
 import WelcomeModal from "@/components/shared/modals/WelcomeModal";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 
 const AllShortLetPage = () => {
   const { isIntersecting, ref } = useIntersectionObserver();
@@ -84,6 +85,7 @@ const AllShortLetPage = () => {
       </div>
       <div ref={ref} className="py-4 h-8 bg-transparent w-full"></div>
 
+      <ScrollToTop />
       <WelcomeModal />
     </>
   );

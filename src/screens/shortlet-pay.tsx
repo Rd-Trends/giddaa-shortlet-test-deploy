@@ -16,11 +16,17 @@ import SkeletonLoader from "@/components/ui/Skeleton";
 import pluralize from "pluralize";
 import { Button } from "@/components/ui/Button";
 import { useMediaQuery } from "@/hooks/useMediaQueries";
+import { useState } from "react";
+import SelectPaymentMethodModal from "@/components/shared/modals/SelectPaymentMethodModal";
+import Logo from "@/svgs/Logo";
+import Link from "next/link";
 
 const ShortLetPay = ({ shortLet }: { shortLet: ShortLet }) => {
   const { data: exchangeRates, isLoading: isLoadingExchangeRates } =
     useGetExchangeRates();
   const isMobile = useMediaQuery("(max-width: 640px)");
+  const [showSelectPaymentMethodModal, setShowSelectPaymentMethodModal] =
+    useState(false);
 
   const freeServices = shortLet.services
     .filter(
@@ -36,8 +42,11 @@ const ShortLetPay = ({ shortLet }: { shortLet: ShortLet }) => {
   const grandTotal = bookingFee + cautionFee;
 
   return (
-    <Container className=" bg-background min-h-screen pt-8">
-      <div className=" max-w-[911px] mx-auto">
+    <Container className=" bg-background min-h-screen py-10">
+      <Link href="/">
+        <Logo />
+      </Link>
+      <div className=" max-w-[911px] mx-auto py-10">
         <div className=" border-b border-mid-grey pb-3">
           <h1 className=" text-center text-heading-4 text-primary font-secondary">
             [Guest’s Name] Payment Link
@@ -189,20 +198,30 @@ const ShortLetPay = ({ shortLet }: { shortLet: ShortLet }) => {
         <div className=" flex items-center justify-center p-4 space-x-4 border-t border-mid-grey mt-10">
           <Button
             size={isMobile ? "medium" : "large"}
-            variant="filled"
-            className=" font-bold px-10 md:px-14">
-            Pay Now
-          </Button>
-          <Button
-            size={isMobile ? "medium" : "large"}
             variant="outline-danger"
             // onClick={() => changeStep(0)}
             className=" font-bold px-10 md:px-14"
             type="button">
             Cancel
           </Button>
+          <Button
+            size={isMobile ? "medium" : "large"}
+            variant="filled"
+            className=" font-bold px-10 md:px-14"
+            onClick={() => setShowSelectPaymentMethodModal(true)}>
+            Pay Now
+          </Button>
         </div>
       </div>
+
+      <SelectPaymentMethodModal
+        isOpen={showSelectPaymentMethodModal}
+        setIsOpen={setShowSelectPaymentMethodModal}
+        city={shortLet.city}
+        totalFee={grandTotal}
+        propertyType={shortLet.type}
+        numberOfNights={nights}
+      />
     </Container>
   );
 };

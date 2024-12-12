@@ -5,18 +5,11 @@ import { useMemo, useState } from "react";
 import { AmmenitiesIconMap } from "./IconMap";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/Drawer";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/Tooltip";
-import { IoMdClose } from "react-icons/io";
 import Container from "@/components/layouts/Container";
 import { useScrollableContainerNavigation } from "@/hooks/useContainerScrollNavigation";
 import { cn } from "@/utils/classname";
@@ -41,7 +34,7 @@ const AmenitiesSection = ({ shortLet }: { shortLet: ShortLet }) => {
 
   return (
     <div className=" space-y-4 md:space-y-10">
-      <div className=" grid grid-cols-2 gap-4 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+      <div className=" grid grid-cols-2 gap-4 gap-y-6 md:gap-6  md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
         {firstTenAvailableAmenities.map((amenity) => (
           <div key={amenity} className=" flex items-start space-x-4">
             <span className=" w-7 flex-shrink-0">
@@ -124,34 +117,18 @@ const TourASectionDrawer = ({
   return (
     <Drawer open={isOpen} onOpenChange={seIsOpen}>
       <DrawerContent
-        preventAutoFocusOnOPen
+        preventAutoFocusOnOpen
         className=" flex flex-col overflow-y-auto">
         <DrawerHeader className={"border-b border-midGrey"}>
           <DrawerTitle className=" text-center text-heading-3 font-secondary text-primary">
             Amenities
           </DrawerTitle>
-          <DrawerDescription className=" text-center text-body-md text-charcoal-grey pt-1">
+          <DrawerDescription className=" text-center text-body-sm text-charcoal-grey pt-1">
             Amenities at <b>{name}</b> located at{" "}
             <b>
               {city.state?.name}, {city.name}
             </b>
           </DrawerDescription>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <DrawerClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none hover:ring-2 focus:ring-2 focus:ring-primary hover:ring-primary hover:ring-offset-2 focus:ring-offset-2 disabled:pointer-events-none bg-white data-[state=open]:text-black p-0.5">
-                <IoMdClose strokeWidth={10} className="size-4" />
-                <span className="sr-only">Close</span>
-              </DrawerClose>
-            </TooltipTrigger>
-            <TooltipContent
-              sideOffset={8}
-              side="bottom"
-              align="end"
-              className="text-xs">
-              Close
-            </TooltipContent>
-          </Tooltip>
         </DrawerHeader>
         <Container className="border-b border-mid-grey !px-0 ">
           <div className="flex md:justify-center space-x-4 overflow-x-auto p-4">
@@ -183,7 +160,7 @@ const TourASectionDrawer = ({
                 {section.label.split("_").join(" ")}
               </p>
 
-              <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 pb-4">
+              <div className="mt-6 grid grid-cols-2 gap-6 md:grid-cols-2 xl:grid-cols-3 pb-4">
                 {section.amenities.map((amenity) => (
                   <div key={amenity} className=" flex items-start space-x-4">
                     <span className=" w-7 flex-shrink-0">
@@ -231,10 +208,23 @@ const categoryMappings = {
     "hasSpaLikeFeatures",
     "hasTileOrMarbleFeatures",
   ],
+  Entertainment_Features: [
+    "hasFoosball",
+    "hasPoolOrSnookerTable",
+    "hasBoardGames",
+    "hasPS5",
+    "hasXbox",
+    "hasNetflix",
+    "hasAmazonPrime",
+    "hasShowMax",
+    "hasTableTennis",
+    "hasHomeTheater",
+  ],
   Kitchen_Features: [
     "hasFullyEquippedKitcken",
     "hasModernAppliances",
     "hasGraniteCountertops",
+    "hasRefrigerator",
     "hasBreakfastBar",
     "HasStorageRoom",
     "hasKettle",
@@ -259,7 +249,6 @@ const categoryMappings = {
     "hasPatioOrDarkSpace",
     "hasLandscapedGarden",
     "hasSwimmingPool",
-    "hasPoolOrSnookerTable",
   ],
   Home_Office_Features: [
     "hasHomeOfficeSpace",

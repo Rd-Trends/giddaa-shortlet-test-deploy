@@ -7,6 +7,7 @@ import { FieldErrorText } from "@/components/ui/FormHelpers";
 import Input from "@/components/ui/Input";
 import { AppRoutes } from "@/constants/routes";
 import useAuth from "@/hooks/useAuth";
+import Logo from "@/svgs/Logo";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -55,11 +56,7 @@ const SignUpForm = () => {
     <div className="min-h-screen w-full flex flex-row bg-background container mx-auto overflow-y-auto">
       <div className="w-full flex-col py-6  relative hidden lg:flex space-y-8 xl:w-2/5 xl:pl-[60px]">
         <Link href="/" className="">
-          <img
-            src="//s3.amazonaws.com/appforest_uf/f1675031132769x885606220423525500/GiddaaLogoGreen.svg"
-            alt=""
-            className=" w-[48px] h-auto object-cover"
-          />
+          <Logo />
         </Link>
         <img
           src={"/bg-image/auth-bg.svg"}
@@ -70,11 +67,7 @@ const SignUpForm = () => {
 
       <div className="flex flex-col h-screen flex-1 overflow-y-auto py-14 px-6 lg:px-[60px]">
         <Link href="/" className="lg:hidden pb-8">
-          <img
-            src="//s3.amazonaws.com/appforest_uf/f1675031132769x885606220423525500/GiddaaLogoGreen.svg"
-            alt=""
-            className=" w-[48px] h-auto object-cover"
-          />
+          <Logo />
         </Link>
         <div className="mb-5">
           <h1 className="font-secondary text-heading-1">

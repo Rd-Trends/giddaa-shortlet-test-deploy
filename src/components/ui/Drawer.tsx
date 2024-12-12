@@ -5,6 +5,8 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/classname";
 import { use100vh } from "react-div-100vh";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip";
+import { IoMdClose } from "react-icons/io";
 
 const Drawer = DialogPrimitive.Root;
 
@@ -50,7 +52,7 @@ const drawerVariants = cva(
 
 type DrawerContentProps = React.ComponentPropsWithoutRef<
   typeof DialogPrimitive.Content
-> & { preventAutoFocusOnOPen?: boolean } & VariantProps<typeof drawerVariants>;
+> & { preventAutoFocusOnOpen?: boolean } & VariantProps<typeof drawerVariants>;
 
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
@@ -62,7 +64,7 @@ const DrawerContent = React.forwardRef<
       className,
       children,
       style,
-      preventAutoFocusOnOPen,
+      preventAutoFocusOnOpen,
       ...props
     },
     ref
@@ -79,7 +81,7 @@ const DrawerContent = React.forwardRef<
               ? { height: `calc(${height}px - 2rem)`, ...style }
               : { height, ...style }
           }
-          {...(preventAutoFocusOnOPen
+          {...(preventAutoFocusOnOpen
             ? {
                 onOpenAutoFocus: (e) => {
                   e.preventDefault();
@@ -89,6 +91,22 @@ const DrawerContent = React.forwardRef<
           className={cn(drawerVariants({ side }), "bg-background", className)}
           {...props}>
           {children}
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none hover:ring-2 focus:ring-2 focus:ring-primary hover:ring-primary hover:ring-offset-2 focus:ring-offset-2 disabled:pointer-events-none bg-white data-[state=open]:text-black p-0.5">
+                <IoMdClose strokeWidth={10} className="size-4" />
+                <span className="sr-only">Close</span>
+              </DialogPrimitive.Close>
+            </TooltipTrigger>
+            <TooltipContent
+              sideOffset={8}
+              side="bottom"
+              align="end"
+              className="text-xs">
+              Close
+            </TooltipContent>
+          </Tooltip>
         </DialogPrimitive.Content>
       </DrawerPortal>
     );

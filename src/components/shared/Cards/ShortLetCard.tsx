@@ -18,18 +18,44 @@ import HeartIcon from "@/svgs/HeartIcon";
 import SkeletonLoader from "@/components/ui/Skeleton";
 import { useGetExchangeRates } from "@/apis/queries/exchange-rate";
 import ContactStaffsPopover from "../popovers/ContactStaffsPopover";
+import { useMarkShortLetAsFavorite } from "@/apis/mutations/short-let";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef } from "react";
+import pluralize from "pluralize";
 
 const ShortLetCard = ({ shortLet }: { shortLet: ShortLet }) => {
+  const searchParams = useSearchParams();
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
   const { data: exchangeRates, isLoading: isLoadingExchangeRates } =
     useGetExchangeRates();
+  const addShortLetToFavorite = useMarkShortLetAsFavorite(shortLet);
+  // const removeShortLetFromFavorite = useRemoveShortLetFromFavorite(shortLet);
+
+  const justViewed = searchParams.get("viewed") === shortLet.id;
+
+  useEffect(() => {
+    if (justViewed && wrapperRef.current) {
+      wrapperRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      });
+    }
+  }, [justViewed]);
 
   return (
-    <div className="space-y-2 relative">
+    <div ref={wrapperRef} className="space-y-2 relative">
       {shortLet.images.length === 1 && (
         <Link href={`/${shortLet.id}`}>
           <img
             src={shortLet.images[0].document}
-            className=" rounded-2xl border border-mid-grey h-[273px] w-full object-cover "
+            className={cn(
+              " rounded-2xl border border-mid-grey h-[273px] w-full object-cover ",
+              {
+                "border-[3px] shadow-2xl border-secondary": justViewed,
+              }
+            )}
             alt={shortLet.name}
           />
         </Link>
@@ -42,7 +68,12 @@ const ShortLetCard = ({ shortLet }: { shortLet: ShortLet }) => {
                 <Link href={`/${shortLet.id}`}>
                   <img
                     src={image.document}
-                    className=" rounded-2xl border border-mid-grey h-[273px] w-full object-cover "
+                    className={cn(
+                      " rounded-2xl border border-mid-grey h-[273px] w-full object-cover ",
+                      {
+                        "border-4 border-secondary": justViewed,
+                      }
+                    )}
                     alt={shortLet.name}
                   />
                 </Link>
@@ -67,16 +98,18 @@ const ShortLetCard = ({ shortLet }: { shortLet: ShortLet }) => {
           </span>
         </div>
 
-        <button className={cn("outline-none border-none bg-transparent")}>
+        <button
+          onClick={() => addShortLetToFavorite.mutate()}
+          className={cn("outline-none border-none bg-transparent")}>
           <HeartIcon />
         </button>
       </div>
 
       <div className=" space-y-1">
         <h3 className=" text-body-md font-bold">
-          {shortLet.name}, {shortLet.city?.state?.name}
+          {shortLet.city?.name}, {shortLet.city?.state?.name}
         </h3>
-        <p className=" text-body-sm ">Book the entire 2 bedroom apartment</p>
+        <p className=" text-body-sm ">{getShortLetDescription(shortLet)}</p>
         <p>
           <b className=" text-body-md font-bold text-primary">
             {formatCurrency(shortLet.listingPrice)}
@@ -119,4 +152,42 @@ export const ShortLetCardLoader = () => {
       </div>
     </div>
   );
+};
+
+// 2. ⁠When stay type is entire place/entire home: Book the entire [number of beds] bed [building type]
+// 3. ⁠When stay type is room in a home: Book a room in a[number of beds] bed [building type].
+// 4. ⁠When stay type is ground floor/first floor/second floor/third floor: Book the entire ground floor/first floor/second floor/third floor in a [number of beds] bed [building type].
+// 5. ⁠When stay type is studio room: Book a [number of beds] bed studio.
+export const getShortLetDescription = (shortLet: ShortLet) => {
+  if (shortLet.type === "ENTIRE_PLACE") {
+    return `Book the entire ${shortLet.numberOfBedroom} ${pluralize(
+      "bed",
+      shortLet.numberOfBedroom
+    )} ${shortLet.buildingType.toLowerCase()}`;
+  }
+
+  if (shortLet.type === "ROOM_IN_A_HOUSE") {
+    return `Book a room in a ${shortLet.numberOfBedroom} ${pluralize(
+      "bed",
+      shortLet.numberOfBedroom
+    )} ${shortLet.buildingType.toLowerCase()}`;
+  }
+
+  // could be GROUND_FLOOR_IN_A_MULTI_STORY_BUILDING, SECOND_FLOOR_IN_A_MULTI_STORY_BUILDING, TOP_FLOOR_IN_A_MULTI_STORY_BUILDING
+  if (shortLet.type.includes("FLOOR_IN_A_MULTI_STORY_BUILDING")) {
+    const floorNumber = shortLet.type.split("_")[0].toLowerCase();
+    return `Book the entire ${floorNumber} floor in a ${
+      shortLet.numberOfBedroom
+    } ${pluralize(
+      "bed",
+      shortLet.numberOfBedroom
+    )} ${shortLet.buildingType.toLowerCase()}`;
+  }
+
+  if (shortLet.type === "STUDIO_ROOM") {
+    return `Book a ${shortLet.numberOfBedroom} ${pluralize(
+      "bed",
+      shortLet.numberOfBedroom
+    )} bed studio`;
+  }
 };

@@ -11,8 +11,8 @@ const StickyFooter = ({ shortletId }: { shortletId: string }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
-    <div className=" fixed bottom-4 md:bottom-10 left-1/2 -translate-x-1/2  mx-auto z-10 p-0.5 bg-primary-gradient rounded-full shadow-[0px_4px_4px_3px_#00000040]">
-      <div className=" bg-background p-4 rounded-full flex items-center gap-4">
+    <div className=" fixed bottom-4 left-1/2 -translate-x-1/2  mx-auto z-10 p-0.5 bg-primary-gradient rounded-full shadow-[0px_4px_4px_3px_#00000040]">
+      <div className=" bg-background py-4 px-[22px] md:py-6 md:px-8 rounded-full flex items-center gap-4">
         <Link
           href={`/${shortletId}/booking`}
           className={cn(

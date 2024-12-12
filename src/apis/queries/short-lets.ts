@@ -1,17 +1,19 @@
 import { GetRequestParamsType } from "@/types/api";
 import {
   infiniteQueryOptions,
+  useInfiniteQuery,
   useQuery,
-  useSuspenseInfiniteQuery,
 } from "@tanstack/react-query";
 import {
   getAllShortLets,
   getContactAgentsForShortLet,
   getShortletsInACity,
+  getUserFavoriteShortLets,
 } from "../services/short-lets";
 import {
   GET_ALL_SHORT_LETS_KEY,
   GET_CONTACT_AGENTS_FOR_SHORTLET_KEY,
+  GET_FAVORITE_SHORT_LETS_KEY,
   GET_SHORT_LETS_IN_A_CITY_KEY,
 } from "../constants/keys";
 
@@ -30,7 +32,7 @@ export const allShortLetsOptions = (params: GetRequestParamsType) =>
   });
 
 export const useGetShortLets = (params: GetRequestParamsType) => {
-  return useSuspenseInfiniteQuery(allShortLetsOptions(params));
+  return useInfiniteQuery(allShortLetsOptions(params));
 };
 
 export const useGetShortLetsInACity = (
@@ -51,5 +53,12 @@ export const useGetContactAgentsForShortLet = (
     queryKey: [GET_CONTACT_AGENTS_FOR_SHORTLET_KEY, id, params],
     queryFn: () => getContactAgentsForShortLet(payload),
     ...opts,
+  });
+};
+
+export const useGetUserFavoriteShortLets = (params: GetRequestParamsType) => {
+  return useQuery({
+    queryKey: [GET_FAVORITE_SHORT_LETS_KEY, params],
+    queryFn: () => getUserFavoriteShortLets(params),
   });
 };

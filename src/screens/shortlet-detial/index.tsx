@@ -20,6 +20,7 @@ import TakeATour from "./TakeATour";
 import AmenitiesSection from "./AmenitiesSection";
 import HouseLocation from "./Location";
 import StickyFooter from "./StickyFooter";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 
 const dummyImages = [
   {
@@ -144,8 +145,8 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
   const sections = useMemo(() => {
     return [
       {
-        id: "HighLight",
-        label: "HighLight",
+        id: "Highlights",
+        label: "Highlights",
         content: <HighlightSection shortLet={shortLet} />,
       },
       {
@@ -165,14 +166,14 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
         ),
       },
       {
-        id: "Take-A-Tour",
-        label: "Take A Tour",
+        id: "Take-a-Tour",
+        label: "Take a Tour",
         pageTitle: "Take a Tour",
         content: (
           <TakeATour
             images={dummyImages}
-            videoUrl={shortLet.videoUrl}
-            // videoUrl="https://www.youtube.com/embed/pYKAngWoyVw?si=L8dHnwrG54FIH_XZ"
+            // videoUrl={shortLet.videoUrl}
+            videoUrl="https://www.youtube.com/embed/pYKAngWoyVw?si=L8dHnwrG54FIH_XZ"
             name={shortLet.name}
             city={shortLet.city}
           />
@@ -183,7 +184,11 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
         label: "Location",
         pageTitle: "Where you will stay",
         content: (
-          <HouseLocation city={shortLet.city} address={shortLet.address} />
+          <HouseLocation
+            name={shortLet.name}
+            city={shortLet.city}
+            address={shortLet.address}
+          />
         ),
       },
       {
@@ -233,6 +238,8 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
           name={shortLet.name}
           id={shortLet.id}
           price={shortLet.listingPrice}
+          type={shortLet.type}
+          city={shortLet.city}
         />
         <ScrollNavigation
           sections={sections}
@@ -243,11 +250,13 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
 
       <ImageSection
         images={dummyImages}
-        name={shortLet.name}
+        type={shortLet.type}
         city={shortLet.city}
+        // videoUrl={shortLet.videoUrl}
+        videoUrl="https://www.youtube.com/embed/pYKAngWoyVw?si=L8dHnwrG54FIH_XZ"
       />
 
-      <Container className="px-4 md:px-6 space-y-20 pt-20 pb-8 ">
+      <Container className="px-4 md:px-6 space-y-10 md:space-y-20 pt-20 pb-20 ">
         {sections.map((section, index) => {
           return (
             <section
@@ -255,7 +264,7 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
               id={section.id}
               className={cn(
                 "space-y-8 md:space-y-10",
-                index !== 0 && "border-t border-light-grey pt-8 md:pt-10"
+                index !== 0 && "border-t border-mid-grey pt-8 md:pt-10"
               )}
               ref={(element) => {
                 sectionRefs.current[section.id] = element;
@@ -268,7 +277,7 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
       </Container>
 
       <StickyFooter shortletId={shortLet.id} />
-
+      <ScrollToTop className=" bottom-24 md:bottom-8" />
       <Footer />
     </div>
   );

@@ -1,32 +1,82 @@
 "use client";
 
+import { useGetExchangeRates } from "@/apis/queries/exchange-rate";
 import Container from "@/components/layouts/Container";
 import SocialShareModal from "@/components/shared/modals/SocialShareModal";
 import { Button } from "@/components/ui/Button";
+import SkeletonLoader from "@/components/ui/Skeleton";
 import ArrowShareIcon from "@/svgs/ArrowShareIcon";
 import ThumbsUpIcon from "@/svgs/ThumbsUpIcon";
+import { ShortLet } from "@/types/short-let";
 import { formatCurrency } from "@/utils/format-currency";
 import { getURL } from "@/utils/get-url";
+import { displayShortLetType } from "@/utils/short-let";
 import Link from "next/link";
 import React from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/Tooltip";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
-const Nav = ({ name, price }: { name: string; id: string; price: number }) => {
+const Nav = ({
+  name,
+  price,
+  id,
+  type,
+  city,
+}: {
+  name: string;
+  id: string;
+  price: number;
+  type: ShortLet["type"];
+  city: ShortLet["city"];
+}) => {
+  const { data: exchangeRates, isLoading: isLoadingExchangeRates } =
+    useGetExchangeRates();
+
   return (
     <Container className=" bg-background">
-      <nav className=" px-4 md:px-6 border border-light-grey bg-white py-1.5 rounded-full flex items-center justify-between space-x-4">
-        <Link
-          href={"/"}
-          className=" inline-flex items-center space-x-2 text-body-sm font-bold text-primary">
-          <FaArrowLeftLong className=" size-5" />
-          <span className="hidden md:block">Back to Short Lets</span>
-        </Link>
+      <nav className=" px-4 md:px-6 border border-mid-grey bg-background py-1.5 rounded-2xl flex items-center justify-between space-x-4">
+        <div className=" flex items-start gap-6">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href={`/?viewed=${id}`}
+                className=" inline-flex items-center space-x-2 text-body-sm font-bold text-primary">
+                <FaArrowLeftLong className=" size-5" />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent
+              sideOffset={8}
+              side="bottom"
+              align="start"
+              className="text-xs">
+              Back to Short Lets
+            </TooltipContent>
+          </Tooltip>
 
-        <div className=" text-black space-y-2 text-center">
-          <h1 className="text-body-sm md:text-body-lg font-medium">{name}</h1>
-          <p className=" text-body-sm md:text-body-md font-bold">
-            {formatCurrency(price)}
-          </p>
+          <div className=" text-black space-y-2">
+            <h1 className="text-body-sm md:text-body-xl font-medium">
+              {displayShortLetType(type)}. {city.name}, {city.state.name}.
+            </h1>
+            <div className="flex items-center text-body-sm md:text-body-md font-bold">
+              <span>{formatCurrency(price)}</span>
+              {exchangeRates && (
+                <span className=" ">
+                  /
+                  {formatCurrency(price / exchangeRates?.dollar, {
+                    currency: "USD",
+                  })}
+                </span>
+              )}
+              {isLoadingExchangeRates && (
+                <SkeletonLoader className=" ml-2 h-5 w-10 rounded-xl" />
+              )}
+              <span className="ml-1">Per Night</span>
+            </div>
+          </div>
         </div>
 
         <NavButtons title={name} />

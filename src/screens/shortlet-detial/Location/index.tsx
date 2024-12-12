@@ -28,15 +28,19 @@ import LandmarksPopover from "./LandmarksPopover";
 import PlacesAutoComplete from "./PlacesAutoComplet";
 import { Coordinates } from "@/types/google-map-api-types";
 import ArrowOpenIcon from "@/svgs/ArrowOpenIcon";
+import WalkDistanceIcon from "./icons/WalkDistanceIcon";
+import DriveDistanceIcon from "./icons/DriveDistanceIcon";
+import { cn } from "@/utils/classname";
 
 type SingleHouseLocationProps = {
   address: string;
   city: ShortLet["city"];
+  name: string;
 };
 
 const libraries = ["places"] as Libraries;
 
-const HouseLocation = ({ address, city }: SingleHouseLocationProps) => {
+const HouseLocation = ({ address, name, city }: SingleHouseLocationProps) => {
   const [initialDetailsTab, setInitialDetailsTab] = useState("");
   const [destination, setDestination] = useState("");
   const [destinationCordinates, setDestinationCoordinates] =
@@ -161,9 +165,15 @@ const HouseLocation = ({ address, city }: SingleHouseLocationProps) => {
               <PlacesAutoComplete handleSearch={calculateDistanc} />
             )}
 
-            <div className="flex justify-between items-center mt-4">
+            <div
+              className={cn(
+                "flex flex-col md:flex-row gap-2 md:gap-8 justify-between md:items-center mt-4",
+                {
+                  hidden: !calculatedDistance && !isCalculatingDistance,
+                }
+              )}>
               <div className="flex gap-3 items-center">
-                {/* <DriveIcon /> */}
+                <DriveDistanceIcon className=" size-6 md:size-10 " />
                 {!isCalculatingDistance && calculatedDistance?.driveTime && (
                   <p className="text-body-xs">
                     <span className="font-bold text-primary">
@@ -178,7 +188,7 @@ const HouseLocation = ({ address, city }: SingleHouseLocationProps) => {
               </div>
 
               <div className="flex gap-3 items-center mr-8">
-                {/* <WalkIcon /> */}
+                <WalkDistanceIcon className=" size-6 md:size-10 " />
                 {!isCalculatingDistance && calculatedDistance?.walkTime && (
                   <p className="text-body-xs">
                     <span className="font-bold text-primary">
@@ -197,7 +207,7 @@ const HouseLocation = ({ address, city }: SingleHouseLocationProps) => {
 
         <div className="flex-1 space-y-4">
           <h3 className="text-body-sm font-bold">NEARBY PLACES & AMENITIES</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-3 gap-4">
             {amenities.map((amenity, i) => (
               <div
                 className="rounded-[20px] bg-white  flex flex-col justify-center items-center gap-y-5 w-full px-3 h-[124px] border border-[#D9D9D9] relative cursor-pointer"
@@ -241,7 +251,8 @@ const HouseLocation = ({ address, city }: SingleHouseLocationProps) => {
           setIsOpen={setShowMapFull}
           places={nearbyPlaces}
           coordinates={coordinates}
-          house={{ name: "", address: "" }}
+          city={city}
+          shortLetName={name}
           initialTab={initialDetailsTab}
         />
       )}

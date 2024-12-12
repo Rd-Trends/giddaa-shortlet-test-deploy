@@ -52,7 +52,7 @@ const Navbar = () => {
           {/* Search Bar */}
           <div className="flex-grow max-w-[357px] h-[39px] relative">
             <Input
-              placeholder="Search for short lets locations"
+              placeholder="Search by location..."
               type="search"
               className="bg-white"
             />
@@ -191,7 +191,11 @@ export default Navbar;
 
 export const checkActive = (pathname: string, paths: string[]) => {
   if (paths) {
-    return paths.some((path) => pathname.startsWith(path));
+    return paths.some((path) => {
+      if (path === "/") return pathname === path;
+
+      return pathname.startsWith(path);
+    });
   }
   return false;
 };

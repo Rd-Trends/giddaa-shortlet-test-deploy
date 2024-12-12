@@ -18,7 +18,6 @@ import SmartHomeIcon from "@/svgs/SmartHomeIcon";
 import SofaIcon from "@/svgs/SofaIcon";
 import SpaCenterIcon from "@/svgs/SpaCenterIcon";
 import StorageRoomIcon from "@/svgs/StorageRoomIcon";
-import TheatreIcon from "@/svgs/TheatreIcon";
 import TiledFloorIcon from "@/svgs/TiledFloorIcon";
 import WalkInClosetsIcon from "@/svgs/WalkInClosetsIcon";
 import WifiIcon from "@/svgs/WifiIcon";
@@ -51,13 +50,22 @@ import TaxiIcon from "@/svgs/TaxiIcon";
 import PetFriendlyNeighbourhoodIcon from "@/svgs/PetFriendlyNeighbourhoodIcon";
 import NearbyTrailsIcon from "@/svgs/NearbyTrailsIcon";
 import PrivateParkingSpaceIcon from "@/svgs/PrivateParkingSpaceIcon";
-import { TbCooker, TbMicrowave, TbWashMachine } from "react-icons/tb";
-import { BiFridge, BiSolidDryer } from "react-icons/bi";
 import SteamIronIcon from "@/svgs/SteamIronIcon";
 import TelevisionIcon from "@/svgs/TelevisionIcon";
-import { FaJugDetergent } from "react-icons/fa6";
 import BathTubIcon from "@/svgs/BathTubIcon";
-import { IoWaterSharp } from "react-icons/io5";
+import WashingMachineIcon from "@/svgs/WashingMachineIcon";
+import DryerIcon from "@/svgs/DryerIcon";
+import IroningBoardIcon from "@/svgs/IroningBoardIcon";
+import SnookerTableIcon from "@/svgs/SnookerTableIcon";
+import HomeTheatreIcon from "@/svgs/HomeTheatreIcon";
+import KettleIcon from "@/svgs/KettleIcon";
+import RefrigeratorIcon from "@/svgs/RefrigeratorIcon";
+import CookingGasIcon from "@/svgs/CookingGasIcon";
+import MicrowaveIcon from "@/svgs/MicrowaveIcon";
+import OvenIcon from "@/svgs/OvenIcon";
+import StandingShowerIcon from "@/svgs/StandingShowerIcon";
+import WaterDropleticon from "@/svgs/WaterDropletIcon";
+import MarbleWallIcon from "@/svgs/MarbleWallIcon";
 
 export const AmmenitiesIconMap = {
   hasEnsuite: <EnsuiteIcon />,
@@ -77,36 +85,37 @@ export const AmmenitiesIconMap = {
   hasUpgradedBathroomFeatures: <ClassicBathTubIcon />,
   hasSpaLikeFeatures: <SpaCenterIcon />,
   hasTileOrMarbleFeatures: <TiledFloorIcon />,
-  hasWashingMachine: <TbWashMachine />, //no icon
-  hasDryer: <BiSolidDryer className=" size-6" />, //no icon
+  hasWashingMachine: <WashingMachineIcon className=" size-6" />,
+  hasDryer: <DryerIcon className=" size-6" />,
   hasPresingIron: <SteamIronIcon className=" w-7 h-6" />,
   hasTelevision: <TelevisionIcon className="w-6" />,
+  hasIroningBoard: <IroningBoardIcon className=" w-7 h-6" />,
 
   hasFullyEquippedKitcken: <KitchenIcon />,
   hasModernAppliances: <ModernApplianceIcon />,
   hasGraniteCountertops: <GraniteCounterTopsIcon />,
-  hasBreakfastBar: <BreakfastBarIcon />,
+  hasBreakfastBar: <BreakfastBarIcon className=" size-7" />,
   HasStorageRoom: <StorageRoomIcon />,
-  hasKettle: <FaJugDetergent className=" size-6" />, //no icon
-  hasRefrigerator: <BiFridge className=" size-6"/>,
-  hasCookingGas: <TbCooker className=" size-6"/>, //no icon
-  hasMicrowave: <TbMicrowave className=" size-6"/>, //no icon
-  hasOven: <TbCooker className=" size-6"/>, //no icon
+  hasKettle: <KettleIcon className=" size-6" />,
+  hasRefrigerator: <RefrigeratorIcon className=" size-6" />,
+  hasCookingGas: <CookingGasIcon className=" size-6" />,
+  hasMicrowave: <MicrowaveIcon className=" size-6" />,
+  hasOven: <OvenIcon className=" size-6" />,
 
-  hasBathtub: <BathTubIcon className=" h-6 w-6" />, //no icon
-  hasStandingShower: <ClassicBathTubIcon className=" size-6"/>, //no icon
-  hasHeaterAndHotWater: <IoWaterSharp className=" size-6"/>, //no icon
-  hasMarbleWalls: <TbCooker className=" size-6"/>, //no icon
+  hasBathtub: <BathTubIcon className=" h-6 w-6" />,
+  hasStandingShower: <StandingShowerIcon className=" size-6" />,
+  hasHeaterAndHotWater: <WaterDropleticon className=" size-6" />,
+  hasMarbleWalls: <MarbleWallIcon className=" size-6" />,
 
   hasOpenFloorPlan: <OpenFloorPlanIcon />,
   hasLargeWindwos: <LargeWindowIcon />,
-  hasBuiltInHouseTheater: <TheatreIcon />,
+  hasBuiltInHouseTheater: <HomeTheatreIcon className="size-6" />,
 
   hasPrivateBackyard: <PrivatebackyardIcon />,
   hasPatioOrDarkSpace: <PatioIcon />,
   hasLandscapedGarden: <LandscapeIcon />,
   hasSwimmingPool: <SwimmingPoolLadderIcon />,
-  hasPoolOrSnookerTable: <SwimmingPoolLadderIcon />, //no icon
+  hasPoolOrSnookerTable: <SnookerTableIcon className="size-6" />, 
 
   hasHomeOfficeSpace: <HomeOfficeSpaceIcon />,
   hasBuiltInShelfOrBookSpace: <BookShelfIcon />,

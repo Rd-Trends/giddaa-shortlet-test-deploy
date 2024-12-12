@@ -35,6 +35,7 @@ export const CommonModal = ({
   return (
     <Modal open={isOpen} onOpenChange={setIsOpen}>
       <ModalContent
+        preventAutoFocusOnOpen
         className=" rounded-[20px] p-0"
         wrapperClassName="w-full max-w-[calc(100vw-2rem)] md:max-w-sm rounded-[22px]">
         <ModalHeader className="py-4 border-b border-mid-grey px-4">

@@ -16,94 +16,106 @@ import React from "react";
 
 const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
   return (
-    <div className=" space-y-8 divide-y divide-mid-grey">
-      <div className=" grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-8 xl:gap-8">
-       <div className=" flex flex-col md:flex-row items-start gap-4 pr-4 xl:pr-8 border-r border-mid-grey">
+    <div className=" grid grid-cols-1 md:grid-cols-2">
+      <div className=" grid grid-cols-2 gap-6 gap-y-8 xl:gap-8 border-b pb-6 border-mid-grey">
+        <div className=" flex flex-col xl:flex-row items-start gap-4 pr-6 md:pr-8 border-r border-mid-grey">
           <span className="w-11 flex-shrink-0">
-            <MoneyStackIcon className="w-[41px] h-[30px]" />
+            <MoneyStackIcon className="w-[36px] h-[25px] md:w-[41px] md:h-[30px]" />
           </span>
           <div className=" text-black space-y-2">
-            <p className="font-bold text-body-lg md:text-[20px] leading-tight ">
+            <p className="font-bold text-body-md xl:text-body-xl">
               {abbreviateCount(shortLet.listingPrice)}
             </p>
-            <p className="text-body-md">Per Nigth</p>
+            <p className="text-body-sm xl:text-body-md">Per Nigth</p>
           </div>
         </div>
 
-       <div className=" flex flex-col md:flex-row items-start gap-4 md:border-r border-mid-grey md:pr-4 xl:pr-8">
+        <div className=" flex flex-col xl:flex-row items-start gap-4 md:border-r border-mid-grey pr-6 xl:pr-8">
           <span className="w-11 flex-shrink-0">
-            <BedIcon className="w-[37px] h-[24px] shrink-0" />
+            <BedIcon className="w-[32px] h-[19px]  md:w-[37px] md:h-[24px] shrink-0" />
           </span>
           <div className=" text-black space-y-2">
-            <p className="font-bold text-body-lg md:text-[20px] leading-tight ">
+            <p className="font-bold text-body-md xl:text-body-xl">
               {shortLet.numberOfBedroom} Beds
             </p>
-            <p className="text-body-md">Bedrooms</p>
-          </div>
-        </div>
-
-       <div className=" flex flex-col md:flex-row items-start gap-4 pr-4 md:pr-0 xl:pr-8 border-r md:border-r-0 xl:border-r border-mid-grey">
-          <span className="w-11 flex-shrink-0">
-            <BathTubIcon className="w-[32px] h-[29px] shrink-0" />
-          </span>
-          <div className=" text-black space-y-2">
-            <p className="font-bold text-body-lg md:text-[20px] leading-tight ">
-              {shortLet.numberOfBathroom} Baths
-            </p>
-            <p className="text-body-md">Bathrooms</p>
-          </div>
-        </div>
-
-       <div className=" flex flex-col md:flex-row items-start gap-4">
-          <span className="w-11 flex-shrink-0">
-            <LocationIcon className="w-[25px] h-[31px] shrink-0" />
-          </span>
-          <div className=" text-black space-y-2">
-            <p className="font-bold text-body-lg md:text-[20px] leading-tight ">
-              {shortLet.address}
-            </p>
-            <p className="text-body-md">Location</p>
+            <p className="text-body-sm xl:text-body-md">Bedrooms</p>
           </div>
         </div>
       </div>
 
-      <div className=" grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-8 xl:gap-8 pt-8">
-        <div className=" flex flex-col md:flex-row items-start gap-4 pr-4 xl:pr-8 border-r border-mid-grey">
+      <div className=" grid grid-cols-2 gap-6 gap-y-8 xl:gap-8 border-b pb-6 border-mid-grey mt-6 md:mt-0">
+        <div className=" flex flex-col xl:flex-row items-start gap-4 pr-6 md:px-8 border-r md:border-r-0 border-mid-grey">
           <span className="w-11 flex-shrink-0">
-            <PropertyIcon color="#000" className="w-[42px] h-[30px] shrink-0" />
+            <BathTubIcon className="w-[27px] h-[24px]  md:w-[32px] md:h-[29px] shrink-0" />
           </span>
           <div className=" text-black space-y-2">
-            <p className=" font-bold text-body-lg md:text-[20px] leading-tight capitalize ">
-              {shortLet.type.split("_").join(" ").toLowerCase()}
+            <p className="font-bold text-body-md xl:text-body-xl">
+              {shortLet.numberOfBathroom} Baths
             </p>
-            <p className="text-body-md">You will book the entire space</p>
+            <p className="text-body-sm xl:text-body-md">Bathrooms</p>
           </div>
         </div>
 
-       <div className=" flex flex-col md:flex-row items-start gap-4 md:border-r border-mid-grey md:pr-4 xl:pr-8">
+        <div className=" flex flex-col xl:flex-row items-start gap-4 md:border-l border-mid-grey md:pl-8">
           <span className="w-11 flex-shrink-0">
-            <CalendarIcon color="#000" className="w-[27px] h-[30px] shrink-0" />
+            <LocationIcon className=" w-[22px] h-[26px] md:w-[25px] md:h-[31px] shrink-0" />
           </span>
           <div className=" text-black space-y-2">
-            <p className="font-bold text-body-lg md:text-[20px] leading-tight ">
+            <p className="font-bold text-body-md xl:text-body-xl">
+              {shortLet.address}
+            </p>
+            <p className="text-body-sm xl:text-body-md">Location</p>
+          </div>
+        </div>
+      </div>
+
+      <div className=" grid grid-cols-2 gap-6 gap-y-8 xl:gap-8 pt-6 pb-6 border-b border-mid-grey ">
+        <div className=" flex flex-col xl:flex-row items-start gap-4 pr-6 md:pr-8 border-r border-mid-grey">
+          <span className="w-11 flex-shrink-0">
+            <PropertyIcon
+              color="#000"
+              className=" w-[37px] h-[25px]  md:w-[42px] md:h-[30px] shrink-0"
+            />
+          </span>
+          <div className=" text-black space-y-2">
+            <p className=" font-bold text-body-md md:text-xl capitalize ">
+              {shortLet.type.split("_").join(" ").toLowerCase()}
+            </p>
+            <p className="text-body-sm xl:text-body-md">
+              You will book the entire space
+            </p>
+          </div>
+        </div>
+
+        <div className=" flex flex-col xl:flex-row items-start gap-4 md:border-r border-mid-grey pr-6 xl:pr-8">
+          <span className="w-11 flex-shrink-0">
+            <CalendarIcon
+              color="#000"
+              className="w-[22px] h-[25px] md:w-[27px] md:h-[30px] shrink-0"
+            />
+          </span>
+          <div className=" text-black space-y-2">
+            <p className="font-bold text-body-md xl:text-body-xl">
               {shortLet?.minBookingDays || 1}{" "}
               {pluralize("Night", shortLet?.minBookingDays || 1)}
             </p>
-            <p className="text-body-md">
+            <p className="text-body-sm xl:text-body-md">
               The minimum number of nights you can book
             </p>
           </div>
         </div>
+      </div>
 
-       <div className=" flex flex-col md:flex-row items-start gap-4 pr-4 md:pr-0 xl:pr-8 border-r md:border-r-0 xl:border-r border-mid-grey">
+      <div className=" grid grid-cols-2  gap-6 gap-y-8 xl:gap-8 pt-6 pb-6 border-b border-mid-grey">
+        <div className=" flex flex-col xl:flex-row items-start gap-4 pr-6 md:px-8 border-r md:border-r-0 border-mid-grey">
           <span className="w-11 flex-shrink-0">
-            <ClockIcon className="w-[30px] h-[30px] shrink-0" />
+            <ClockIcon className="w-[25px] h-[25px] md:w-[30px] md:h-[30px] shrink-0" />
           </span>
           <div className=" text-black space-y-2">
-            <p className="font-bold text-body-lg md:text-[20px] leading-tight ">
+            <p className="font-bold text-body-md xl:text-body-lg">
               Check-In and Check-Out
             </p>
-            <div className="text-body-md space-y-1">
+            <div className="text-body-sm xl:text-body-md space-y-1">
               <RenderInnerHtml
                 html={shortLet.checkInProcess}
                 className="prose-p:my-1 prose-ul:-ml-2"
@@ -116,12 +128,12 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
           </div>
         </div>
 
-       <div className=" flex flex-col md:flex-row items-start gap-4">
+        <div className=" flex flex-col xl:flex-row items-start gap-4 md:border-l border-mid-grey md:pl-8">
           <span className="w-11 flex-shrink-0">
-            <DoorOpenIcon className="w-[31px] h-[37px] shrink-0" />
+            <DoorOpenIcon className="w-[26px] h-[32px] md:w-[31px] md:h-[37px] shrink-0" />
           </span>
           <div className=" text-black space-y-2">
-            <p className="font-bold text-body-lg md:text-[20px] leading-tight ">
+            <p className="font-bold text-body-md xl:text-body-xl">
               Check-In Method
             </p>
             <p className="text-body-md capitalize">
@@ -131,33 +143,49 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
         </div>
       </div>
 
-      <div className=" grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-8 xl:gap-8 pt-8">
-       <div className=" flex flex-col md:flex-row items-start gap-4 pr-4 xl:pr-8 border-r border-mid-grey">
+      <div className=" grid grid-cols-2  gap-6 gap-y-8 xl:gap-8 pt-6">
+        <div className=" flex flex-col xl:flex-row items-start gap-4 pr-4 xl:pr-8 border-r border-mid-grey">
           <span className="w-11 flex-shrink-0">
-            <CautionIcon className="w-[38px] h-[33px] shrink-0" />
+            <CautionIcon className=" w-[30px] h-[28px] md:w-[38px] md:h-[33px] shrink-0" />
           </span>
           <div className=" text-black space-y-2">
-            <p className="font-bold text-body-lg md:text-[20px] leading-tight ">
+            <p className="font-bold text-body-md xl:text-body-xl">
               {abbreviateCount(shortLet.cautionFee)} - Paid Back 24 Hours after
               Inspection.
             </p>
-            <p className="text-body-md">
+            <p className="text-body-sm xl:text-body-md">
               Caution Fee: Used to cover potential damage costs to the short
               let.
             </p>
           </div>
         </div>
 
-       <div className=" flex flex-col md:flex-row items-start gap-4 md:border-r border-mid-grey md:pr-4 xl:pr-8">
+        <div className=" flex flex-col xl:flex-row items-start gap-4 md:border-r border-mid-grey md:pr-4 xl:pr-8">
           <span className="w-11 flex-shrink-0">
-            <PeopleIcon className="w-[37px] h-[28px] shrink-0" />
+            <PeopleIcon className="w-[32px] h-[23px] md:w-[37px] md:h-[28px] shrink-0" />
           </span>
           <div className=" text-black space-y-2">
-            <p className="font-bold text-body-lg md:text-[20px] leading-tight ">
+            <p className="font-bold text-body-md xl:text-body-xl">
               {shortLet.maxGuestNumber}{" "}
               {pluralize("Guest", shortLet.maxGuestNumber)}
             </p>
-            <p className="text-body-md">Maximum Number of Guests</p>
+            <p className="text-body-sm xl:text-body-md">
+              Maximum Number of Guests
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className=" grid grid-cols-2  gap-6 gap-y-8 xl:gap-8 pt-6 mt-6 md:mt-0 border-t border-mid-grey md:border-t-0 ">
+        <div className=" flex flex-col xl:flex-row items-start gap-4 pr-6 md:px-8 border-r md:border-r-0 border-mid-grey">
+          <span className="w-11 flex-shrink-0">
+            <PeopleIcon className=" w-[35px] h-[23px] md:w-[37px] md:h-[28px] shrink-0" />
+          </span>
+          <div className=" text-black space-y-2">
+            <p className="font-bold text-body-md xl:text-body-xl">Verified.</p>
+            <p className="text-body-sm xl:text-body-md">
+              This place, and its location have been verified.
+            </p>
           </div>
         </div>
       </div>

@@ -12,8 +12,13 @@ export async function generateMetadata({
 
   if (!shortlet) return;
 
-  const title = shortlet.name;
-  const description = "This is a shortlet";
+  const title = `${shortlet.name} - Book Your Short Let Stay in ${shortlet.city.name}, ${shortlet.city?.state?.name}`;
+  const description = `Book this beautiful short-term rental in ${
+    shortlet.city.name
+  }, ${shortlet.city?.state?.name} Book the ${shortlet.type
+    .split("_")
+    .join(" ")
+    .toLowerCase()}. — Fully furnished with all the amenities you need for a comfortable stay. Perfect for vacationers, business travelers, content creation, and bridal showers, and more. Book now on Giddaa Stays`;
   const images = shortlet.images.map((image) => image.document);
 
   return {
@@ -23,7 +28,7 @@ export async function generateMetadata({
       title,
       description,
       type: "website",
-      url: `https://dev-rd.vercel.app/blog/${title}`,
+      url: `https://dev-rd.vercel.app/${id}`,
       images: images.map((image) => ({
         url: image,
       })),

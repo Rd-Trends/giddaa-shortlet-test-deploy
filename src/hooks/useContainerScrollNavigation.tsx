@@ -13,7 +13,9 @@ export const useScrollableContainerNavigation = ({
   sections,
 }: UseScrollNavigationProps) => {
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState<string | null>(
+    sections[0]?.id ?? null
+  );
 
   // Smooth scroll to section within the container
   const handleClick = useCallback(
