@@ -10,7 +10,7 @@ export default function ScrollToTop({ className }: { className?: string }) {
       className={cn(
         "fixed outline-none bottom-8 shadow-2xl size-11 ",
         "right-4 md:right-6 lg:right-10 xl:right-20 2xl:right-[calc((100%-1536px)/2+80PX)]",
-        "rounded-full flex items-center justify-center bg-background p-[2px] z-50 cursor-pointer ",
+        "rounded-full flex items-center justify-center bg-background p-[2px] z-40 cursor-pointer ",
         "border border-mid-grey drop-shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)]",
         className
       )}

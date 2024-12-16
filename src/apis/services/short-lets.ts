@@ -11,7 +11,6 @@ import {
 import {
   GET_ALL_SHORT_LETS,
   GET_CONTACT_AGENTS_FOR_SHORTLET,
-  GET_FAVORITE_SHORT_LETS,
   GET_SHORT_LET_BY_ID,
   GET_SHORT_LETS_IN_A_CITY,
   MARK_SHORT_LET_AS_FAVORITE,
@@ -74,16 +73,6 @@ export const getContactAgentsForShortLet = (
     GET_CONTACT_AGENTS_FOR_SHORTLET(id),
     { params },
     (res: PaginatedResponseType<User>) => transformPaginatedResponse(res)
-  );
-};
-
-export const getUserFavoriteShortLets = async (
-  params: GetRequestParamsType
-) => {
-  return http.get(
-    GET_FAVORITE_SHORT_LETS,
-    { params },
-    (res: PaginatedResponseType<ShortLet>) => transformPaginatedResponse(res)
   );
 };
 

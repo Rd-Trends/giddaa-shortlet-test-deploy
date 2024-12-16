@@ -66,6 +66,7 @@ import OvenIcon from "@/svgs/OvenIcon";
 import StandingShowerIcon from "@/svgs/StandingShowerIcon";
 import WaterDropleticon from "@/svgs/WaterDropletIcon";
 import MarbleWallIcon from "@/svgs/MarbleWallIcon";
+import NetflixIcon from "@/svgs/NetflixIcon";
 
 export const AmmenitiesIconMap = {
   hasEnsuite: <EnsuiteIcon />,
@@ -115,7 +116,7 @@ export const AmmenitiesIconMap = {
   hasPatioOrDarkSpace: <PatioIcon />,
   hasLandscapedGarden: <LandscapeIcon />,
   hasSwimmingPool: <SwimmingPoolLadderIcon />,
-  hasPoolOrSnookerTable: <SnookerTableIcon className="size-6" />, 
+  hasPoolOrSnookerTable: <SnookerTableIcon className="size-6" />,
 
   hasHomeOfficeSpace: <HomeOfficeSpaceIcon />,
   hasBuiltInShelfOrBookSpace: <BookShelfIcon />,
@@ -149,4 +150,6 @@ export const AmmenitiesIconMap = {
   hasFencedBackyard: <FencedbackyardIcon />,
   hasPetFriendlyNeighbourhood: <PetFriendlyNeighbourhoodIcon />,
   hasNearbyWalkingTrailsAndSidewalks: <NearbyTrailsIcon />,
+
+  hasNetflix: <NetflixIcon />,
 };

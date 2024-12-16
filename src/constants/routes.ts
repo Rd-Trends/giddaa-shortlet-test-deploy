@@ -10,4 +10,7 @@ export const AppRoutes = {
 
   // short lets
   SHORT_LETS: "/short-lets",
+
+  // profile
+  PROFILE: "/profile",
 };

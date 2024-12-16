@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import StoreContextProvider from "@/context/Store";
 
 const redHatDisplay = Red_Hat_Display({
   variable: "--font-red-hat-display",
@@ -41,7 +42,7 @@ export default async function RootLayout({
         className={`${redHatDisplay.variable} ${millik.variable}  font-sans antialiased bg-primary-gradient`}>
         <Providers>
           <AuthenticationProvider value={{ token }}>
-            {children}
+            <StoreContextProvider>{children}</StoreContextProvider>
           </AuthenticationProvider>
         </Providers>
         <ToastContainer />

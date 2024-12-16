@@ -1,4 +1,5 @@
 import { City } from "./location";
+import { User } from "./user";
 
 export type ShortLet = {
   id: string;
@@ -135,4 +136,35 @@ export type ReserveShortLetPayload = {
   numberOfDays: number;
   contactMethod: string;
   isPaid: boolean;
+};
+
+export type ShortLetBooking = {
+  id: string;
+  dateCreated: string;
+  createdBy: string;
+  guest: {
+    id: string;
+    type: string;
+    firstName: string;
+    withInNigeria: boolean;
+    lastName: string;
+    contactMethod: string | null;
+    occupation: string | null;
+    email: string;
+    phoneNumber: string;
+    customer: User | null;
+    bookings: Array<ShortLetBooking>;
+  };
+  checkInDate: string;
+  checkOutDate: string;
+  numberOfGuests: number;
+  cautionFee: number;
+  bookingFee: number;
+  totalFee: number;
+  numberOfDays: number;
+  isPaid: boolean;
+  contactMethod: string;
+  shortlet: ShortLet;
+  extendedBookings: Array<ShortLetBooking>;
+  customer: User | null;
 };

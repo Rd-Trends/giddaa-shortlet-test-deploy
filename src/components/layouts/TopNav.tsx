@@ -1,7 +1,7 @@
 "use client";
 
 import { BiLogIn } from "react-icons/bi";
-import { IoCaretDownSharp, IoLogOutOutline } from "react-icons/io5";
+import { IoCaretDownSharp } from "react-icons/io5";
 import useAuth from "@/hooks/useAuth";
 import {
   NavigationMenu,
@@ -22,28 +22,24 @@ import Input from "../ui/Input";
 import Logo from "@/svgs/Logo";
 import LogoIcon from "@/svgs/LogoIcon";
 import Container from "./Container";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui/DropdownMenu";
-import { BsEye } from "react-icons/bs";
-import { useLogout } from "@/apis/mutations/accout";
-import { DEFAULT_IMAGES } from "@/constants/images";
 import { buttonVariants } from "../ui/Button";
 import MobileMenu from "./MobileNav";
+import UserDropdown from "./UserDropdown";
+import CurrencyDropdown from "./CurrencyDropdown";
+import { getInitials } from "@/utils/get-initials";
 
 const Navbar = () => {
+  const { user, isAuthenticated } = useAuth();
   const pathname = usePathname();
-  const { isAuthenticated } = useAuth();
+
+  const userAvatar = user?.profilePicture;
 
   return (
     // <Container>
     <div className="block fixed left-0 top-0 z-50 w-full">
       {/* Generic Navbar === Note bring the other classNmae from above div to nav when removing banner of diaspora */}
       <Container className="bg-background border-b border-mid-grey ">
-        <nav className="   py-4 flex items-center justify-between gap-[32px]">
+        <nav className=" h-20 py-4 flex items-center justify-between gap-[32px]">
           <Link href="/">
             <Logo className="hidden lg:block" />
             <LogoIcon className=" lg:hidden" />
@@ -142,18 +138,38 @@ const Navbar = () => {
           {/* Right Section */}
           <div className="hidden lg:flex items-center gap-[24px]">
             {/* Currency Selector */}
-            <button className="h-[31px] flex items-center gap-[9px] text-sm font-bold text-black rounded-full border border-[#D9D9D9] bg-[#FAFFFA] p-[8px] flex-1">
-              <img
-                src={undefined}
-                alt="USD flag"
-                className="w-[16px] h-[16px] rounded-full"
-              />
-              USD
-              <IoCaretDownSharp size={10} />
-            </button>
+            <CurrencyDropdown sameWidthAsTrigger>
+              <button className="h-[31px] flex items-center gap-[9px] text-sm font-bold text-black rounded-full border border-[#D9D9D9] bg-[#FAFFFA] p-[8px] flex-1">
+                <img
+                  src={undefined}
+                  alt="USD flag"
+                  className="w-[16px] h-[16px] rounded-full"
+                />
+                USD
+                <IoCaretDownSharp size={10} />
+              </button>
+            </CurrencyDropdown>
 
             {/* User Profile */}
-            {isAuthenticated && <UserDropdown />}
+            {isAuthenticated && (
+              <UserDropdown>
+                <button className="outline-none border-none bg-transparent">
+                  {userAvatar && (
+                    <img
+                      src={userAvatar}
+                      alt={user?.name}
+                      className="rounded-full size-9 shrink-0 object-cover object-center"
+                    />
+                  )}
+
+                  {!userAvatar && (
+                    <div className="rounded-full bg-primary text-white text-body-sm uppercase font-bold size-9 shrink-0 flex items-center justify-center">
+                      {getInitials(user?.name ?? "")}
+                    </div>
+                  )}
+                </button>
+              </UserDropdown>
+            )}
             {!isAuthenticated && (
               <Link
                 href="/login"
@@ -198,47 +214,4 @@ export const checkActive = (pathname: string, paths: string[]) => {
     });
   }
   return false;
-};
-
-const UserDropdown = () => {
-  const { user } = useAuth();
-  const logout = useLogout();
-
-  const userAvatar = user?.profilePicture || DEFAULT_IMAGES.avatar;
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className=" outline-none border-none">
-        {!!userAvatar && (
-          <img
-            src={userAvatar}
-            alt={user?.name}
-            className="rounded-full size-9 shrink-0 object-cover object-center"
-          />
-        )}
-
-        {/* {!userAvatar && (
-          <div className="rounded-full bg-primary text-white size-9 shrink-0 flex items-center justify-center">
-            {getInitials(user?.name ?? "")}
-          </div>
-        )} */}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem asChild>
-          <Link
-            href="/account/profile"
-            className=" flex items-center space-x-2 text-xs font-bold">
-            <BsEye />
-            <span>View Details</span>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className=" flex items-center space-x-2 text-danger text-xs font-bold"
-          onClick={() => logout.mutate()}>
-          <IoLogOutOutline size={20} />
-          <span>{logout.isPending ? "Logging out..." : "Logout"}</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
 };

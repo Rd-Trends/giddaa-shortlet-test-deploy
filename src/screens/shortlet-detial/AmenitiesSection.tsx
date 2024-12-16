@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/Button";
 import ArrowOpenIcon from "@/svgs/ArrowOpenIcon";
 import { ShortLet } from "@/types/short-let";
 import { useMemo, useState } from "react";
-import { AmmenitiesIconMap } from "./IconMap";
+import { AmmenitiesIconMap } from "@/constants/shortlet-amenities-icon-map";
 import {
   Drawer,
   DrawerContent,
@@ -13,6 +13,8 @@ import {
 import Container from "@/components/layouts/Container";
 import { useScrollableContainerNavigation } from "@/hooks/useContainerScrollNavigation";
 import { cn } from "@/utils/classname";
+import { shortLetFeatures } from "@/constants/short-let-features";
+import { convertCamelCaseToTitleCase } from "@/utils/convert-camel-case-to-title-case";
 
 const AmenitiesSection = ({ shortLet }: { shortLet: ShortLet }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -83,14 +85,14 @@ const TourASectionDrawer = ({
   city: ShortLet["city"];
 }) => {
   const sections = useMemo(() => {
-    const amenities = {} as Record<keyof typeof categoryMappings, string[]>;
+    const amenities = {} as Record<keyof typeof shortLetFeatures, string[]>;
     const data = Object.entries(features).reduce((acc, [key, value]) => {
       if (value && key !== "id" && key !== "name" && key !== "icon") {
-        const category = Object.keys(categoryMappings).find((category) =>
-          categoryMappings[category as keyof typeof categoryMappings].includes(
+        const category = Object.keys(shortLetFeatures).find((category) =>
+          shortLetFeatures[category as keyof typeof shortLetFeatures].includes(
             key
           )
-        ) as keyof typeof categoryMappings;
+        ) as keyof typeof shortLetFeatures;
         if (category) {
           if (!acc[category]) {
             acc[category] = [];
@@ -182,119 +184,4 @@ const TourASectionDrawer = ({
       </DrawerContent>
     </Drawer>
   );
-};
-
-const categoryMappings = {
-  General_Features: [
-    "hasEnsuite",
-    "hasPoPCeiling",
-    "hasWalkInClosets",
-    "hasAirConditioning",
-    "hasSpeedInternet",
-    "hasWineCeller",
-    "hasWashingMachine",
-    "hasDryer",
-    "hasFurnished",
-    "hasWifi",
-    "hasHighSpeedInternet",
-    "hasPresingIron",
-    "hasFibreOptics",
-    "hasSatelliteTV",
-    "hasTelevision",
-    "hasElevator",
-    "hasBoysQuarters",
-    "hasSmartHomeTechnology",
-    "hasUpgradedBathroomFeatures",
-    "hasSpaLikeFeatures",
-    "hasTileOrMarbleFeatures",
-  ],
-  Entertainment_Features: [
-    "hasFoosball",
-    "hasPoolOrSnookerTable",
-    "hasBoardGames",
-    "hasPS5",
-    "hasXbox",
-    "hasNetflix",
-    "hasAmazonPrime",
-    "hasShowMax",
-    "hasTableTennis",
-    "hasHomeTheater",
-  ],
-  Kitchen_Features: [
-    "hasFullyEquippedKitcken",
-    "hasModernAppliances",
-    "hasGraniteCountertops",
-    "hasRefrigerator",
-    "hasBreakfastBar",
-    "HasStorageRoom",
-    "hasKettle",
-    "hasRefrigerator",
-    "hasCookingGas",
-    "hasMicrowave",
-    "hasOven",
-  ],
-  Bathroom_Features: [
-    "hasBathtub",
-    "hasStandingShower",
-    "hasHeaterAndHotWater",
-    "hasMarbleWalls",
-  ],
-  Living_Room_Features: [
-    "hasOpenFloorPlan",
-    "hasLargeWindwos",
-    "hasBuiltInHouseTheater",
-  ],
-  Outdoor_Features: [
-    "hasPrivateBackyard",
-    "hasPatioOrDarkSpace",
-    "hasLandscapedGarden",
-    "hasSwimmingPool",
-  ],
-  Home_Office_Features: [
-    "hasHomeOfficeSpace",
-    "hasBuiltInShelfOrBookSpace",
-    "hasAmpleNaturalLight",
-  ],
-  Safety_and_Security_Features: [
-    "hasSecuritySystem",
-    "hasBulletProofDoors",
-    "hasGatedCompound",
-    "hasReinforcedDoorsAndWindows",
-    "hasGaurdedCommunity",
-    "hasUniformedSecurity",
-    "hasArmedGuards",
-  ],
-  Parking_Features: [
-    "hasParkingGarage",
-    "hasDriveWaySpace",
-    "hasStreetParkingAvaliability",
-    "hasPrivateParkingSpace",
-  ],
-  Utilities_Features: [
-    "hasElectricity",
-    "hasBackupGenerator",
-    "hasInverter",
-    "hasBorehole",
-    "hasWaterBoard",
-  ],
-  Community_Features: [
-    "hasProximityToSchools",
-    "hasProximityToShoppingMalls",
-    "hasProximityToSupermarkets",
-    "hasNearByPublicTransportation",
-    "hasAccessiblityViaBoltOrUber",
-  ],
-  Pet_Features: [
-    "hasFencedBackyard",
-    "hasPetFriendlyNeighbourhood",
-    "hasNearbyWalkingTrailsAndSidewalks",
-  ],
-};
-
-export const convertCamelCaseToTitleCase = (str: string) => {
-  if (str === "hasPoPCeiling") return "POP Ceiling";
-
-  const result = str.replace(/([A-Z])/g, " $1");
-  const finalResult = result.charAt(0).toUpperCase() + result.slice(1);
-  return finalResult.replace("Has ", "");
 };

@@ -1,5 +1,6 @@
 import { getShortletById } from "@/apis/services/short-lets";
 import RenderShortLetPage from "@/screens/shortlet-detial";
+import { displayShortLetType } from "@/utils/short-let";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata({
@@ -15,10 +16,9 @@ export async function generateMetadata({
   const title = `${shortlet.name} - Book Your Short Let Stay in ${shortlet.city.name}, ${shortlet.city?.state?.name}`;
   const description = `Book this beautiful short-term rental in ${
     shortlet.city.name
-  }, ${shortlet.city?.state?.name} Book the ${shortlet.type
-    .split("_")
-    .join(" ")
-    .toLowerCase()}. — Fully furnished with all the amenities you need for a comfortable stay. Perfect for vacationers, business travelers, content creation, and bridal showers, and more. Book now on Giddaa Stays`;
+  }, ${shortlet.city?.state?.name}. Book the ${displayShortLetType(
+    shortlet.type
+  )}. — Fully furnished with all the amenities you need for a comfortable stay. Perfect for vacationers, business travelers, content creation, and bridal showers, and more. Book now on Giddaa Stays`;
   const images = shortlet.images.map((image) => image.document);
 
   return {

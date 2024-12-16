@@ -39,7 +39,5 @@ export async function DELETE() {
   const session = await getIronSession<SessionData>(cookie, sessionOptions);
 
   session.destroy();
-  revalidatePath("/");
-
   return Response.json(defaultSession);
 }

@@ -44,12 +44,12 @@ const Nav = ({
             <TooltipTrigger asChild>
               <Link
                 href={`/?viewed=${id}`}
-                className=" inline-flex items-center space-x-2 text-body-sm font-bold text-primary">
+                className=" inline-flex items-center space-x-2 text-body-sm font-bold text-primary pb-2">
                 <FaArrowLeftLong className=" size-5" />
               </Link>
             </TooltipTrigger>
             <TooltipContent
-              sideOffset={8}
+              sideOffset={-4}
               side="bottom"
               align="start"
               className="text-xs">
@@ -93,19 +93,19 @@ const NavButtons = ({ title }: { title: string }) => {
   return (
     <>
       <div className="flex items-center space-x-2 md:hidden">
-        <button className=" outline-none border-none bg-feint-grey border border-light-grey rounded-full p-1 ">
-          <ThumbsUpIcon className=" size-4 mr-1" />
+        <button className="inline-flex size-7 items-center justify-center outline-none bg-feint-grey border border-mid-grey text-primary rounded-full p-1 ">
+          <ThumbsUpIcon className=" size-4" />
         </button>
         <button
           onClick={() => {
             setShowShare((prev) => !prev);
           }}
-          className=" outline-none border-none bg-feint-grey border border-light-grey rounded-full p-1 ">
-          <ArrowShareIcon className=" size-4 mr-1" />
+          className="inline-flex size-7 items-center justify-center outline-none bg-feint-grey border border-mid-grey text-primary rounded-full p-1 ">
+          <ArrowShareIcon className=" size-4" />
         </button>
       </div>
       <div className=" hidden md:flex items-center space-x-4">
-        <Button variant={"outline"}>
+        <Button variant={"outline"} className=" leading-none">
           <ThumbsUpIcon className=" mr-1" />
           Like
         </Button>
@@ -113,7 +113,7 @@ const NavButtons = ({ title }: { title: string }) => {
           onClick={() => {
             setShowShare((prev) => !prev);
           }}
-          variant={"outline"}>
+          variant={"outline"} className=" leading-none">
           <ArrowShareIcon className=" mr-1" />
           Share
         </Button>

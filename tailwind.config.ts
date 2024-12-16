@@ -52,6 +52,7 @@ export default {
         "info-light": "#CFF3FF",
         danger: "#F22424",
         "danger-light": "#FFEDED",
+        "dark-red": "#C90000",
         cream: "#f9f9f9",
         background: "#FFFEED",
       },

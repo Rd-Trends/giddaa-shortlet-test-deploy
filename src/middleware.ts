@@ -5,13 +5,14 @@ import { SessionData, sessionOptions } from "./lib/session";
 import { AppRoutes } from "./constants/routes";
 
 // 1. Specify protected and public routes
-const protectedRoutes = ["/dashboard"];
+const protectedRoutes = ["/dashboard", "/profile"];
 const authRoutes = ["/login", "/signup"];
 
 export default async function middleware(req: NextRequest) {
   // 2. Check if the current route is protected or public
   const path = req.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
+  const isProtectedRoute =
+    protectedRoutes.includes(path) || path.startsWith("/profile");
   const isAuthRoute = authRoutes.includes(path);
 
   // 3. Decrypt the session from the cookie

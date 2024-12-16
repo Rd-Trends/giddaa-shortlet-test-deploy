@@ -22,10 +22,21 @@ export const MARK_SHORT_LET_AS_FAVORITE = (shortletId: string) =>
 export const REMOVE_SHORT_LET_FROM_FAVORITE = (shortletId: string) =>
   `/public/short-let/${shortletId}/unfavorite-shortlet`;
 
+// customer
+export const GET_CUSTOMER_FAVORITE_SHORT_LETS = `/customer/get-favorite-short-lets`;
+export const GET_CUSTOMER_BOOKINGS = `/customer/get-bookings`;
+
+// booking
+export const GET_BOOKING_BY_ID = (bookingId: string) =>
+  `/public/booking/${bookingId}`;
+
 // news letter
 export const JOIN_NEWSLETTER = `/public/join-newsletter`;
 
 // locations
+export const GET_STATES = `/public/state/get-all`;
+export const GET_ALL_STATES_IN_A_COUNTRY = (countryId: string) =>
+  `/public/state/${countryId}/get-all`;
 export const GET_CITIES_IN_A_STATE = (stateId: string) =>
   `/public/city/${stateId}/get-all`;
 

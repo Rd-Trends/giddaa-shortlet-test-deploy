@@ -13,6 +13,7 @@ import {
 import Container from "@/components/layouts/Container";
 import { useMemo, useState } from "react";
 import { useScrollableContainerNavigation } from "@/hooks/useContainerScrollNavigation";
+import ImageWithSkeletonLoader from "@/components/ui/ImageWithSkeletonLoader";
 
 type TakeATourProps = {
   images: ShortLet["images"];
@@ -54,12 +55,16 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
               "md:row-span-2 md:col-span-2":
                 !videoUrl && (hasFourImages || hasJustThreeImages),
             })}>
-            <img
+            <ImageWithSkeletonLoader
               src={images[0].document}
               alt=""
-              className={cn("w-full h-[264px] object-cover rounded-2xl", {
-                "md:h-[573px]": !videoUrl,
-              })}
+              wrapperClassName={cn(
+                "w-full h-[264px] object-cover rounded-2xl",
+                {
+                  "md:h-[573px]": !videoUrl,
+                }
+              )}
+              className=" rounded-2xl"
             />
             <p className=" text-body-md font-semibold capitalize">
               {getImageType(images[0].optionId)}
@@ -73,12 +78,16 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
                 " md:col-span-2":
                   !videoUrl && (hasFourImages || hasJustThreeImages),
               })}>
-              <img
+              <ImageWithSkeletonLoader
                 src={images[1].document}
                 alt=""
-                className={cn("w-full h-[264px] object-cover rounded-2xl", {
-                  "md:h-[573px]": !videoUrl && hasJustTwoImages,
-                })}
+                wrapperClassName={cn(
+                  "w-full h-[264px] object-cover rounded-2xl",
+                  {
+                    "md:h-[573px]": !videoUrl && hasJustTwoImages,
+                  }
+                )}
+                className=" rounded-2xl"
               />
               <p className=" text-body-md font-semibold capitalize">
                 {getImageType(images[1].optionId)}
@@ -91,10 +100,13 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
               className={cn("space-y-1 flex flex-col", {
                 "md:col-span-2": hasJustThreeImages && !videoUrl,
               })}>
-              <img
+              <ImageWithSkeletonLoader
                 src={images[2].document}
                 alt=""
-                className={cn("w-full h-[264px] object-cover rounded-2xl")}
+                wrapperClassName={cn(
+                  "w-full h-[264px] object-cover rounded-2xl"
+                )}
+                className=" rounded-2xl"
               />
               <p className=" text-body-md font-semibold capitalize">
                 {getImageType(images[2].optionId)}
@@ -104,10 +116,13 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
 
           {hasFourImages && (
             <div className="space-y-1 flex flex-col">
-              <img
+              <ImageWithSkeletonLoader
                 src={images[3].document}
                 alt=""
-                className={cn("w-full h-[264px] object-cover rounded-2xl")}
+                wrapperClassName={cn(
+                  "w-full h-[264px] object-cover rounded-2xl"
+                )}
+                className=" rounded-2xl"
               />
               <p className=" text-body-md font-semibold capitalize">
                 {getImageType(images[3].optionId)}
@@ -128,7 +143,7 @@ const TakeATour = ({ images, videoUrl, name, city }: TakeATourProps) => {
 
       <TourASectionDrawer
         isOpen={isDrawerOpen}
-        seIsOpen={setIsDrawerOpen}
+        setIsOpen={setIsDrawerOpen}
         images={images}
         name={name}
         city={city}
@@ -141,13 +156,13 @@ export default TakeATour;
 
 const TourASectionDrawer = ({
   isOpen,
-  seIsOpen,
+  setIsOpen,
   images,
   name,
   city,
 }: {
   isOpen: boolean;
-  seIsOpen: (value: boolean) => void;
+  setIsOpen: (value: boolean) => void;
   images: ShortLet["images"];
   name: string;
   city: ShortLet["city"];
@@ -178,7 +193,7 @@ const TourASectionDrawer = ({
     });
 
   return (
-    <Drawer open={isOpen} onOpenChange={seIsOpen}>
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerContent
         preventAutoFocusOnOpen
         className=" flex flex-col overflow-y-auto">
@@ -226,11 +241,12 @@ const TourASectionDrawer = ({
 
               <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 flex-auto overflow-y-auto pb-4">
                 {section.images.map((image) => (
-                  <img
+                  <ImageWithSkeletonLoader
                     key={image.id}
                     src={image.document}
                     alt=""
-                    className="w-full h-[264px] md:h-[393px] object-cover rounded-2xl"
+                    wrapperClassName="w-full h-[264px] md:h-[393px] object-cover rounded-2xl"
+                    className=" rounded-2xl"
                   />
                 ))}
               </div>

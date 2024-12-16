@@ -70,11 +70,11 @@ const WelcomeModal = () => {
         wrapperClassName=" rounded-[22px] w-full max-w-[calc(100vw-2rem)] lg:max-w-[911px] flex flex-col overflow-y-auto ">
         <div className=" flex-1 overflow-y-auto p-4 relative z-0">
           <span className="absolute top-8 left-8 bg-background p-2 rounded-md">
-            <Logo className=" h-[55.8px] w-auto " />
+            <Logo className=" h-[30px] md:h-[55.8px] w-auto " />
           </span>
           <img
             src="/images/welcome-modal-image.png"
-            className=" w-full h-auto"
+            className=" w-full min-h-[150px] h-auto object-cover object-center rounded-2xl"
             alt=""
           />
 

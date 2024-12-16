@@ -18,21 +18,36 @@ import HeartIcon from "@/svgs/HeartIcon";
 import SkeletonLoader from "@/components/ui/Skeleton";
 import { useGetExchangeRates } from "@/apis/queries/exchange-rate";
 import ContactStaffsPopover from "../popovers/ContactStaffsPopover";
-import { useMarkShortLetAsFavorite } from "@/apis/mutations/short-let";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import {
+  useMarkShortLetAsFavorite,
+  useRemoveShortLetFromFavorite,
+} from "@/apis/mutations/short-let";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import pluralize from "pluralize";
+import { useGetFavoriteShortlets } from "@/hooks/useGetFavoriteShortlets";
+import useAuth from "@/hooks/useAuth";
+import { CommonModal } from "../modals/CommonModal";
+import { AppRoutes } from "@/constants/routes";
+import { Popover, PopoverTrigger } from "@/components/ui/Popover";
 
 const ShortLetCard = ({ shortLet }: { shortLet: ShortLet }) => {
-  const searchParams = useSearchParams();
+  const { isAuthenticated } = useAuth();
+  const { isFavorite } = useGetFavoriteShortlets();
+
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showContactStaffsPopover, setShowContactStaffsPopover] =
+    useState(false);
+
+  const searchParams = useSearchParams();
+  const justViewed = searchParams.get("viewed") === shortLet.id;
+  const router = useRouter();
 
   const { data: exchangeRates, isLoading: isLoadingExchangeRates } =
     useGetExchangeRates();
   const addShortLetToFavorite = useMarkShortLetAsFavorite(shortLet);
-  // const removeShortLetFromFavorite = useRemoveShortLetFromFavorite(shortLet);
-
-  const justViewed = searchParams.get("viewed") === shortLet.id;
+  const removeShortLetFromFavorite = useRemoveShortLetFromFavorite(shortLet);
 
   useEffect(() => {
     if (justViewed && wrapperRef.current) {
@@ -44,97 +59,147 @@ const ShortLetCard = ({ shortLet }: { shortLet: ShortLet }) => {
     }
   }, [justViewed]);
 
+  const handleFavoriteClick = () => {
+    if (!isAuthenticated) {
+      setShowLoginModal(true);
+      return;
+    }
+
+    if (isFavorite(shortLet.id)) {
+      removeShortLetFromFavorite.mutate();
+      return;
+    }
+
+    addShortLetToFavorite.mutate();
+  };
+
   return (
-    <div ref={wrapperRef} className="space-y-2 relative">
-      {shortLet.images.length === 1 && (
-        <Link href={`/${shortLet.id}`}>
-          <img
-            src={shortLet.images[0].document}
+    <>
+      <div ref={wrapperRef} className="space-y-2 relative">
+        {shortLet.images.length === 1 && (
+          <Link href={`/${shortLet.id}`}>
+            <img
+              src={shortLet.images[0].document}
+              className={cn(
+                " rounded-2xl border border-mid-grey h-[273px] w-full object-cover ",
+                {
+                  "border-[3px] shadow-2xl border-secondary": justViewed,
+                }
+              )}
+              alt={shortLet.name}
+            />
+          </Link>
+        )}
+        {shortLet.images.length > 1 && (
+          <Carousel opts={{ loop: true }} className="w-full group ">
+            <CarouselContent className=" -ml-1">
+              {shortLet.images.map((image, index) => (
+                <CarouselItem key={index} className=" pl-1  basis-[100%]">
+                  <Link href={`/${shortLet.id}`}>
+                    <img
+                      src={image.document}
+                      className={cn(
+                        " rounded-2xl border border-mid-grey h-[273px] w-full object-cover ",
+                        {
+                          "border-4 border-secondary": justViewed,
+                        }
+                      )}
+                      alt={shortLet.name}
+                    />
+                  </Link>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselDotButtons
+              wrapperClassName=" w-fit bottom-2 items-center justify-center gap-1.5 bg-black/50 px-4 py-1.5 rounded-full absolute left-1/2 -translate-x-1/2  space-x-0"
+              dotClassName="size-1.5 bg-white/50 border-none hover:!bg-white"
+              dotActiveClassName="bg-white border-none"
+            />
+
+            <CarouselNext className=" hidden group-hover:flex absolute right-4 top-1/2 -translate-y-1/2 size-5 md:size-5 " />
+            <CarouselPrevious className=" hidden group-hover:flex absolute left-4 top-1/2 -translate-y-1/2 size-5 md:size-5 " />
+          </Carousel>
+        )}
+
+        <div className=" absolute top-0 w-full p-2 right-0 left-0 flex justify-between items-center">
+          <div className=" w-fit bg-primary-gradient p-0.5 rounded-full">
+            <span className=" bg-white text-body-xs font-bold text-primary px-4 py-1.5 rounded-full ">
+              Recommended
+            </span>
+          </div>
+
+          <button
+            onClick={handleFavoriteClick}
             className={cn(
-              " rounded-2xl border border-mid-grey h-[273px] w-full object-cover ",
+              "outline-none border-none bg-transparent text-black",
               {
-                "border-[3px] shadow-2xl border-secondary": justViewed,
+                " text-primary": isFavorite(shortLet.id),
               }
-            )}
-            alt={shortLet.name}
-          />
-        </Link>
-      )}
-      {shortLet.images.length > 1 && (
-        <Carousel opts={{ loop: true }} className="w-full group ">
-          <CarouselContent className=" -ml-1">
-            {shortLet.images.map((image, index) => (
-              <CarouselItem key={index} className=" pl-1  basis-[100%]">
-                <Link href={`/${shortLet.id}`}>
-                  <img
-                    src={image.document}
-                    className={cn(
-                      " rounded-2xl border border-mid-grey h-[273px] w-full object-cover ",
-                      {
-                        "border-4 border-secondary": justViewed,
-                      }
-                    )}
-                    alt={shortLet.name}
-                  />
-                </Link>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselDotButtons
-            wrapperClassName=" w-fit bottom-2 items-center justify-center gap-1.5 bg-black/50 px-4 py-1.5 rounded-full absolute left-1/2 -translate-x-1/2  space-x-0"
-            dotClassName="size-1.5 bg-white/50 border-none hover:!bg-white"
-            dotActiveClassName="bg-white border-none"
-          />
-
-          <CarouselNext className=" hidden group-hover:flex absolute right-4 top-1/2 -translate-y-1/2 size-5 md:size-5 " />
-          <CarouselPrevious className=" hidden group-hover:flex absolute left-4 top-1/2 -translate-y-1/2 size-5 md:size-5 " />
-        </Carousel>
-      )}
-
-      <div className=" absolute top-0 w-full p-2 right-0 left-0 flex justify-between items-center">
-        <div className=" w-fit bg-primary-gradient p-0.5 rounded-full">
-          <span className=" bg-white text-body-xs font-bold text-primary px-4 py-1.5 rounded-full ">
-            Recommended
-          </span>
+            )}>
+            <HeartIcon />
+          </button>
         </div>
 
-        <button
-          onClick={() => addShortLetToFavorite.mutate()}
-          className={cn("outline-none border-none bg-transparent")}>
-          <HeartIcon />
-        </button>
-      </div>
-
-      <div className=" space-y-1">
-        <h3 className=" text-body-md font-bold">
-          {shortLet.city?.name}, {shortLet.city?.state?.name}
-        </h3>
-        <p className=" text-body-sm ">{getShortLetDescription(shortLet)}</p>
-        <p>
-          <b className=" text-body-md font-bold text-primary">
-            {formatCurrency(shortLet.listingPrice)}
-          </b>{" "}
-          <span className=" text-body-xs">Per night</span>
-        </p>
-        {isLoadingExchangeRates && (
-          <SkeletonLoader className=" h-4 w-12 rounded-md" />
-        )}
-        {exchangeRates && (
-          <p className=" text-body-sm font-semibold">
-            {formatCurrency(shortLet.listingPrice / exchangeRates.dollar, {
-              currency: "USD",
-            })}
+        <div className=" space-y-1">
+          <h3 className=" text-body-md font-bold">
+            {shortLet.city?.name}, {shortLet.city?.state?.name}
+          </h3>
+          <p className=" text-body-sm ">{getShortLetDescription(shortLet)}</p>
+          <p>
+            <b className=" text-body-md font-bold text-primary">
+              {formatCurrency(shortLet.listingPrice)}
+            </b>{" "}
+            <span className=" text-body-xs">Per night</span>
           </p>
-        )}
+          {isLoadingExchangeRates && (
+            <SkeletonLoader className=" h-4 w-12 rounded-md" />
+          )}
+          {exchangeRates && (
+            <p className=" text-body-sm font-semibold">
+              {formatCurrency(shortLet.listingPrice / exchangeRates.dollar, {
+                currency: "USD",
+              })}
+            </p>
+          )}
 
-        <ContactStaffsPopover shortLetId={shortLet.id}>
-          <button className=" border-none outline-none bg-transparent flex items-center space-x-4 text-secondary pt-1">
-            <BsTelephone className=" size-5" />
-            <FaWhatsapp className=" size-5" />
-          </button>
-        </ContactStaffsPopover>
+          <Popover
+            open={showContactStaffsPopover}
+            onOpenChange={setShowContactStaffsPopover}>
+            <PopoverTrigger asChild>
+              <button className=" border-none outline-none bg-transparent flex items-center space-x-4 text-secondary pt-1">
+                <BsTelephone className=" size-5" />
+                <FaWhatsapp className=" size-5" />
+              </button>
+            </PopoverTrigger>
+            <ContactStaffsPopover
+              shortLetId={shortLet.id}
+              isOpen={showContactStaffsPopover}
+              setIsOpen={setShowContactStaffsPopover}
+            />
+          </Popover>
+        </div>
       </div>
-    </div>
+
+      <CommonModal
+        title="You’re Not Logged In"
+        subHeader="You need to be logged in to mark a shortlet as favorite"
+        description="For you to mark a shortlet as favorite, you need to be logged in. Register or login to continue"
+        confirmBtnText="Login"
+        confirmAction={() => {
+          router.push(AppRoutes.LOGIN);
+        }}
+        cancelBtnText="Continue as Guest"
+        isOpen={showLoginModal}
+        setIsOpen={setShowLoginModal}
+        icon={
+          <img
+            src="/icons/not_logged_in_modal_icon.png"
+            className=" w-[196px] h-auto mx-auto "
+            alt=""
+          />
+        }
+      />
+    </>
   );
 };
 

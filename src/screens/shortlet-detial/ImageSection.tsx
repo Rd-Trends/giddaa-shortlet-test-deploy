@@ -22,6 +22,7 @@ import {
   ModalTitle,
 } from "@/components/ui/Modal";
 import { displayShortLetType } from "@/utils/short-let";
+import ImageWithSkeletonLoader from "@/components/ui/ImageWithSkeletonLoader";
 
 const ImageSection = ({
   images,
@@ -38,40 +39,43 @@ const ImageSection = ({
   const hasFourImages = images.length >= 4;
 
   return (
-    <Container className="px-0  pt-44">
+    <Container className="px-0 pt-[147px] md:pt-44">
       <div className="flex gap-4 md:h-[498px] relative">
-        <img
+        <ImageWithSkeletonLoader
           src={images[0].document}
           alt=""
-          className={cn(
+          wrapperClassName={cn(
             "w-full h-[235px] md:h-full object-cover md:rounded-2xl",
             {
               "md:w-[60%]": hasTwoImages,
               "md:w-[45%]": hasThreeImages || hasFourImages,
             }
           )}
+          className="md:rounded-2xl"
         />
 
         {hasTwoImages && (
-          <img
+          <ImageWithSkeletonLoader
             src={images[1].document}
             alt=""
-            className={cn(
+            wrapperClassName={cn(
               "w-full h-full object-cover hidden md:block rounded-2xl md:w-[40%]",
               {
                 "md:w-[30%]": hasThreeImages || hasFourImages,
               }
             )}
+            className="md:rounded-2xl"
           />
         )}
 
         {hasThreeImages && (
-          <img
+          <ImageWithSkeletonLoader
             src={images[1].document}
             alt=""
-            className={cn(
+            wrapperClassName={cn(
               "hidden md:block w-full h-full object-cover rounded-2xl md:w-[25%]"
             )}
+            className=" rounded-2xl"
           />
         )}
 
@@ -80,15 +84,17 @@ const ImageSection = ({
             className={cn(
               " w-full md:w-[25%] h-full hidden md:flex flex-col gap-4 justify-between"
             )}>
-            <img
+            <ImageWithSkeletonLoader
               src={images[2].document}
               alt=""
-              className="w-full h-auto md:h-[240px] object-cover rounded-2xl"
+              wrapperClassName="w-full h-auto md:h-[240px] object-cover rounded-2xl"
+              className=" rounded-2xl"
             />
-            <img
+            <ImageWithSkeletonLoader
               src={images[3].document}
               alt=""
-              className="w-full h-auto md:h-[240px] object-cover rounded-2xl"
+              wrapperClassName="w-full h-auto md:h-[240px] object-cover rounded-2xl"
+              className=" rounded-2xl"
             />
           </div>
         )}
@@ -179,10 +185,11 @@ const ImageGalleryDrawer = ({
         <Container className=" pt-6 px-4 grid grid-cols-1 gap-4 md:grid-cols-2 flex-auto overflow-y-auto pb-4">
           {images.map((image) => (
             <div key={image.id} className=" relative">
-              <img
+              <ImageWithSkeletonLoader
                 src={image.document}
                 alt=""
-                className="w-full h-[264px] md:h-[393px] object-cover rounded-2xl"
+                wrapperClassName="w-full h-[264px] md:h-[393px] object-cover rounded-2xl"
+                className=" rounded-2xl"
               />
               <div className=" absolute bottom-4 left-4 bg-cream border border-r-primary rounded-full text-primary text-body-xs capitalize font-bold px-4 py-1 min-h-[30px] inline-flex items-center">
                 {getImageType(image.optionId)}

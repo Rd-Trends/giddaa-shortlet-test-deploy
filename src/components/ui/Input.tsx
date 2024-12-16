@@ -78,7 +78,7 @@ const Input = React.forwardRef<HTMLInputElement, FormInputProps>(
               ref={ref}
               type={getInputType(type, showPassword)}
               className={cn(
-                "flex h-10 w-full rounded-full border border-mid-grey bg-transparent px-4 py-[10px] text-xs ring-offset-transaprent file:border-0 file:bg-transparent file:text-xs file:font-medium placeholder:text-charcoal-grey placeholder:text-xs text-black  outline-none ring-offset-0  disabled:cursor-not-allowed disabled:bg-feint-grey disabled:border-mid-grey disabled:text-dark-grey disabled:placeholder:text-dark-grey",
+                "flex h-10 w-full rounded-full border border-mid-grey bg-transparent px-4 py-[10px] text-body-xs ring-offset-transaprent file:border-0 file:bg-transparent file:text-xs file:font-medium placeholder:text-charcoal-grey placeholder:text-body-xs text-black  outline-none ring-offset-0  disabled:cursor-not-allowed disabled:bg-feint-grey disabled:border-mid-grey disabled:text-dark-grey disabled:placeholder:text-dark-grey",
                 {
                   "focus:ring-2 hover:ring-2 ring-primary":
                     !error && !rest.disabled,

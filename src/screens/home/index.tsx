@@ -9,9 +9,13 @@ import ShortLetCard, {
 } from "@/components/shared/Cards/ShortLetCard";
 import WelcomeModal from "@/components/shared/modals/WelcomeModal";
 import ScrollToTop from "@/components/ui/ScrollToTop";
+import { Button } from "@/components/ui/Button";
+import FilterIcon from "@/svgs/Filtericon";
+import FilterDrawer from "./FilterDrawer";
 
 const AllShortLetPage = () => {
   const { isIntersecting, ref } = useIntersectionObserver();
+  const [showFilterDrawer, setShowFilterDrawer] = useState(false);
   const [search] = useState("");
 
   const {
@@ -70,7 +74,16 @@ const AllShortLetPage = () => {
   }
 
   return (
-    <>
+    <div>
+      <div>
+        <Button
+          variant={"outline"}
+          className=" text-body-subtext font-bold h-[35px]"
+          onClick={() => setShowFilterDrawer(true)}>
+          <FilterIcon className=" size-4" />
+          More Filters
+        </Button>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-10 ">
         {!isFetchingForFirstTime &&
           !!shortLets.length &&
@@ -87,7 +100,9 @@ const AllShortLetPage = () => {
 
       <ScrollToTop />
       <WelcomeModal />
-    </>
+
+      <FilterDrawer isOpen={showFilterDrawer} setIsOpen={setShowFilterDrawer} />
+    </div>
   );
 };
 

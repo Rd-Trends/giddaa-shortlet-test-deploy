@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import {
-  GET_FAVORITE_SHORT_LETS_KEY,
+  GET_CUSTOMER_FAVORITE_SHORT_LETS_KEY,
   MARK_SHORT_LET_AS_FAVORITE_KEY,
   REMOVE_SHORT_LET_FROM_FAVORITE_KEY,
   RESERVE_SHORT_LET_KEY,
@@ -31,17 +31,17 @@ export const useMarkShortLetAsFavorite = (shortLet: ShortLet) => {
       // Cancel any outgoing refetches
       // (so they don't overwrite our optimistic update)
       await queryClient.cancelQueries({
-        queryKey: [GET_FAVORITE_SHORT_LETS_KEY],
+        queryKey: [GET_CUSTOMER_FAVORITE_SHORT_LETS_KEY],
       });
 
       // Snapshot the previous value
       const prevFavoriteShortLets = queryClient.getQueryData([
-        GET_FAVORITE_SHORT_LETS_KEY,
+        GET_CUSTOMER_FAVORITE_SHORT_LETS_KEY,
       ]);
 
       // Optimistically update to the new value
       queryClient.setQueryData(
-        [GET_FAVORITE_SHORT_LETS_KEY],
+        [GET_CUSTOMER_FAVORITE_SHORT_LETS_KEY],
         (old: ShortLet[]) => [...(old || []), shortLet]
       );
 
@@ -50,13 +50,13 @@ export const useMarkShortLetAsFavorite = (shortLet: ShortLet) => {
     },
     onError: (_, __, context) => {
       queryClient.setQueryData(
-        [GET_FAVORITE_SHORT_LETS_KEY],
+        [GET_CUSTOMER_FAVORITE_SHORT_LETS_KEY],
         context?.prevFavoriteShortLets
       );
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: [GET_FAVORITE_SHORT_LETS_KEY],
+        queryKey: [GET_CUSTOMER_FAVORITE_SHORT_LETS_KEY],
       });
     },
   });
@@ -72,17 +72,17 @@ export const useRemoveShortLetFromFavorite = (shortLet: ShortLet) => {
       // Cancel any outgoing refetches
       // (so they don't overwrite our optimistic update)
       await queryClient.cancelQueries({
-        queryKey: [GET_FAVORITE_SHORT_LETS_KEY],
+        queryKey: [GET_CUSTOMER_FAVORITE_SHORT_LETS_KEY],
       });
 
       // Snapshot the previous value
       const prevFavoriteShortLets = queryClient.getQueryData([
-        GET_FAVORITE_SHORT_LETS_KEY,
+        GET_CUSTOMER_FAVORITE_SHORT_LETS_KEY,
       ]);
 
       // Optimistically update to the new value
       queryClient.setQueryData(
-        [GET_FAVORITE_SHORT_LETS_KEY],
+        [GET_CUSTOMER_FAVORITE_SHORT_LETS_KEY],
         (old: ShortLet[]) =>
           (old || []).filter((oShortLet) => oShortLet.id !== shortLet.id)
       );
@@ -92,13 +92,13 @@ export const useRemoveShortLetFromFavorite = (shortLet: ShortLet) => {
     },
     onError: (_, __, context) => {
       queryClient.setQueryData(
-        [GET_FAVORITE_SHORT_LETS_KEY],
+        [GET_CUSTOMER_FAVORITE_SHORT_LETS_KEY],
         context?.prevFavoriteShortLets
       );
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: [GET_FAVORITE_SHORT_LETS_KEY],
+        queryKey: [GET_CUSTOMER_FAVORITE_SHORT_LETS_KEY],
       });
     },
   });

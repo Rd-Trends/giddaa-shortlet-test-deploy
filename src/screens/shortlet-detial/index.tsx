@@ -172,8 +172,8 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
         content: (
           <TakeATour
             images={dummyImages}
-            // videoUrl={shortLet.videoUrl}
-            videoUrl="https://www.youtube.com/embed/pYKAngWoyVw?si=L8dHnwrG54FIH_XZ"
+            videoUrl={shortLet.videoUrl}
+            // videoUrl="https://www.youtube.com/embed/pYKAngWoyVw?si=L8dHnwrG54FIH_XZ"
             name={shortLet.name}
             city={shortLet.city}
           />

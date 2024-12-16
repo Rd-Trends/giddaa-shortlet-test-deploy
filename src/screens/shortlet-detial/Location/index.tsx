@@ -152,7 +152,7 @@ const HouseLocation = ({ address, name, city }: SingleHouseLocationProps) => {
           </div>
           <MapContainer location={coordinates} />
 
-          <div className="rounded-b-[20px] bg-white p-5 pb-7 border border-[#D9D9D9] border-t-0">
+          <div className="rounded-b-[20px] bg-background p-5 pb-7 border border-mid-grey border-t-0">
             <div className="flex flex-col md:flex-row gap-4 justify-between md:items-center mt-2">
               <LandmarksPopover
                 stateId={city.stateId}
@@ -210,7 +210,7 @@ const HouseLocation = ({ address, name, city }: SingleHouseLocationProps) => {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-3 gap-4">
             {amenities.map((amenity, i) => (
               <div
-                className="rounded-[20px] bg-white  flex flex-col justify-center items-center gap-y-5 w-full px-3 h-[124px] border border-[#D9D9D9] relative cursor-pointer"
+                className="rounded-[20px] bg-background flex flex-col justify-center items-center gap-y-5 w-full px-3 h-[124px] border border-mid-grey relative cursor-pointer"
                 key={i}
                 onClick={() => {
                   setInitialDetailsTab(amenity.id);

@@ -1,25 +1,23 @@
 "use client";
 
 import { useGetContactAgentsForShortLet } from "@/apis/queries/short-lets";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  CustomPopoverClose,
-} from "@/components/ui/Popover";
-import { useState } from "react";
+import { PopoverContent, CustomPopoverClose } from "@/components/ui/Popover";
 import { BsTelephone } from "react-icons/bs";
 import { FaWhatsapp } from "react-icons/fa6";
 import SkeletonLoader from "@/components/ui/Skeleton";
 
+type ContactStaffsPopoverProps = {
+  shortLetId: string;
+  isOpen?: boolean;
+  setIsOpen?: (value: boolean) => void;
+} & React.ComponentPropsWithoutRef<typeof PopoverContent>;
+
 const ContactStaffsPopover = ({
   shortLetId,
-  children,
-}: {
-  shortLetId: string;
-  children: React.ReactNode;
-}) => {
-  const [showContactStaffs, setShowContactStaffs] = useState(false);
+  isOpen = false,
+  // setIsOpen,
+  ...props
+}: ContactStaffsPopoverProps) => {
   const { data: contactAgentsData, isLoading: isLoadingContactStaffs } =
     useGetContactAgentsForShortLet(
       {
@@ -28,7 +26,7 @@ const ContactStaffsPopover = ({
         search: "",
         id: shortLetId,
       },
-      { enabled: showContactStaffs && !!shortLetId }
+      { enabled: isOpen && !!shortLetId }
     );
 
   const chatWhatsApp = (phoneNumber: string) => {
@@ -45,50 +43,46 @@ const ContactStaffsPopover = ({
 
   return (
     <>
-      <Popover open={showContactStaffs} onOpenChange={setShowContactStaffs}>
-        <PopoverTrigger asChild>{children}</PopoverTrigger>
-
-        <PopoverContent align="start" className=" p-0">
-          <div className="flex flex-col divide-y divide-mid-grey max-h-[199px] overflow-y-auto">
-            {isLoadingContactStaffs && (
-              <SkeletonLoader className="h-16 rounded-xl m-4" />
-            )}
-            {!isLoadingContactStaffs &&
-              contactAgentsData?.value.map((agent) => {
-                return (
-                  <div
-                    key={agent.id}
-                    className=" flex items-start space-x-4 py-4 px-4">
-                    <img
-                      src="/images/contact_image.png"
-                      className=" w-14 h-16 rounded-2xl object-cover"
-                      alt={agent.name}
-                    />
-                    <div>
-                      <h3 className=" text-body-sm font-bold text-black">
-                        {agent.name}
-                      </h3>
-                      <p className=" text-body-xs">{agent.phoneNumber}</p>
-                      <div className=" flex items-center space-x-4">
-                        <button
-                          onClick={() => handlePhoneClick(agent.phoneNumber)}
-                          className="inline-flex items-center text-xs outline-none border-none text-primary font-bold">
-                          <BsTelephone className=" size-5 mr-2" /> Call
-                        </button>
-                        <button
-                          onClick={() => chatWhatsApp(agent.phoneNumber)}
-                          className="inline-flex items-center text-xs outline-none border-none text-primary font-bold">
-                          <FaWhatsapp className=" size-5 mr-2" /> Whatsapp
-                        </button>
-                      </div>
+      <PopoverContent align="start" className=" p-0" {...props}>
+        <div className="flex flex-col divide-y divide-mid-grey max-h-[199px] overflow-y-auto">
+          {isLoadingContactStaffs && (
+            <SkeletonLoader className="h-16 rounded-xl m-4" />
+          )}
+          {!isLoadingContactStaffs &&
+            contactAgentsData?.value.map((agent) => {
+              return (
+                <div
+                  key={agent.id}
+                  className=" flex items-start space-x-4 py-4 px-4">
+                  <img
+                    src="/images/contact_image.png"
+                    className=" w-14 h-16 rounded-2xl object-cover"
+                    alt={agent.name}
+                  />
+                  <div>
+                    <h3 className=" text-body-sm font-bold text-black">
+                      {agent.name}
+                    </h3>
+                    <p className=" text-body-xs">{agent.phoneNumber}</p>
+                    <div className=" flex items-center space-x-4">
+                      <button
+                        onClick={() => handlePhoneClick(agent.phoneNumber)}
+                        className="inline-flex items-center text-xs outline-none border-none text-primary font-bold">
+                        <BsTelephone className=" size-5 mr-2" /> Call
+                      </button>
+                      <button
+                        onClick={() => chatWhatsApp(agent.phoneNumber)}
+                        className="inline-flex items-center text-xs outline-none border-none text-primary font-bold">
+                        <FaWhatsapp className=" size-5 mr-2" /> Whatsapp
+                      </button>
                     </div>
                   </div>
-                );
-              })}
-          </div>
-          <CustomPopoverClose />
-        </PopoverContent>
-      </Popover>
+                </div>
+              );
+            })}
+        </div>
+        <CustomPopoverClose />
+      </PopoverContent>
 
       {/* <CommonModal
         title="You’re Not Logged In"

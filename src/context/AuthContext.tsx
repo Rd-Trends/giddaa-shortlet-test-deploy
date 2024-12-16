@@ -47,7 +47,14 @@ export const AuthenticationProvider = ({
   value?: { token?: string | null };
 }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(value?.token || null);
+  const [token, setToken] = useState<string | null>(() => {
+    if (value?.token) {
+      http.setAuth(value.token);
+      return value.token;
+    }
+
+    return null;
+  });
   const [isAuthenticated, setIsAuthenticated] = useState(!!value?.token);
 
   useEffect(() => {
@@ -55,12 +62,6 @@ export const AuthenticationProvider = ({
     const parsedUser = user ? JSON.parse(user) : null;
     setUser(parsedUser);
   }, []);
-
-  useEffect(() => {
-    if (token) {
-      http.setAuth(token);
-    }
-  }, [token]);
 
   const setAuthUserHandler = useCallback(
     (value: { user: User; token: string }) => {
@@ -89,13 +90,7 @@ export const AuthenticationProvider = ({
       removeAuth: removeAuthUserHandler,
       token,
     }),
-    [
-      user,
-      setAuthUserHandler,
-      removeAuthUserHandler,
-      token,
-      isAuthenticated,
-    ]
+    [user, setAuthUserHandler, removeAuthUserHandler, token, isAuthenticated]
   );
 
   return (

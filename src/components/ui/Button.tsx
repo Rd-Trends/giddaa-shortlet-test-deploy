@@ -7,7 +7,7 @@ import { cn } from "@/utils/classname";
 
 export const buttonVariants = cva(
   // Base styles
-  "inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-full transition-colors duration-200 ease-in-out focus-visible:outline-none outline-none ",
+  "inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-full transition-colors duration-200 ease-in-out focus-visible:outline-none outline-none font-bold ",
   {
     variants: {
       variant: {
