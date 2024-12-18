@@ -2,7 +2,7 @@ import * as React from "react";
 import { SVGProps } from "react";
 
 const TelevisionIcon = ({
-  color = "#000",
+  color = "currentColor",
   ...props
 }: SVGProps<SVGSVGElement>) => (
   <svg

@@ -1,21 +1,16 @@
 import React, { useMemo, useState } from "react";
 import { GoogleMap, MarkerF, StreetViewPanorama } from "@react-google-maps/api";
 import WalkIcon from "@/svgs/WalkIcon";
+import { cn } from "@/utils/classname";
 
 type MapContainerProps = {
   location: { lat: number; lng: number };
   styles?: React.CSSProperties;
+  className?: string;
 };
 
-const MapContainer = ({ location, styles }: MapContainerProps) => {
+const MapContainer = ({ location, className, styles }: MapContainerProps) => {
   const [isStreetViewVisible, setStreetViewVisible] = useState(false);
-
-  const mapStyles = {
-    height: "400px",
-    width: "100%",
-    borderRadius: "20px 20px 0 0",
-    ...styles,
-  };
 
   const mapCenter = useMemo(() => {
     return location;
@@ -43,7 +38,11 @@ const MapContainer = ({ location, styles }: MapContainerProps) => {
       {location && (
         <GoogleMap
           id="shortlet-map"
-          mapContainerStyle={mapStyles}
+          mapContainerClassName={cn(
+            " h-[400px] w-full rounded-t-[20px] ",
+            className
+          )}
+          mapContainerStyle={styles}
           zoom={18}
           center={mapCenter}>
           {isStreetViewVisible && (

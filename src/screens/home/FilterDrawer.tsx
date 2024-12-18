@@ -11,6 +11,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/Drawer";
+import DropdownInput from "@/components/ui/Select";
 import { Slider } from "@/components/ui/Slider";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/Toggle";
 import { shortLetFeatures } from "@/constants/short-let-features";
@@ -122,70 +123,55 @@ const FilterDrawer = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 xl:gap-20 py-10">
-            <div>
-              <p className=" text-heading-4 font-bold">Pricing & Charges</p>
-              <p className=" text-body-sm pt-2">
-                Filter for price ranges and caution charges
-              </p>
+          <div className="py-10">
+            <p className=" text-heading-4 font-bold">Pricing & Charges</p>
+            <p className=" text-body-sm pt-2">
+              Filter for price ranges and caution charges
+            </p>
 
-              <p className=" text-body-sm pt-4 pb-2">
-                Price range:{" "}
-                <b className=" text-primary">
-                  {formatCurrency(priceRange[0])} -{" "}
-                  {formatCurrency(priceRange[1])}
-                </b>
-              </p>
+            <div className=" grid items-end grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 xl:gap-20">
+              <div>
+                <p className=" text-body-sm pt-4 pb-2">
+                  Price range:{" "}
+                  <b className=" text-primary">
+                    {formatCurrency(priceRange[0])} -{" "}
+                    {formatCurrency(priceRange[1])}
+                  </b>
+                </p>
 
-              <div className="  space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <p className=" text-body-xs font-bold">Minimum</p>
-                  <p className=" text-body-xs font-bold">Maximum</p>
-                </div>
-                <Slider
-                  className=""
-                  value={priceRange}
-                  onValueChange={(values) => setPriceRange(values)}
-                  max={150000000}
-                  step={1}
-                  minStepsBetweenThumbs={1000000}
-                  numberOfThumb={2}
-                />
-                <div className="flex items-center justify-between">
-                  <p className=" text-body-subtext text-primary font-medium">
-                    {formatCurrency(5000000)}
-                  </p>
-                  <p className=" text-body-subtext text-primary font-medium">
-                    {formatCurrency(150000000)}
-                  </p>
+                <div className="  space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <p className=" text-body-xs font-bold">Minimum</p>
+                    <p className=" text-body-xs font-bold">Maximum</p>
+                  </div>
+                  <Slider
+                    className=""
+                    value={priceRange}
+                    onValueChange={(values) => setPriceRange(values)}
+                    max={150000000}
+                    step={1}
+                    minStepsBetweenThumbs={1000000}
+                    numberOfThumb={2}
+                  />
+                  <div className="flex items-center justify-between">
+                    <p className=" text-body-subtext text-primary font-medium">
+                      {formatCurrency(5000000)}
+                    </p>
+                    <p className=" text-body-subtext text-primary font-medium">
+                      {formatCurrency(150000000)}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div>
-              <p className=" text-heading-4 font-bold">Location</p>
-              <p className=" text-body-sm pt-2">Filter for exact locations.</p>
-
-              <div className=" grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-                <Combobox
-                  label="State"
-                  options={[
-                    { label: "Location 1", value: "location1" },
-                    { label: "Location 2", value: "location2" },
-                    { label: "Location 3", value: "location3" },
-                  ]}
-                  onSelect={(value) => console.log(value)}
-                />
-                <Combobox
-                  label="City"
-                  options={[
-                    { label: "Location 1", value: "location1" },
-                    { label: "Location 2", value: "location2" },
-                    { label: "Location 3", value: "location3" },
-                  ]}
-                  onSelect={(value) => console.log(value)}
-                />
-              </div>
+              <DropdownInput
+                label="Caution Fee Charges"
+                options={[
+                  { label: "Yes", value: "1" },
+                  { label: "No", value: "0" },
+                ]}
+                onSelect={(value) => console.log(value)}
+              />
             </div>
           </div>
 
@@ -372,7 +358,7 @@ const AmenitiesSection = () => {
                       className=" sr-only"
                       value={amenity}
                     />
-                    <span className=" w-7 flex-shrink-0 [&_svg]:h-5 [&_svg]:stroke-current ">
+                    <span className=" w-7 flex-shrink-0 [&_svg]:h-5 [&_svg]:fill-current ">
                       {
                         AmmenitiesIconMap[
                           amenity as keyof typeof AmmenitiesIconMap

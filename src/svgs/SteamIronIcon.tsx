@@ -2,7 +2,7 @@ import * as React from "react";
 import { SVGProps } from "react";
 
 const SteamIronIcon = ({
-  color = "#010101",
+  color = "currentColor",
   ...props
 }: SVGProps<SVGSVGElement>) => (
   <svg

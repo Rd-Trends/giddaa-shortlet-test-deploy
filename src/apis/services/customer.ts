@@ -18,10 +18,13 @@ export const getCustomerFavoriteShortLets = async (
   );
 };
 
-export const getCustomerBookings = async (params: GetRequestParamsType) => {
+export const getCustomerBookings = async (
+  params: GetRequestParamsType & { isPast?: boolean }
+) => {
   return http.get(
     GET_CUSTOMER_BOOKINGS,
     { params },
-    (res: PaginatedResponseType<ShortLetBooking>) => transformPaginatedResponse(res)
+    (res: PaginatedResponseType<ShortLetBooking>) =>
+      transformPaginatedResponse(res)
   );
 };

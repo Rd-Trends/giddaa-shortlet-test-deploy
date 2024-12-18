@@ -10,10 +10,17 @@ import {
 } from "@/components/ui/Drawer";
 import Container from "@/components/layouts/Container";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/Toggle";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/Tabs";
 import { cn } from "@/utils/classname";
 import { GooglePlaceDetails } from "@/types/google-map-api-types";
 import { ShortLet } from "@/types/short-let";
+import { BsCaretDownFill } from "react-icons/bs";
+import { use100vh } from "react-div-100vh";
 
 // Define a mapping for types to display names
 const typeMapping = {
@@ -52,12 +59,15 @@ const LocationDetails = ({
   }));
 
   const [activeTab, setActiveTab] = useState(tabs[0]?.name);
+  const [extendMap, setExtendMap] = useState(false);
 
   useEffect(() => {
     if (initialTab) {
       setActiveTab(initialTab);
     }
   }, [initialTab]);
+
+  const fullHeight = use100vh() || "1000";
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
@@ -90,14 +100,14 @@ const LocationDetails = ({
           </ToggleGroup>
         </Container>
 
-        <div className=" flex-1 overflow-y-auto xl:flex flex-row items-start ">
+        <div className="relative flex-1 overflow-y-auto lg:flex gap-6 flex-row items-start ">
           <Tabs
             defaultValue={activeTab}
             onValueChange={(value) => {
               setActiveTab(value);
             }}
-            className="xl:w-fit flex flex-col h-full overflow-y-auto">
-            <TabsList className=" px-4 md:px-6 lg:px-6 xl:px-10 w-full overflow-x-scroll">
+            className="w-full lg:w-[620px] flex flex-col h-full overflow-y-auto">
+            <TabsList className="px-4 md:px-6 lg:px-6 xl:px-10  w-full overflow-x-scroll">
               {tabs.map((tab) => (
                 <TabsTrigger
                   className="px-0 pb-0.5 h-10 items-end capitalize "
@@ -113,7 +123,7 @@ const LocationDetails = ({
                 value={tab.name}
                 key={tab.name}
                 className={cn(
-                  " px-4 md:px-6 lg:px-6 xl:px-10 flex-1 overflow-y-auto pb-6",
+                  "px-4 lg:pl-6 xl:pl-10 lg:!pr-0 flex-1 overflow-y-auto pb-[245px] md:pb-6",
                   {
                     hidden: tab.name !== activeTab,
                   }
@@ -126,7 +136,7 @@ const LocationDetails = ({
                   </b>
                 </h3>
 
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="w-full grid md:grid-cols-2 gap-4">
                   {places[tab.name]?.map((business, index) => (
                     <NearbyPlacesCard key={index} business={business} />
                   ))}
@@ -135,13 +145,41 @@ const LocationDetails = ({
             ))}
           </Tabs>
 
-          <div className="relative flex-1 p-4 ">
-            <MapContainer
-              location={coordinates}
-              styles={{
-                borderRadius: "20px 20px 20px 20px",
-              }}
-            />
+          <div
+            className={cn(
+              "fixed bottom-0 left-0 w-full transition-all h-[225px] lg:relative lg:flex-1 lg:py-4 z-10 " +
+                " lg:!h-[calc(100vh_-_2rem_-_170px)]"
+            )}
+            style={{
+              height: extendMap
+                ? `calc(${fullHeight}px - 2rem - 140px)`
+                : "225px",
+            }}>
+            <div className="h-full relative">
+              <button
+                onClick={() => setExtendMap(!extendMap)}
+                className={
+                  " bg-primary text-white flex items-center justify-center rounded-full shadow-md " +
+                  "size-[28px] absolute -top-[14px] left-1/2 -translate-x-1/2 z-50 lg:hidden "
+                }>
+                <BsCaretDownFill
+                  className={cn(" size-3.5 transition-transform duration-150", {
+                    "rotate-180": extendMap,
+                  })}
+                />
+              </button>
+              <MapContainer
+                location={coordinates}
+                className={cn(
+                  "  transition-all rounded-none md:rounded-l-[20px] lg:!h-[calc(100vh_-_2rem_-_170px)] "
+                )}
+                styles={{
+                  height: extendMap
+                    ? `calc(${fullHeight}px - 2rem - 140px)`
+                    : "225px",
+                }}
+              />
+            </div>
           </div>
         </div>
       </DrawerContent>

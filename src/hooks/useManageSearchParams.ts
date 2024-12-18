@@ -1,21 +1,26 @@
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
 export const useManageSearchParams = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const getSearchParams = useCallback(
+    (key: string) => {
+      return searchParams.get(key);
+    },
+    [searchParams]
+  );
 
   const setSearchParams = useCallback(
     (key: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString());
       params.set(key, value);
 
-      return {
-        query: params.toString(),
-        fullPath: `${pathname}?${params.toString()}`,
-      };
+      router.push(`${pathname}?${params.toString()}`);
     },
-    [pathname, searchParams]
+    [pathname, searchParams, router]
   );
 
   const removeSearchParams = useCallback(
@@ -23,13 +28,14 @@ export const useManageSearchParams = () => {
       const params = new URLSearchParams(searchParams.toString());
       params.delete(key);
 
-      return {
-        query: params.toString(),
-        fullPath: `${pathname}?${params.toString()}`,
-      };
+      router.push(`${pathname}?${params.toString()}`);
     },
-    [pathname, searchParams]
+    [pathname, searchParams, router]
   );
 
-  return { setSearchParams, removeSearchParams };
+  return {
+    get: getSearchParams,
+    set: setSearchParams,
+    remove: removeSearchParams,
+  };
 };

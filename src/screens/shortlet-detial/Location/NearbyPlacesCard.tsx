@@ -11,7 +11,7 @@ import pluralize from "pluralize";
 
 const NearbyPlacesCard = ({ business }: { business: GooglePlaceDetails }) => {
   return (
-    <div className="border border-[#D9D9D9] rounded-[16px] p-4 md:max-w-[267px] w-full flex flex-col justify-between">
+    <div className="border border-[#D9D9D9] rounded-[16px] p-4  w-full flex flex-col justify-between">
       <div>
         <img
           src={business?.icon as string}

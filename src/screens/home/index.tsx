@@ -3,7 +3,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useGetShortLets } from "@/apis/queries/short-lets";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-import { toast } from "@/lib/toast";
 import ShortLetCard, {
   ShortLetCardLoader,
 } from "@/components/shared/Cards/ShortLetCard";
@@ -16,7 +15,7 @@ import FilterDrawer from "./FilterDrawer";
 const AllShortLetPage = () => {
   const { isIntersecting, ref } = useIntersectionObserver();
   const [showFilterDrawer, setShowFilterDrawer] = useState(false);
-  const [search] = useState("");
+  // const [search] = useState("");
 
   const {
     data,
@@ -29,7 +28,6 @@ const AllShortLetPage = () => {
   } = useGetShortLets({
     pageNumber: 1,
     pageSize: 8,
-    search,
   });
 
   useEffect(() => {
@@ -51,7 +49,26 @@ const AllShortLetPage = () => {
   const isFetchingForFirstTime = isFetching && !isFetchingNextPage;
 
   if (error) {
-    return <div>An Error Occured</div>;
+    return (
+      <div>
+        <div>
+          <Button
+            variant={"outline"}
+            className=" text-body-subtext font-bold h-[35px]"
+            onClick={() => setShowFilterDrawer(true)}>
+            <FilterIcon className=" size-4" />
+            More Filters
+          </Button>
+        </div>
+
+        <p>An error occured</p>
+
+        <FilterDrawer
+          isOpen={showFilterDrawer}
+          setIsOpen={setShowFilterDrawer}
+        />
+      </div>
+    );
   }
 
   if (!isFetching && isFetched && !shortLets.length) {
@@ -59,23 +76,13 @@ const AllShortLetPage = () => {
       <div className=" h-80 flex flex-col justify-center items-center">
         <h1>No Short Lets</h1>
         <p>There are no available short lets at the moment</p>
-
-        <button
-          onClick={() => {
-            toast.success({
-              title: "Success",
-              description: "Login successful",
-            });
-          }}>
-          Click Me
-        </button>
       </div>
     );
   }
 
   return (
-    <div>
-      <div>
+    <div className="">
+      <div className=" border-b border-mid-grey py-4">
         <Button
           variant={"outline"}
           className=" text-body-subtext font-bold h-[35px]"
@@ -96,7 +103,7 @@ const AllShortLetPage = () => {
             <ShortLetCardLoader key={index} />
           ))}
       </div>
-      <div ref={ref} className="py-4 h-8 bg-transparent w-full"></div>
+      <div ref={ref} className="py-4 h-8 bg-transparent w-full" />
 
       <ScrollToTop />
       <WelcomeModal />

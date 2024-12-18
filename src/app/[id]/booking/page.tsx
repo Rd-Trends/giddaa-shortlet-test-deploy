@@ -1,5 +1,6 @@
 import { getShortletById } from "@/apis/services/short-lets";
 import ReservationForm from "@/screens/shortlet-reservation";
+import { notFound } from "next/navigation";
 
 export default async function Page({
   params,
@@ -10,7 +11,7 @@ export default async function Page({
   const shortlet = await getShortletById(id);
 
   if (!shortlet) {
-    return <div>Page not found</div>;
+    return notFound();
   }
 
   return <ReservationForm shortLet={shortlet} />;

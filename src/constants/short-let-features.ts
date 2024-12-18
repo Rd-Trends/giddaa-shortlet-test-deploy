@@ -35,12 +35,10 @@ export const shortLetFeatures = {
     "hasHomeTheater",
   ],
   Kitchen_Features: [
-    "hasFullyEquippedKitcken",
-    "hasModernAppliances",
     "hasGraniteCountertops",
     "hasRefrigerator",
     "hasBreakfastBar",
-    "HasStorageRoom",
+    "hasStorageRoom",
     "hasKettle",
     "hasCookingGas",
     "hasMicrowave",

@@ -1,7 +1,10 @@
 import * as React from "react";
 import { SVGProps } from "react";
 
-const SofaIcon = ({ ...props }: SVGProps<SVGSVGElement>) => (
+const SofaIcon = ({
+  color = "currentColor",
+  ...props
+}: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={24}
@@ -11,7 +14,7 @@ const SofaIcon = ({ ...props }: SVGProps<SVGSVGElement>) => (
     <g data-name="Group 2720" transform="translate(0 -5)">
       <path
         fill="none"
-        stroke="#000"
+        stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M21.397 20.037V8.226A2.726 2.726 0 0 0 18.671 5.5H6.86a2.726 2.726 0 0 0-2.726 2.726v2.884"
@@ -19,7 +22,7 @@ const SofaIcon = ({ ...props }: SVGProps<SVGSVGElement>) => (
       />
       <path
         fill="none"
-        stroke="#000"
+        stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M38.66 11.11V8.226A2.726 2.726 0 0 0 35.934 5.5H24.123a2.726 2.726 0 0 0-2.726 2.726v11.811"
@@ -27,7 +30,7 @@ const SofaIcon = ({ ...props }: SVGProps<SVGSVGElement>) => (
       />
       <path
         fill="none"
-        stroke="#000"
+        stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M39.569 10.952a2.726 2.726 0 0 0-2.726 2.726v6.36H5.952v-6.36a2.726 2.726 0 0 0-5.452 0v9.086a2.726 2.726 0 0 0 2.726 2.726h36.343a2.726 2.726 0 0 0 2.726-2.726v-9.086a2.726 2.726 0 0 0-2.726-2.726Z"
@@ -49,7 +52,7 @@ const SofaIcon = ({ ...props }: SVGProps<SVGSVGElement>) => (
       />
       <path
         fill="none"
-        stroke="#000"
+        stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M2.317 25.333v3.786h5.452v-3.63"
@@ -57,7 +60,7 @@ const SofaIcon = ({ ...props }: SVGProps<SVGSVGElement>) => (
       />
       <path
         fill="none"
-        stroke="#000"
+        stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M35.026 25.489v3.634h5.452v-3.792"

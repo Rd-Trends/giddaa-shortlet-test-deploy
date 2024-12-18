@@ -256,7 +256,7 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
         videoUrl="https://www.youtube.com/embed/pYKAngWoyVw?si=L8dHnwrG54FIH_XZ"
       />
 
-      <Container className="px-4 md:px-6 space-y-10 md:space-y-20 pt-20 pb-20 ">
+      <Container className="px-4 md:px-6 space-y-[60px] md:space-y-20 pt-20 pb-20 ">
         {sections.map((section, index) => {
           return (
             <section
@@ -264,7 +264,7 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
               id={section.id}
               className={cn(
                 "space-y-8 md:space-y-10",
-                index !== 0 && "border-t border-mid-grey pt-8 md:pt-10"
+                index !== 0 && "border-t border-mid-grey pt-[30px] md:pt-10"
               )}
               ref={(element) => {
                 sectionRefs.current[section.id] = element;

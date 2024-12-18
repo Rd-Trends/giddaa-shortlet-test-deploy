@@ -1,5 +1,6 @@
 "use client";
 
+import { useVerifyBookingPayment } from "@/apis/mutations/booking";
 import { Button } from "@/components/ui/Button";
 import {
   Modal,
@@ -9,34 +10,67 @@ import {
   ModalHeader,
   ModalTitle,
 } from "@/components/ui/Modal";
-import { ShortLet } from "@/types/short-let";
+import { toast } from "@/lib/toast";
+import { ShortLetBooking } from "@/types/short-let";
 import { cn } from "@/utils/classname";
 import { formatCurrency } from "@/utils/format-currency";
 import pluralize from "pluralize";
 import { useState } from "react";
 import { use100vh } from "react-div-100vh";
 import { BsArrowUpRightCircleFill } from "react-icons/bs";
+import { usePaystackPayment } from "react-paystack";
 
 type SelectPaymentMethodModalProps = {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
-  totalFee: number;
-  numberOfNights: number;
-  propertyType: string;
-  city: ShortLet["city"];
+  booking: ShortLetBooking;
 };
 
-const SelectPaymentMethodModal = ({
+const HandlePaymentModal = ({
   isOpen,
   setIsOpen,
-  totalFee,
-  numberOfNights,
-  propertyType,
-  city,
+  booking,
 }: SelectPaymentMethodModalProps) => {
   const maxHeight = use100vh() || "700";
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState<string>("");
+
+  const verifyPayment = useVerifyBookingPayment();
+
+  const config = {
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
+    email: booking.guest.email,
+    phone: booking.guest.phoneNumber,
+    firstName: booking.guest.firstName,
+    lastName: booking.guest.lastName,
+    channels: selectedPaymentMethod === "others" ? [] : [selectedPaymentMethod],
+    amount: 20000, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+  };
+  const initializePayment = usePaystackPayment(config);
+
+  const handlePaymentSuccess = async () => {
+    await verifyPayment.mutateAsync(booking.id, {
+      onSuccess: () => {
+        toast.success({
+          title: "Payment Successful",
+          description: "Your payment was successful",
+        });
+      },
+      onError: () => {
+        toast.error({
+          title: "Failed to verify payment",
+          description: "Your payment was successful but we could not verify it",
+        });
+      },
+    });
+  };
+
+  const handlePaymentFailure = () => {
+    toast.error({
+      title: "Payment Failed",
+      description: "Your payment was not successful",
+    });
+  };
 
   return (
     <Modal open={isOpen} onOpenChange={setIsOpen}>
@@ -49,13 +83,14 @@ const SelectPaymentMethodModal = ({
             Select Payment Method
           </ModalTitle>
           <ModalDescription className=" text-body-sm text-center">
-            You will pay <b>{formatCurrency(totalFee)}</b> for a{" "}
+            You will pay <b>{formatCurrency(booking.totalFee)}</b> for a{" "}
             <b>
-              {numberOfNights} {pluralize("night", numberOfNights)}
+              {booking.numberOfDays} {pluralize("night", booking.numberOfDays)}
             </b>{" "}
-            stay at the <b>{propertyType}</b> in{" "}
+            stay at the <b>{booking.shortlet.type}</b> in{" "}
             <b>
-              {city.name}, {city?.state?.name}
+              {booking?.shortlet?.city.name},{" "}
+              {booking?.shortlet?.city?.state?.name}
             </b>
           </ModalDescription>
         </ModalHeader>
@@ -65,7 +100,7 @@ const SelectPaymentMethodModal = ({
               " flex w-full cursor-pointer relative rounded-2xl bg-background p-0.5",
               {
                 " bg-primary-gradient shadow-[0px_4px_4px_2px_rgba(0,_0,_0,_0.10)] ":
-                  selectedPaymentMethod === "bank-transfer",
+                  selectedPaymentMethod === "bank_transfer",
               }
             )}>
             <input
@@ -74,7 +109,7 @@ const SelectPaymentMethodModal = ({
                 setSelectedPaymentMethod(e.target.value);
               }}
               name="payment-method"
-              value="bank-transfer"
+              value="bank_transfer"
               className=" sr-only"
             />
             <div className=" w-full flex flex-row items-start space-x-5 p-4 bg-background rounded-[14px]">
@@ -199,7 +234,16 @@ const SelectPaymentMethodModal = ({
             onClick={() => setIsOpen(false)}>
             Cancel
           </Button>
-          <Button>
+          <Button
+            disabled={!selectedPaymentMethod}
+            onClick={() => {
+              setIsOpen(false);
+              initializePayment({
+                onSuccess: handlePaymentSuccess,
+                onClose: handlePaymentFailure,
+              });
+            }}
+            className=" font-bold md:px-8">
             Continue to Payment{" "}
             <BsArrowUpRightCircleFill className=" size-5 fill-white" />
           </Button>
@@ -209,4 +253,4 @@ const SelectPaymentMethodModal = ({
   );
 };
 
-export default SelectPaymentMethodModal;
+export default HandlePaymentModal;

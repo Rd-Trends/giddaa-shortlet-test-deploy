@@ -29,6 +29,8 @@ export const GET_CUSTOMER_BOOKINGS = `/customer/get-bookings`;
 // booking
 export const GET_BOOKING_BY_ID = (bookingId: string) =>
   `/public/booking/${bookingId}`;
+export const VERIFY_BOOKING = (bookingId: string) =>
+  `/public/booking/${bookingId}/verify-payment`;
 
 // news letter
 export const JOIN_NEWSLETTER = `/public/join-newsletter`;

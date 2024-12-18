@@ -64,6 +64,13 @@ const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
   ) => {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(defaultValue);
+    const [prevDefaultValue, setPrevDefaultValue] =
+      React.useState(defaultValue);
+
+    if (prevDefaultValue !== defaultValue) {
+      setValue(defaultValue);
+      setPrevDefaultValue(defaultValue);
+    }
 
     const sortedOptions = React.useMemo(() => {
       if (!sort) return options;
@@ -109,7 +116,7 @@ const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
           </PopoverTrigger>
           <PopoverContent
             sameWidthAsTrigger
-            wrapperClassName=" p-[1px] bg-mid-grey  "
+            wrapperClassName=" p-[1px] bg-mid-grey shadow-[0px_12px_16px_-4px_rgba(16,_24,_40,_0.08),_0px_4px_6px_-2px_rgba(16,_24,_40,_0.03)]  "
             className=" p-0">
             <Command>
               <CommandInput placeholder={searchPlaceholder} />
