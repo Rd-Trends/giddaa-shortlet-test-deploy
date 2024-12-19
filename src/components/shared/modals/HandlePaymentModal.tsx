@@ -89,7 +89,7 @@ const HandlePaymentModal = ({
             </b>{" "}
             stay at the <b>{booking.shortlet.type}</b> in{" "}
             <b>
-              {booking?.shortlet?.city.name},{" "}
+              {booking?.shortlet?.city?.name},{" "}
               {booking?.shortlet?.city?.state?.name}
             </b>
           </ModalDescription>
@@ -245,7 +245,11 @@ const HandlePaymentModal = ({
             }}
             className=" font-bold md:px-8">
             Continue to Payment{" "}
-            <BsArrowUpRightCircleFill className=" size-5 fill-white" />
+            <BsArrowUpRightCircleFill
+              className={cn(" size-5 fill-white", {
+                " fill-dark-grey": !selectedPaymentMethod,
+              })}
+            />
           </Button>
         </ModalFooter>
       </ModalContent>

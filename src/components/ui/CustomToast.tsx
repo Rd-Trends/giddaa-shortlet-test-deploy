@@ -19,7 +19,7 @@ const variants = {
     containerClass:
       "bg-[#FEF6F6] border border-[#F22424] h-full p-[16px] rounded-[8px] text-black",
     iconColor: "text-[#F22424]",
-    Icon: "/gif/Error.gif",
+    Icon: "/gif/Cancel.gif",
   },
   warning: {
     containerClass:

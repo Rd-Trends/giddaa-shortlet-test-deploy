@@ -1,8 +1,9 @@
+import Container from "@/components/layouts/Container";
 import React from "react";
 
 const PrivacyPolicy = () => {
   return (
-    <div className=" prose max-w-5xl mx-auto text-black ">
+    <Container className=" pt-[7rem] pb-10 prose max-w-5xl mx-auto text-black ">
       <h1>Terms and Conditions</h1>
 
       <p>
@@ -443,7 +444,7 @@ const PrivacyPolicy = () => {
           <b>December 9th, 2024.</b>
         </p>
       </div>
-    </div>
+    </Container>
   );
 };
 

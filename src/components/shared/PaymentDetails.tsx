@@ -32,14 +32,14 @@ const PaymentDetails = ({ booking }: { booking: ShortLetBooking }) => {
     <div>
       <div className=" flex flex-col gap-4 md:flex-row xl:px-14 mt-6">
         <div className=" w-full md:w-[249px]">
-          {shortLet.images.length === 1 && (
+          {shortLet?.images?.length === 1 && (
             <img
               src={shortLet.images[0].document}
               className=" rounded-2xl border border-mid-grey h-[233px] w-full object-cover "
               alt=""
             />
           )}
-          {shortLet.images.length > 1 && (
+          {shortLet?.images?.length > 1 && (
             <Carousel opts={{ loop: true }} className="w-full group ">
               <CarouselContent className=" -ml-1">
                 {shortLet.images.map((image, index) => (
@@ -74,7 +74,7 @@ const PaymentDetails = ({ booking }: { booking: ShortLetBooking }) => {
               {booking.guest?.phoneNumber ?? ""} {booking.guest?.email ?? ""}
             </b>
           </p>
-          <p className=" text-body-sxs text-charcoal-grey">
+          <p className=" text-body-xs text-charcoal-grey">
             Booking for {nights} {pluralize("Night", nights)} (
             {formatDate(booking.checkOutDate, "MMM dd")} -{" "}
             {formatDate(booking.checkInDate, "MMM dd")})

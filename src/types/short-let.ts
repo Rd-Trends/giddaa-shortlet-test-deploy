@@ -167,4 +167,24 @@ export type ShortLetBooking = {
   shortlet: ShortLet;
   extendedBookings: Array<ShortLetBooking>;
   customer: User | null;
+  transaction: ShortLetBookingTransaction | null;
+};
+
+export type ShortLetBookingTransaction = {
+  id: string;
+  rrr: string;
+  transactionType: string;
+  amount: number;
+  organizationAmount: number;
+  giddaaAmount: number;
+  defaultAmount: number;
+  application: string | null;
+  customer: User | null;
+  mortgagePlan: string | null;
+  house: ShortLet | null;
+  dueDate: string;
+  dateOfPayment: string;
+  isPaid: boolean;
+  paymentItem: string | null;
+  merchantCode: string;
 };

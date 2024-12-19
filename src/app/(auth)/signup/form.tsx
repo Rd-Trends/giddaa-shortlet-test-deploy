@@ -2,7 +2,7 @@
 
 import { useRegisterUser } from "@/apis/mutations/accout";
 import { Button } from "@/components/ui/Button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/components/ui/Checkbox";
 import { FieldErrorText } from "@/components/ui/FormHelpers";
 import Input from "@/components/ui/Input";
 import { AppRoutes } from "@/constants/routes";

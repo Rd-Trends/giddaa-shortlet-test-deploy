@@ -6,22 +6,26 @@ import http from "../http";
 
 export const getBookingById = async (id: string) => {
   const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL!;
-  const res = await fetch(`${baseURL}/${GET_BOOKING_BY_ID(id)}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    cache: "force-cache",
-  });
+  try {
+    const res = await fetch(`${baseURL}${GET_BOOKING_BY_ID(id)}`);
 
-  if (!res.ok) {
-    const resp = await res.json();
-    console.log(resp);
-    return null;
+    console.log(`${baseURL}/${GET_BOOKING_BY_ID(id)}`);
+
+    if (!res.ok) {
+      throw new Error(res.statusText);
+    }
+
+    const data = (await res.json()) as SingleResponseType<ShortLetBooking>;
+    return transformSingleResponse(data);
+  } catch (error) {
+    console.error(error);
   }
 
-  const data = (await res.json()) as SingleResponseType<ShortLetBooking>;
-  return transformSingleResponse(data);
+  // return http.get(
+  //   GET_BOOKING_BY_ID(id),
+  //   {},
+  //   (res: SingleResponseType<ShortLetBooking>) => transformSingleResponse(res)
+  // );
 };
 
 export const verifyBookingPayment = async (id: string) => {

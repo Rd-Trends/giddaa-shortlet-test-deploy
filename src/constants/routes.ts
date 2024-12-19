@@ -13,4 +13,6 @@ export const AppRoutes = {
 
   // profile
   PROFILE: "/profile",
+  PROFILE_RESERVATIONS: "/profile/reservations",
+  PROFILE_RESERVATION_DETAILS: "/profile/reservations/[id]",
 };

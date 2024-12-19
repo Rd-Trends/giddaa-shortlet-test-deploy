@@ -1,13 +1,11 @@
 import { useGetcustomerBookingsInfinite } from "@/apis/queries/customer";
-import ShortLetCard, {
-  ShortLetCardLoader,
-} from "@/components/shared/Cards/ShortLetCard";
-import { Button } from "@/components/ui/Button";
+import { ShortLetCardLoader } from "@/components/shared/Cards/ShortLetCard";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { ShortLetBooking } from "@/types/short-let";
 import { useEffect, useMemo, useState } from "react";
 import PaymentDetailsModal from "./PaymentDetailsModal";
 import HandlePaymentModal from "@/components/shared/modals/HandlePaymentModal";
+import ShortletBookingCard from "./ShortLetBookingCard";
 
 const Past = () => {
   const { isIntersecting, ref } = useIntersectionObserver();
@@ -51,23 +49,24 @@ const Past = () => {
   const isFetchingForFirstTime = isFetching && !isFetchingNextPage;
   return (
     <div>
+      <div className=" mb-10">
+        <p className=" text-center text-body-sm">
+          These are reservations where the check-in date is in the past.
+        </p>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-10 ">
         {!isFetchingForFirstTime &&
           !!bookings.length &&
           bookings.map((booking) => {
             return (
-              <div key={booking.id} className="space-y-4">
-                <ShortLetCard shortLet={booking.shortlet} />
-                <Button
-                  variant={"outline"}
-                  className="w-full"
-                  onClick={() => {
-                    setSelectedBooking(booking);
-                    setShowPaymentDetailsModal(true);
-                  }}>
-                  Pay Now
-                </Button>
-              </div>
+              <ShortletBookingCard
+                key={booking.id}
+                booking={booking}
+                handlePayBtnClick={() => {
+                  setSelectedBooking(booking);
+                  setShowPaymentDetailsModal(true);
+                }}
+              />
             );
           })}
 

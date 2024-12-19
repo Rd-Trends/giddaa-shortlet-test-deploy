@@ -25,6 +25,7 @@ export const ReservationSuccessModal = ({
   return (
     <Modal open={isOpen} onOpenChange={setIsOpen}>
       <ModalContent
+        preventAutoFocusOnOpen
         className=" rounded-[20px] p-4"
         wrapperClassName="w-full max-w-[calc(100vw-2rem)] md:max-w-[441px] rounded-[22px]">
         <ModalHeader className="py-4 px-8">

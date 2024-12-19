@@ -191,7 +191,7 @@ const ImageGalleryDrawer = ({
                 wrapperClassName="w-full h-[264px] md:h-[393px] object-cover rounded-2xl"
                 className=" rounded-2xl"
               />
-              <div className=" absolute bottom-4 left-4 bg-cream border border-r-primary rounded-full text-primary text-body-xs capitalize font-bold px-4 py-1 min-h-[30px] inline-flex items-center">
+              <div className=" absolute bottom-4 left-4 bg-cream border border-primary rounded-full text-primary text-body-xs capitalize font-bold px-4 py-1 min-h-[30px] inline-flex items-center">
                 {getImageType(image.optionId)}
               </div>
             </div>
