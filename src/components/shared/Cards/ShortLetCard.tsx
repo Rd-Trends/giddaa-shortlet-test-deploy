@@ -167,7 +167,11 @@ const ShortLetCard = ({ shortLet }: { shortLet: ShortLet }) => {
             open={showContactStaffsPopover}
             onOpenChange={setShowContactStaffsPopover}>
             <PopoverTrigger asChild>
-              <button className=" border-none outline-none bg-transparent flex items-center space-x-4 text-secondary pt-1">
+              <button
+                className={
+                  " flex items-center gap-8 text-secondary py-2 px-4 " +
+                  " border border-light-grey outline-none bg-transparent rounded-full "
+                }>
                 <BsTelephone className=" size-5" />
                 <FaWhatsapp className=" size-5" />
               </button>

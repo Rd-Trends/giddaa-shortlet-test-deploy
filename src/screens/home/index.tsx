@@ -51,39 +51,40 @@ const AllShortLetPage = () => {
   const isFetchingForFirstTime = isFetching && !isFetchingNextPage;
 
   return (
-    <div className=" pb-20 h-full">
+    <>
       <FilterNav totalShortLets={totalShortLets} isFetching={isFetching} />
+      <div className="pb-[60px] md:pb-20">
+        <Container className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-10 pt-6 ">
+          {!isFetchingForFirstTime &&
+            !!shortLets.length &&
+            shortLets.map((shortLet) => {
+              return <ShortLetCard key={shortLet.id} shortLet={shortLet} />;
+            })}
 
-      <Container className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-10 pt-6 pb-20 ">
-        {!isFetchingForFirstTime &&
-          !!shortLets.length &&
-          shortLets.map((shortLet) => {
-            return <ShortLetCard key={shortLet.id} shortLet={shortLet} />;
-          })}
-
-        {(isFetching || isFetchingNextPage) &&
-          Array.from({ length: 4 }).map((_, index) => (
-            <ShortLetCardLoader key={index} />
-          ))}
-      </Container>
-      <div ref={ref} className="py-4 h-8 bg-transparent w-full" />
-
-      {!isFetching && isFetched && !shortLets.length && (
-        <Container className=" pb-10 flex flex-col justify-center items-center">
-          <h1>No Short Lets</h1>
-          <p>There are no available short lets at the moment</p>
+          {(isFetching || isFetchingNextPage) &&
+            Array.from({ length: 4 }).map((_, index) => (
+              <ShortLetCardLoader key={index} />
+            ))}
         </Container>
-      )}
+        <div ref={ref} className="py-4 h-8 bg-transparent w-full" />
 
-      {error && (
-        <Container className=" pt-[7rem] pb-10 ">
-          <p>An error occured</p>
-        </Container>
-      )}
+        {!isFetching && isFetched && !shortLets.length && (
+          <Container className=" pb-10 flex flex-col justify-center items-center">
+            <h1>No Short Lets</h1>
+            <p>There are no available short lets at the moment</p>
+          </Container>
+        )}
 
-      <ScrollToTop />
-      <WelcomeModal />
-    </div>
+        {error && (
+          <Container className=" pt-[7rem] pb-10 ">
+            <p>An error occured</p>
+          </Container>
+        )}
+
+        <ScrollToTop />
+        <WelcomeModal />
+      </div>
+    </>
   );
 };
 

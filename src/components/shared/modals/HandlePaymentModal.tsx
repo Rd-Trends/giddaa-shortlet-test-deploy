@@ -35,23 +35,19 @@ const HandlePaymentModal = ({
   const verifyPayment = useVerifyBookingPayment();
 
   const initializePayment = async () => {
+    if (typeof window === "undefined") return;
     if (!booking?.transaction?.rrr) {
       return;
     }
 
     const popup = new Paystack();
-    const status = popup
-      .resumeTransaction({
-        accessCode: booking?.transaction?.rrr,
-      })
-      .getStatus().status;
 
-    if (status === "success") {
-      handlePaymentSuccess();
-    }
-    if (status === "failed") {
-      handlePaymentFailure();
-    }
+    // @ts-expect-error: Type not updated in the library
+    popup.resumeTransaction(booking?.transaction?.rrr, {
+      onSuccess: handlePaymentSuccess,
+      onCancel: handlePaymentFailure,
+      onError: handlePaymentFailure,
+    });
   };
 
   const handlePaymentSuccess = async () => {

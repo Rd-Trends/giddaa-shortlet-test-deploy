@@ -9,8 +9,6 @@ export const getBookingById = async (id: string) => {
   try {
     const res = await fetch(`${baseURL}${GET_BOOKING_BY_ID(id)}`);
 
-    console.log(`${baseURL}/${GET_BOOKING_BY_ID(id)}`);
-
     if (!res.ok) {
       throw new Error(res.statusText);
     }
@@ -20,12 +18,6 @@ export const getBookingById = async (id: string) => {
   } catch (error) {
     console.error(error);
   }
-
-  // return http.get(
-  //   GET_BOOKING_BY_ID(id),
-  //   {},
-  //   (res: SingleResponseType<ShortLetBooking>) => transformSingleResponse(res)
-  // );
 };
 
 export const verifyBookingPayment = async (id: string) => {

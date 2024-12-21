@@ -45,6 +45,7 @@ export type ShortLet = {
   rules: Array<ShortLetHouseRules>;
   features: Array<ShortLetFeatures>;
   bookings: number;
+  isVerified: boolean;
 };
 
 type ShortLetService = {

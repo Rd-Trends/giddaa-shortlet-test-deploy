@@ -145,21 +145,23 @@ const FilterDrawer = ({
             </p>
           )}
           {isFetching && <SkeletonLoader className=" w-40 h-5 rounded-xl" />}
-          <Button
-            isLoading={isFetching}
-            onClick={() => {
-              setIsOpen(false);
-            }}>
-            {isFetching
-              ? "Applying Filters"
-              : `View ${totalShortLets} ${pluralize(
-                  "place",
-                  totalShortLets
-                )} found`}
-          </Button>
-          <Button variant="outline" onClick={clearFilter}>
-            Clear Filters
-          </Button>
+          <div className=" flex items-center gap-4">
+            <Button
+              isLoading={isFetching}
+              onClick={() => {
+                setIsOpen(false);
+              }}>
+              {isFetching
+                ? "Applying Filters"
+                : `View ${totalShortLets} ${pluralize(
+                    "place",
+                    totalShortLets
+                  )} found`}
+            </Button>
+            <Button variant="outline" onClick={clearFilter}>
+              Clear Filters
+            </Button>
+          </div>
         </div>
       </DrawerContent>
     </Drawer>

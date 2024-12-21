@@ -17,6 +17,7 @@ import {
 } from "@/apis/queries/location";
 import Combobox from "@/components/ui/Combobox";
 import { useFilterStore } from "@/app/providers/home-page-filter-provider";
+import { cn } from "@/utils/classname";
 
 type FilterNavProps = {
   totalShortLets: number;
@@ -54,7 +55,7 @@ const FilterNav = ({ totalShortLets, isFetching }: FilterNavProps) => {
 
   return (
     <>
-      <Container className=" border-b border-mid-grey py-4 flex items-center gap-4 sticky top-[5rem] z-10 bg-background ">
+      <Container className=" border-b border-mid-grey py-4 flex items-center gap-2 sticky top-[5rem] z-10 bg-background ">
         <SelectPlaceTypes />
         <Combobox
           wrapperClassName=" hidden md:flex"
@@ -246,10 +247,9 @@ const SelectHouseTypes = () => {
   const filterCount = isAllSelected ? 0 : types.length;
 
   return (
-    <DisplayFilterCount count={filterCount}>
+    <DisplayFilterCount count={filterCount} className=" hidden md:flex">
       <CustomPopoverAsDropdownMenu
         placeholder="House Type"
-        wrapperClassName=" hidden md:flex"
         triggerClassName=" h-[35px] w-full gap-2 "
         contentClassName="max-h-[320px]">
         <div className="max-h-[320px] flex flex-col overflow-y-auto">
@@ -411,12 +411,14 @@ const PriceFilter = () => {
 const DisplayFilterCount = ({
   children,
   count,
+  className,
 }: {
   children: React.ReactNode;
   count: number;
+  className?: string;
 }) => {
   return (
-    <div className="relative w-full">
+    <div className={cn("relative w-full", className)}>
       {children}
       {!!count && (
         <span className="absolute -top-2 -right-2 bg-primary text-white text-body-sm rounded-full size-[18px] flex justify-center items-center">

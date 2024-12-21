@@ -9,7 +9,7 @@ export default function ProfileLayout({
   return (
     <div className="container flex flex-col justify-between px-0 bg-background min-h-screen">
       <Navbar />
-      <div className=" pt-20">{children}</div>
+      {children}
       <Footer />
     </div>
   );
