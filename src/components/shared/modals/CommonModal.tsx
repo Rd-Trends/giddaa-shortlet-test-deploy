@@ -16,6 +16,7 @@ interface CommonModalProps {
   cancelBtnText?: string;
   confirmBtnText?: string;
   confirmAction: () => void;
+  onCancel?: () => void; // when cancel button is clicked, and you want to do something like route to another page
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
   icon?: React.ReactNode;
@@ -30,6 +31,7 @@ export const CommonModal = ({
   cancelBtnText = "No",
   confirmBtnText = "Yes",
   confirmAction,
+  onCancel,
   icon,
 }: CommonModalProps) => {
   return (
@@ -66,7 +68,10 @@ export const CommonModal = ({
             <Button
               variant={"outline"}
               className="w-full font-bold"
-              onClick={() => setIsOpen(false)}>
+              onClick={() => {
+                onCancel?.();
+                setIsOpen(false);
+              }}>
               {cancelBtnText}
             </Button>
           )}

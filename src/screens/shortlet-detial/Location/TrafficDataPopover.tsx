@@ -84,6 +84,14 @@ const TrafficDataPopover = ({
                   </tr>
                 );
               })}
+
+            {!isLoading && !data?.length && (
+              <tr>
+                <td colSpan={2} className="p-4 text-body-sm">
+                  No Traffic Data Available
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </PopoverContent>

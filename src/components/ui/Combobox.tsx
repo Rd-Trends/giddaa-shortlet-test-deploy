@@ -19,6 +19,7 @@ import {
 import { BiCheck, BiChevronDown } from "react-icons/bi";
 import { cn } from "@/utils/classname";
 import { FieldErrorText, FieldHelperText, FieldLabelText } from "./FormHelpers";
+import { PopoverContentProps } from "@radix-ui/react-popover";
 
 type ComboboxOption = {
   label: string;
@@ -40,7 +41,11 @@ type ComboboxProps = {
   isLoading?: boolean;
   loadingText?: string;
   emptyText?: string;
-};
+  triggerClassName?: string;
+  wrapperClassName?: string;
+  contentClassName?: string;
+  align?: PopoverContentProps["align"];
+} & React.ComponentPropsWithoutRef<typeof Popover>;
 
 const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
   (
@@ -59,6 +64,11 @@ const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
       emptyText = "No options found.",
       isLoading = false,
       loadingText = "Loading...",
+      triggerClassName,
+      wrapperClassName,
+      contentClassName,
+      align,
+      ...rest
     },
     ref
   ) => {
@@ -83,14 +93,14 @@ const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
     }, [options, sort]);
 
     return (
-      <div className="w-full flex flex-col space-y-1.5">
+      <div className={cn("w-full flex flex-col space-y-1.5", wrapperClassName)}>
         {label && (
           <label className="text-sm font-medium text-offBlack" htmlFor={label}>
             <FieldLabelText label={label} required={required} />
           </label>
         )}
 
-        <Popover open={open} onOpenChange={setOpen} modal>
+        <Popover open={open} onOpenChange={setOpen} modal {...rest}>
           <PopoverTrigger asChild ref={ref}>
             <button
               id={label}
@@ -104,7 +114,8 @@ const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
                     !error && !disabled,
                   " border-danger border-2 text-danger ": !!error,
                   "text-charcoal-grey": !value,
-                }
+                },
+                triggerClassName
               )}>
               <span className=" line-clamp-1">
                 {value
@@ -115,8 +126,12 @@ const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
             </button>
           </PopoverTrigger>
           <PopoverContent
+            align={align}
             sameWidthAsTrigger
-            wrapperClassName=" p-[1px] bg-mid-grey shadow-[0px_12px_16px_-4px_rgba(16,_24,_40,_0.08),_0px_4px_6px_-2px_rgba(16,_24,_40,_0.03)]  "
+            wrapperClassName={cn(
+              " p-[1px] bg-mid-grey shadow-[0px_12px_16px_-4px_rgba(16,_24,_40,_0.08),_0px_4px_6px_-2px_rgba(16,_24,_40,_0.03)]  ",
+              contentClassName
+            )}
             className=" p-0">
             <Command>
               <CommandInput placeholder={searchPlaceholder} />
@@ -138,6 +153,7 @@ const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
                         setValue(newValue);
                         onSelect(newValue);
                         setOpen(false);
+                        rest?.onOpenChange?.(false);
                       }}>
                       {option.label}
                       <BiCheck

@@ -26,6 +26,9 @@ type DropdownInputProps = {
   isLoading?: boolean;
   loadingText?: string;
   emptyText?: string;
+  triggerClassName?: string;
+  wrapperClassName?: string;
+  contentClassName?: string;
 } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>;
 
 const DropdownInput = React.forwardRef<
@@ -47,14 +50,17 @@ const DropdownInput = React.forwardRef<
       emptyText = "No options found.",
       isLoading = false,
       loadingText = "Loading...",
+      triggerClassName,
+      wrapperClassName,
+      contentClassName,
       ...rest
     },
     ref
   ) => {
     const [value, setValue] = React.useState(defaultValue);
-
     const [prevDefaultValue, setPrevDefaultValue] =
       React.useState(defaultValue);
+    
     if (prevDefaultValue !== defaultValue) {
       setValue(defaultValue);
       setPrevDefaultValue(defaultValue);
@@ -71,7 +77,7 @@ const DropdownInput = React.forwardRef<
     }, [options, sort]);
 
     return (
-      <div className="w-full flex flex-col space-y-1.5">
+      <div className={cn("w-full flex flex-col space-y-1.5", wrapperClassName)}>
         {label && (
           <label className="text-sm font-medium text-offBlack" htmlFor={label}>
             <FieldLabelText label={label} required={required} />
@@ -86,13 +92,18 @@ const DropdownInput = React.forwardRef<
           }}
           disabled={disabled}
           {...rest}>
-          <SelectTrigger id={label} ref={ref} error={error} disabled={disabled}>
+          <SelectTrigger
+            id={label}
+            ref={ref}
+            error={error}
+            disabled={disabled}
+            className={triggerClassName}>
             <SelectValue placeholder={placeholder}>
               {sortedOptions.find((option) => option.value === value)?.label ??
                 ""}
             </SelectValue>
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className={contentClassName}>
             {isLoading && (
               <div className=" px-4 py-6 text-body-sm">
                 <p>{loadingText}</p>

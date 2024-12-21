@@ -36,7 +36,7 @@ const Navbar = () => {
 
   return (
     // <Container>
-    <div className="block fixed left-0 top-0 z-50 w-full">
+    <div className="block sticky top-0 z-50 w-full">
       {/* Generic Navbar === Note bring the other classNmae from above div to nav when removing banner of diaspora */}
       <Container className="bg-background border-b border-mid-grey ">
         <nav className=" h-20 py-4 flex items-center justify-between gap-[32px]">

@@ -74,6 +74,6 @@ const houseType = [
   },
 ];
 
-export const houseTypes = houseType
+export const SHORT_LET_HOUSE_TYPES = houseType
   .slice()
   .sort((a, b) => a.name.localeCompare(b.name));

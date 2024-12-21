@@ -122,7 +122,7 @@ const ShortLetCard = ({ shortLet }: { shortLet: ShortLet }) => {
         )}
 
         <div className=" absolute top-0 w-full p-2 right-0 left-0 flex justify-between items-center">
-          <div className=" w-fit bg-primary-gradient p-0.5 rounded-full">
+          <div className=" w-fit h-fit bg-primary-gradient p-0.5 rounded-full">
             <span className=" bg-white text-body-xs font-bold text-primary px-4 py-1.5 rounded-full ">
               Recommended
             </span>
@@ -145,22 +145,23 @@ const ShortLetCard = ({ shortLet }: { shortLet: ShortLet }) => {
             {shortLet.city?.name}, {shortLet.city?.state?.name}
           </h3>
           <p className=" text-body-sm ">{getShortLetDescription(shortLet)}</p>
-          <p>
-            <b className=" text-body-md font-bold text-primary">
+          <div className="flex items-end text-body-md  ">
+            <b className=" text-primary">
               {formatCurrency(shortLet.listingPrice)}
-            </b>{" "}
-            <span className=" text-body-xs">Per night</span>
-          </p>
-          {isLoadingExchangeRates && (
-            <SkeletonLoader className=" h-4 w-12 rounded-md" />
-          )}
-          {exchangeRates && (
-            <p className=" text-body-sm font-semibold">
-              {formatCurrency(shortLet.listingPrice / exchangeRates.dollar, {
-                currency: "USD",
-              })}
-            </p>
-          )}
+            </b>
+            {exchangeRates && (
+              <b className=" text-primary">
+                /
+                {formatCurrency(shortLet.listingPrice / exchangeRates?.dollar, {
+                  currency: "USD",
+                })}
+              </b>
+            )}
+            {isLoadingExchangeRates && (
+              <SkeletonLoader className=" ml-1 h-5 w-8 rounded-xl" />
+            )}
+            <span className="ml-1 text-body-xs">Per Night</span>
+          </div>
 
           <Popover
             open={showContactStaffsPopover}
@@ -174,7 +175,6 @@ const ShortLetCard = ({ shortLet }: { shortLet: ShortLet }) => {
             <ContactStaffsPopover
               shortLetId={shortLet.id}
               isOpen={showContactStaffsPopover}
-              setIsOpen={setShowContactStaffsPopover}
             />
           </Popover>
         </div>

@@ -67,8 +67,14 @@ import StandingShowerIcon from "@/svgs/StandingShowerIcon";
 import WaterDropleticon from "@/svgs/WaterDropletIcon";
 import MarbleWallIcon from "@/svgs/MarbleWallIcon";
 import NetflixIcon from "@/svgs/NetflixIcon";
+import FoosballIcon from "@/svgs/FoosballIcon";
+import DiceIcon from "@/svgs/DiceIcon";
+import PS5Icon from "@/svgs/PS5Icon";
+import XBOXIcon from "@/svgs/XBOXIcon";
+import PrimeVideoIcon from "@/svgs/PrimeVideIcon";
+import TennisBatAndBallIcon from "@/svgs/TennisBatAndBallIcon";
 
-export const AmmenitiesIconMap = {
+export const SHORT_LET_AMENITIES_ICON_MAP = {
   hasEnsuite: <EnsuiteIcon />,
   hasPoPCeiling: <POPCeilingIcon />,
   hasWalkInClosets: <WalkInClosetsIcon />,
@@ -96,7 +102,7 @@ export const AmmenitiesIconMap = {
   hasModernAppliances: <ModernApplianceIcon />,
   hasGraniteCountertops: <GraniteCounterTopsIcon />,
   hasBreakfastBar: <BreakfastBarIcon className=" size-7" />,
-  HasStorageRoom: <StorageRoomIcon />,
+  hasStorageRoom: <StorageRoomIcon />,
   hasKettle: <KettleIcon className=" size-6" />,
   hasRefrigerator: <RefrigeratorIcon className=" size-6" />,
   hasCookingGas: <CookingGasIcon className=" size-6" />,
@@ -116,7 +122,6 @@ export const AmmenitiesIconMap = {
   hasPatioOrDarkSpace: <PatioIcon />,
   hasLandscapedGarden: <LandscapeIcon />,
   hasSwimmingPool: <SwimmingPoolLadderIcon />,
-  hasPoolOrSnookerTable: <SnookerTableIcon className="size-6" />,
 
   hasHomeOfficeSpace: <HomeOfficeSpaceIcon />,
   hasBuiltInShelfOrBookSpace: <BookShelfIcon />,
@@ -152,4 +157,12 @@ export const AmmenitiesIconMap = {
   hasNearbyWalkingTrailsAndSidewalks: <NearbyTrailsIcon />,
 
   hasNetflix: <NetflixIcon />,
+  hasFoosball: <FoosballIcon />,
+  hasPoolOrSnookerTable: <SnookerTableIcon className="size-6" />,
+  hasBoardGames: <DiceIcon />,
+  hasPS5: <PS5Icon className="size-6" />,
+  hasXbox: <XBOXIcon className="size-6" />,
+  hasAmazonPrime: <PrimeVideoIcon />,
+  hasTableTennis: <TennisBatAndBallIcon />,
+  hasHomeTheater: <HomeTheatreIcon />,
 };

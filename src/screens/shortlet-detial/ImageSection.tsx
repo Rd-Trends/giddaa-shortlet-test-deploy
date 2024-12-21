@@ -45,7 +45,7 @@ const ImageSection = ({
           src={images[0].document}
           alt=""
           wrapperClassName={cn(
-            "w-full h-[235px] md:h-full object-cover md:rounded-2xl",
+            "w-full h-[293px] md:h-full object-cover md:rounded-2xl",
             {
               "md:w-[60%]": hasTwoImages,
               "md:w-[45%]": hasThreeImages || hasFourImages,
@@ -70,7 +70,7 @@ const ImageSection = ({
 
         {hasThreeImages && (
           <ImageWithSkeletonLoader
-            src={images[1].document}
+            src={images[2].document}
             alt=""
             wrapperClassName={cn(
               "hidden md:block w-full h-full object-cover rounded-2xl md:w-[25%]"
@@ -184,7 +184,7 @@ const ImageGalleryDrawer = ({
 
         <Container className=" pt-6 px-4 grid grid-cols-1 gap-4 md:grid-cols-2 flex-auto overflow-y-auto pb-4">
           {images.map((image) => (
-            <div key={image.id} className=" relative">
+            <div key={image.id} className=" relative h-fit">
               <ImageWithSkeletonLoader
                 src={image.document}
                 alt=""

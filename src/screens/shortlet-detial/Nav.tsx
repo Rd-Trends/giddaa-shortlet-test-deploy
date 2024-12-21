@@ -58,10 +58,10 @@ const Nav = ({
           </Tooltip>
 
           <div className=" text-black space-y-2">
-            <h1 className="text-body-sm md:text-body-xl font-medium">
-              {displayShortLetType(type)}. {city.name}, {city.state.name}.
+            <h1 className="text-body-md md:text-heading-4 font-bold">
+              {displayShortLetType(type)} in {city.name}, {city.state.name}.
             </h1>
-            <div className="flex items-center text-body-sm md:text-body-md font-bold">
+            <div className="flex items-center text-body-sm md:text-body-md font-semibold">
               <span>{formatCurrency(price)}</span>
               {exchangeRates && (
                 <span className=" ">
@@ -72,7 +72,7 @@ const Nav = ({
                 </span>
               )}
               {isLoadingExchangeRates && (
-                <SkeletonLoader className=" ml-2 h-5 w-10 rounded-xl" />
+                <SkeletonLoader className=" ml-1 h-5 w-8 rounded-xl" />
               )}
               <span className="ml-1">Per Night</span>
             </div>

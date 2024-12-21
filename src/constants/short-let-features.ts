@@ -1,4 +1,4 @@
-export const shortLetFeatures = {
+export const SHORT_LET_FEATURES = {
   General_Features: [
     "hasEnsuite",
     "hasPoPCeiling",

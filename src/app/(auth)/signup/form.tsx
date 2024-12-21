@@ -46,7 +46,7 @@ const SignUpForm = () => {
       {
         onSuccess: (data) => {
           setAuth(data);
-          router.replace(AppRoutes.Home);
+          router.replace(AppRoutes.HOME);
         },
       }
     );

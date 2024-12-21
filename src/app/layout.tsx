@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Red_Hat_Display } from "next/font/google";
-import Providers from "./provider";
+import ReactQueryProvider from "./providers/react-query-provider";
 import { AuthenticationProvider } from "@/context/AuthContext";
 import { getSession } from "@/server-actions/get-session";
 import { ToastContainer } from "react-toastify";
@@ -40,11 +40,11 @@ export default async function RootLayout({
     <html lang="en" className=" scroll-smooth">
       <body
         className={`${redHatDisplay.variable} ${millik.variable}  font-sans antialiased bg-primary-gradient`}>
-        <Providers>
+        <ReactQueryProvider>
           <AuthenticationProvider value={{ token }}>
             <StoreContextProvider>{children}</StoreContextProvider>
           </AuthenticationProvider>
-        </Providers>
+        </ReactQueryProvider>
         <ToastContainer />
       </body>
     </html>

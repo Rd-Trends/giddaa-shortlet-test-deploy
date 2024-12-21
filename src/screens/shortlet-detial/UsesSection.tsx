@@ -1,16 +1,8 @@
 "use client";
 
+import { SHORT_LET_USES_IMAGE_MAP } from "@/constants/short-let-uses";
 import { ShortLet } from "@/types/short-let";
 import React, { useMemo } from "react";
-
-const ImageMap = {
-  GET_AWAY_SPOT_SHORTLET_USE: "/images/shortlet-uses/get-away.png",
-  OFFICIAL_TRAVEL_SHORTLET_USE: "/images/shortlet-uses/travel.png",
-  PARTIES_SHORTLET_USE: "/images/shortlet-uses/parties.png",
-  WEDDING_PREPARATION_SHORTLET_USE: "/images/shortlet-uses/weddings.png",
-  CONTENT_STUDIO_SHORTLET_USE: "/images/shortlet-uses/content-studio.png",
-  MOVIE_SHOOTS_SHORTLET_USE: "/images/shortlet-uses/movie-shoots.png",
-};
 
 const UsesSection = ({ uses = [] }: { uses: ShortLet["uses"] }) => {
   const availableServices = useMemo(() => {
@@ -23,7 +15,7 @@ const UsesSection = ({ uses = [] }: { uses: ShortLet["uses"] }) => {
         name: service.name,
         id: service.id,
         description: service.description,
-        img: ImageMap[service.id as keyof typeof ImageMap],
+        img: SHORT_LET_USES_IMAGE_MAP[service.id as keyof typeof SHORT_LET_USES_IMAGE_MAP],
       };
     });
   }, [uses]);

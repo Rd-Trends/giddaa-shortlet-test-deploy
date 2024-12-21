@@ -9,13 +9,11 @@ import SkeletonLoader from "@/components/ui/Skeleton";
 type ContactStaffsPopoverProps = {
   shortLetId: string;
   isOpen?: boolean;
-  setIsOpen?: (value: boolean) => void;
 } & React.ComponentPropsWithoutRef<typeof PopoverContent>;
 
 const ContactStaffsPopover = ({
   shortLetId,
   isOpen = false,
-  // setIsOpen,
   ...props
 }: ContactStaffsPopoverProps) => {
   const { data: contactAgentsData, isLoading: isLoadingContactStaffs } =

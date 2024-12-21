@@ -10,10 +10,11 @@ import WelcomeModal from "@/components/shared/modals/WelcomeModal";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import Container from "@/components/layouts/Container";
 import FilterNav from "./FilterNav";
+import { useFilter } from "./useFilter";
 
 const AllShortLetPage = () => {
   const { isIntersecting, ref } = useIntersectionObserver();
-  // const [search] = useState("");
+  const filter = useFilter();
 
   const {
     data,
@@ -26,6 +27,7 @@ const AllShortLetPage = () => {
   } = useGetShortLets({
     pageNumber: 1,
     pageSize: 8,
+    advancedSearch: filter.length ? JSON.stringify(filter) : null,
   });
 
   useEffect(() => {
@@ -43,29 +45,15 @@ const AllShortLetPage = () => {
   const shortLets = useMemo(() => {
     return data?.pages.map((page) => page.value).flat() || [];
   }, [data?.pages]);
+  const totalShortLets =
+    data?.pages.map((page) => page.metadata.totalRecords).flat()[0] || 0;
 
   const isFetchingForFirstTime = isFetching && !isFetchingNextPage;
 
-  if (error) {
-    return (
-      <Container className=" pt-[7rem] pb-10 ">
-        <p>An error occured</p>
-      </Container>
-    );
-  }
-
-  if (!isFetching && isFetched && !shortLets.length) {
-    return (
-      <Container className=" h-80 flex flex-col justify-center items-center">
-        <h1>No Short Lets</h1>
-        <p>There are no available short lets at the moment</p>
-      </Container>
-    );
-  }
-
   return (
-    <div className="pt-[5rem] pb-20">
-      <FilterNav />
+    <div className=" pb-20 h-full">
+      <FilterNav totalShortLets={totalShortLets} isFetching={isFetching} />
+
       <Container className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-10 pt-6 pb-20 ">
         {!isFetchingForFirstTime &&
           !!shortLets.length &&
@@ -79,6 +67,19 @@ const AllShortLetPage = () => {
           ))}
       </Container>
       <div ref={ref} className="py-4 h-8 bg-transparent w-full" />
+
+      {!isFetching && isFetched && !shortLets.length && (
+        <Container className=" pb-10 flex flex-col justify-center items-center">
+          <h1>No Short Lets</h1>
+          <p>There are no available short lets at the moment</p>
+        </Container>
+      )}
+
+      {error && (
+        <Container className=" pt-[7rem] pb-10 ">
+          <p>An error occured</p>
+        </Container>
+      )}
 
       <ScrollToTop />
       <WelcomeModal />

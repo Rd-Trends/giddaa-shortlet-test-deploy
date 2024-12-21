@@ -1,6 +1,6 @@
 "use client";
 
-import { ShortLetServiceIconMap } from "@/constants/shortlet-service-icon-map";
+import { SHORT_LET_SERVICE_ICON_MAP } from "@/constants/shortlet-service-icon-map";
 import { ShortLet } from "@/types/short-let";
 import React, { useMemo } from "react";
 
@@ -26,8 +26,8 @@ const ServicesSection = ({ services }: { services: ShortLet["services"] }) => {
           return (
             <div key={service.id} className=" space-y-4">
               {
-                ShortLetServiceIconMap[
-                  service.id as keyof typeof ShortLetServiceIconMap
+                SHORT_LET_SERVICE_ICON_MAP[
+                  service.id as keyof typeof SHORT_LET_SERVICE_ICON_MAP
                 ]
               }
               <div className=" space-y-2">

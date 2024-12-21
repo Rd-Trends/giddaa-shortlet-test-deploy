@@ -33,7 +33,7 @@ const LoginForm = () => {
       {
         onSuccess: (data) => {
           setAuth(data);
-          router.replace(AppRoutes.Home);
+          router.replace(AppRoutes.HOME);
           toast.success({
             title: "Success",
             description: "Login successful",

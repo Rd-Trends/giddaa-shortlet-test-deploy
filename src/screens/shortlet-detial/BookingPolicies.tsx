@@ -18,10 +18,10 @@ const BookingPoliciesAndHouseRulesSection = ({
         <ClockIcon className=" size-6" />
         <div className=" space-y-2">
           <p className=" text-body-lg font-bold">
-            Clock-In - {shortLet.checkInTime}
+            Check-In - {shortLet.checkInTime}
           </p>
           <p className=" text-body-lg font-bold">
-            Clock-Out - {shortLet.checkOutTime}
+            Check-Out - {shortLet.checkOutTime}
           </p>
           <div className="text-body-md space-y-1">
             <RenderInnerHtml

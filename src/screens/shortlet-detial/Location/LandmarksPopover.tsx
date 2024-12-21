@@ -62,7 +62,7 @@ const LandmarksPopover = ({ stateId, handleSearch }: LandmarksPopoverProps) => {
             ))}
 
           {!isLoadingCities && !cities.length && (
-            <p className=" text-body-sm">No Popular Landmark available</p>
+            <p className=" text-body-sm">No Popular Landmark Available</p>
           )}
         </ul>
       </PopoverContent>

@@ -8,7 +8,7 @@ import HotPotIcon from "@/svgs/HotPotIcon";
 import SpaAndWellnessIcon from "@/svgs/SpaAndWellnessIcon";
 import SteamIronIcon from "@/svgs/SteamIronIcon";
 
-export const ShortLetServiceIconMap = {
+export const SHORT_LET_SERVICE_ICON_MAP = {
   PAID_BULK_FOOD_PURCHASE_SHORTLET_SERVICE: (
     <HotPotIcon color="currentColor" className="size-[32px]" />
   ),
@@ -23,8 +23,12 @@ export const ShortLetServiceIconMap = {
     <SteamIronIcon color="currentColor" className=" w-[40] h-[33px]" />
   ),
 
-  FREE_CAR_HIRE_SHORTLET_SERVICE: <CarIcon color="currentColor" className="w-[31px] h-[30px] " />,
-  PAID_CAR_HIRE_SHORTLET_SERVICE: <CarIcon color="currentColor" className="w-[31px] h-[30px] " />,
+  FREE_CAR_HIRE_SHORTLET_SERVICE: (
+    <CarIcon color="currentColor" className="w-[31px] h-[30px] " />
+  ),
+  PAID_CAR_HIRE_SHORTLET_SERVICE: (
+    <CarIcon color="currentColor" className="w-[31px] h-[30px] " />
+  ),
 
   FREE_ONDEMAND_CATERING_SHORTLET_SERVICE: (
     <CateringIcon color="currentColor" className="size-[32px]" />

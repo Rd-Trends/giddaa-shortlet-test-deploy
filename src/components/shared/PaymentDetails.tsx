@@ -76,8 +76,8 @@ const PaymentDetails = ({ booking }: { booking: ShortLetBooking }) => {
           </p>
           <p className=" text-body-xs text-charcoal-grey">
             Booking for {nights} {pluralize("Night", nights)} (
-            {formatDate(booking.checkOutDate, "MMM dd")} -{" "}
-            {formatDate(booking.checkInDate, "MMM dd")})
+            {formatDate(booking.checkInDate, "MMM dd")} -{" "}
+            {formatDate(booking.checkOutDate, "MMM dd")})
           </p>
           <p className=" text-body-md font-bold text-secondary">
             {formatCurrency(booking.totalFee)}

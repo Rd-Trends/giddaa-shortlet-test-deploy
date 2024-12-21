@@ -1,9 +1,11 @@
-import { stayTypes } from "@/constants/short-let-stay-types";
+import { SHORT_LET_STAY_TYPES } from "@/constants/short-let-stay-types";
 import { ShortLet } from "@/types/short-let";
 import pluralize from "pluralize";
 
 export const displayShortLetType = (type: string) => {
-  return stayTypes.find((stayType) => stayType.id === type)?.name ?? "";
+  return (
+    SHORT_LET_STAY_TYPES.find((stayType) => stayType.id === type)?.name ?? ""
+  );
 };
 
 // 2. ⁠When stay type is entire place/entire home: Book the entire [number of beds] bed [building type]
@@ -42,4 +44,6 @@ export const getShortLetDescription = (shortLet: ShortLet) => {
       shortLet.numberOfBedroom
     )} bed studio`;
   }
+
+  return "No type found";
 };

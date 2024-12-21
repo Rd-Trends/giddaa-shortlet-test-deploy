@@ -58,7 +58,7 @@ const PersonalDetailsForm = ({
           error={form.formState.errors.phoneNumber?.message}
         />
         <Input
-          label="First Name"
+          label="Email"
           {...form.register("email")}
           error={form.formState.errors.email?.message}
         />

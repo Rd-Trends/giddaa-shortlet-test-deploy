@@ -16,7 +16,11 @@ const CurrencyDropdown = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
-      <DropdownMenuContent sameWidthAsTrigger={sameWidthAsTrigger} align="end">
+      <DropdownMenuContent
+        wrapperClassName=" rounded-2xl w-[150px]"
+        className=" rounded-[14px]"
+        sameWidthAsTrigger={sameWidthAsTrigger}
+        align="start">
         <DropdownMenuItem>Naira</DropdownMenuItem>
         <DropdownMenuItem>USD</DropdownMenuItem>
         <DropdownMenuItem>Euro</DropdownMenuItem>

@@ -1,152 +1,143 @@
-// import { useMemo, useState } from "react";
+import { useFilterStore } from "@/app/providers/home-page-filter-provider";
+import { Filter } from "@/types/api";
+import { useMemo } from "react";
 
-// export const useFilter = () => {
-//   const [type, setType] = useState([]);
-//   const [services, setServices] = useState([]);
-//   const [uses, setUses] = useState([]);
-//   const [amenities, setAmenities] = useState([]);
-//   const [houseType, setHouseType] = useState([]);
-//   const [securityFeatures, setSecurityFeatures] = useState([]);
-//   const [city, setCity] = useState("");
-//   const [bedrooms, setBedrooms] = useState(0);
-//   const [bathrooms, setBathrooms] = useState(0);
-//   const [minimumPrice, setMinimumPrice] = useState(0);
-//   const [maximumPrice, setMaximumPrice] = useState(0);
-//   const [cautionFee, setCautionFee] = useState("");
+export const useFilter = () => {
+  const types = useFilterStore((state) => state.types);
+  const services = useFilterStore((state) => state.services);
+  const uses = useFilterStore((state) => state.uses);
+  const features = useFilterStore((state) => state.features);
+  const city = useFilterStore((state) => state.city);
+  const bedrooms = useFilterStore((state) => state.bedrooms);
+  const bathrooms = useFilterStore((state) => state.bathrooms);
+  const houseType = useFilterStore((state) => state.houseTypes);
+  const minimumPrice = useFilterStore((state) => state.minimumPrice);
+  const maximumPrice = useFilterStore((state) => state.maximumPrice);
+  const cautionFee = useFilterStore((state) => state.cautionFee);
 
-//   const advancedFilter = useMemo(() => {
-//     const filter = [];
+  const advancedFilter = useMemo(() => {
+    const filter: Filter[] = [];
 
-//     if (type.length > 0) {
-//       type.forEach((t) => {
-//         filter.push({
-//           connector: "OR",
-//           field: "Type",
-//           action: "equals",
-//           value: t,
-//         });
-//       });
-//     }
+    if (types.length > 0 && !types.includes("all")) {
+      filter.push({
+        connector: "AND",
+        field: "Type",
+        action: "equals",
+        value: types.join(", "),
+      });
+    }
 
-//     if (services.length > 0) {
-//       services.forEach((s) => {
-//         filter.push({
-//           connector: "OR",
-//           field: "services",
-//           action: "equals",
-//           value: s,
-//         });
-//       });
-//     }
+    if (services.length > 0) {
+      filter.push({
+        connector: "AND",
+        field: "Services.Service",
+        action: "equals",
+        value: services.join(", "),
+      });
+    }
 
-//     if (uses.length > 0) {
-//       uses.forEach((u) => {
-//         filter.push({
-//           connector: "OR",
-//           field: "uses",
-//           action: "equals",
-//           value: u,
-//         });
-//       });
-//     }
+    if (uses.length > 0) {
+      filter.push({
+        connector: "AND",
+        field: "Uses.Use",
+        action: "equals",
+        value: uses.join(", "),
+      });
+    }
 
-//     if (amenities.length > 0) {
-//       amenities.forEach((a) => {
-//         filter.push({
-//           connector: "OR",
-//           field: `Features.${a}`,
-//           action: "equals",
-//           value: true,
-//         });
-//       });
-//     }
+    if (features.length > 0) {
+      features.forEach((a) => {
+        filter.push({
+          connector: "AND",
+          field: `Features.${capitalizeFirstLetter(a)}`,
+          action: "equals",
+          value: true,
+        });
+      });
+    }
 
-//     if (securityFeatures.length > 0) {
-//       securityFeatures.forEach((s) => {
-//         filter.push({
-//           connector: "OR",
-//           field: `Features.${s}`,
-//           action: "equals",
-//           value: true,
-//         });
-//       });
-//     }
+    if (city) {
+      filter.push({
+        connector: "AND",
+        field: "CityId",
+        action: "equals",
+        value: city,
+      });
+    }
 
-//     if (city) {
-//       filter.push({
-//         connector: "AND",
-//         field: "CityId",
-//         action: "equals",
-//         value: city,
-//       });
-//     }
+    if (bedrooms) {
+      filter.push({
+        connector: "AND",
+        field: "NumberOfBedroom",
+        action: "equals",
+        value: bedrooms.toString(),
+      });
+    }
 
-//     if (bedrooms) {
-//       filter.push({
-//         connector: "AND",
-//         field: "NumberOfBedroom",
-//         action: "equals",
-//         value: bedrooms,
-//       });
-//     }
+    if (bathrooms) {
+      filter.push({
+        connector: "AND",
+        field: "NumberOfBathroom",
+        action: "equals",
+        value: bathrooms.toString(),
+      });
+    }
 
-//     if (bathrooms) {
-//       filter.push({
-//         connector: "AND",
-//         field: "NumberOfBathroom",
-//         action: "equals",
-//         value: bathrooms,
-//       });
-//     }
+    if (houseType.length > 0 && !houseType.includes("all")) {
+      filter.push({
+        connector: "AND",
+        field: "BuildingType",
+        action: "equals",
+        value: houseType.join(", "),
+      });
+    }
 
-//     if (houseType.length > 0) {
-//       houseType.forEach((h) => {
-//         filter.push({
-//           connector: "OR",
-//           field: "BuildingType",
-//           action: "equals",
-//           value: h,
-//         });
-//       });
-//     }
+    if (minimumPrice) {
+      filter.push({
+        connector: "AND",
+        field: "OfferingPrice",
+        action: "greatThan",
+        value: minimumPrice.toString(),
+      });
+    }
 
-//     if (minimumPrice) {
-//       filter.push({
-//         connector: "AND",
-//         field: "OfferingPrice",
-//         action: "greatThan",
-//         value: minimumPrice,
-//       });
-//     }
+    if (maximumPrice) {
+      filter.push({
+        connector: "AND",
+        field: "OfferingPrice",
+        action: "lessThan",
+        value: maximumPrice.toString(),
+      });
+    }
 
-//     if (maximumPrice) {
-//       filter.push({
-//         connector: "AND",
-//         field: "OfferingPrice",
-//         action: "lessThan",
-//         value: maximumPrice,
-//       });
-//     }
+    if (!!cautionFee) {
+      filter.push({
+        connector: "AND",
+        field: "CautionFee",
+        action: cautionFee === "yes" ? "greatThan" : "lessThan",
+        value: 1,
+      });
+    }
 
-//     return filter;
-//   }, [
-//     type,
-//     services,
-//     uses,
-//     amenities,
-//     securityFeatures,
-//     city,
-//     bedrooms,
-//     bathrooms,
-//     houseType,
-//     minimumPrice,
-//     maximumPrice,
-//     cautionFee,
-//   ]);
+    return filter;
+  }, [
+    types,
+    services,
+    uses,
+    features,
+    city,
+    bedrooms,
+    bathrooms,
+    houseType,
+    minimumPrice,
+    maximumPrice,
+    cautionFee,
+  ]);
 
-//   return {
-//       filter: advancedFilter,
-      
-      
-//   };
-// };
+  return advancedFilter;
+};
+
+// capitalize the first letter of a string
+export const capitalizeFirstLetter = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};

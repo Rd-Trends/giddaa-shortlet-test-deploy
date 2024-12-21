@@ -17,6 +17,7 @@ import { DEFAULT_IMAGES } from "@/constants/images";
 import { useMediaQuery } from "@/hooks/useMediaQueries";
 import Logo from "@/svgs/Logo";
 import Link from "next/link";
+import { getShortLetDescription } from "@/utils/short-let";
 
 const steps = ["Personal Details", "Booking Details", "Confirm Reservation"];
 
@@ -177,7 +178,11 @@ const ReservationForm = ({ shortLet }: { shortLet: ShortLet }) => {
         setIsOpen={setShowCancelModal}
         title="Cancel Reservation"
         subHeader="Cancel Reservation"
-        description={`Are you sure you want to cancel the reservation for the entire apartment in Gwarimpa Abuja?`}
+        description={`Are you sure you want to cancel the reservation for the ${getShortLetDescription(
+          shortLet
+        ).replace("Book The", "")} in ${shortLet.city.name}, ${
+          shortLet.city.state.name
+        }?`}
         confirmBtnText="Yes, Cancel"
         cancelBtnText="No, Don't Cancel"
         confirmAction={() => {

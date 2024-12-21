@@ -25,7 +25,7 @@ export default async function customRequest<T, R = T>(
     if (err?.response?.status == 401) {
       await deleteToken();
       localStorage.removeItem(StorageKeys.USER);
-      window.location.reload();
+      // window.location.reload();
     }
 
     if (err.response) {

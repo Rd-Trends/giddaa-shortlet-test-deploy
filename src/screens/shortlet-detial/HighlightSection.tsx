@@ -9,8 +9,10 @@ import LocationIcon from "@/svgs/LocationIcon";
 import MoneyStackIcon from "@/svgs/MoneyStackIcon";
 import PeopleIcon from "@/svgs/PeopleIcon";
 import PropertyIcon from "@/svgs/PropertyIcon";
+import VerificationIcon from "@/svgs/VerificationIcon";
 import { ShortLet } from "@/types/short-let";
 import { abbreviateCount } from "@/utils/abbreviate-count";
+import { getShortLetDescription } from "@/utils/short-let";
 import pluralize from "pluralize";
 import React from "react";
 
@@ -26,7 +28,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
             <p className="font-bold text-body-md xl:text-body-xl">
               {abbreviateCount(shortLet.listingPrice)}
             </p>
-            <p className="text-body-sm xl:text-body-md">Per Nigth</p>
+            <p className="text-body-sm xl:text-body-md">Per Night</p>
           </div>
         </div>
 
@@ -36,7 +38,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
           </span>
           <div className=" text-black space-y-2">
             <p className="font-bold text-body-md xl:text-body-xl">
-              {shortLet.numberOfBedroom} Beds
+              {shortLet.numberOfBedroom} {pluralize("Bed", shortLet.numberOfBedroom)}
             </p>
             <p className="text-body-sm xl:text-body-md">Bedrooms</p>
           </div>
@@ -50,7 +52,8 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
           </span>
           <div className=" text-black space-y-2">
             <p className="font-bold text-body-md xl:text-body-xl">
-              {shortLet.numberOfBathroom} Baths
+              {shortLet.numberOfBathroom}{" "}
+              {pluralize("Bath", shortLet.numberOfBathroom)}
             </p>
             <p className="text-body-sm xl:text-body-md">Bathrooms</p>
           </div>
@@ -62,7 +65,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
           </span>
           <div className=" text-black space-y-2">
             <p className="font-bold text-body-md xl:text-body-xl">
-              {shortLet.address}
+              {shortLet.city.name}, {shortLet.city.state.name}
             </p>
             <p className="text-body-sm xl:text-body-md">Location</p>
           </div>
@@ -79,7 +82,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
           </span>
           <div className=" text-black space-y-2">
             <p className=" font-bold text-body-md md:text-xl capitalize ">
-              {shortLet.type.split("_").join(" ").toLowerCase()}
+              {getShortLetDescription(shortLet)?.replace("Book the", "")}
             </p>
             <p className="text-body-sm xl:text-body-md">
               You will book the entire space
@@ -133,12 +136,10 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
             <DoorOpenIcon className="w-[26px] h-[32px] md:w-[31px] md:h-[37px] shrink-0" />
           </span>
           <div className=" text-black space-y-2">
-            <p className="font-bold text-body-md xl:text-body-xl">
-              Check-In Method
-            </p>
-            <p className="text-body-md capitalize">
+            <p className="font-bold text-body-md xl:text-body-xl capitalize">
               {shortLet.checkInMethod.split("_").join(" ").toLowerCase()}
             </p>
+            <p className="text-body-md capitalize">Check-In Method</p>
           </div>
         </div>
       </div>
@@ -150,8 +151,11 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
           </span>
           <div className=" text-black space-y-2">
             <p className="font-bold text-body-md xl:text-body-xl">
-              {abbreviateCount(shortLet.cautionFee)} - Paid Back 24 Hours after
-              Inspection.
+              {shortLet.cautionFee
+                ? `${abbreviateCount(
+                    shortLet.cautionFee
+                  )} - Paid Back 24 Hours after Inspection.`
+                : "No Caution Fee"}
             </p>
             <p className="text-body-sm xl:text-body-md">
               Caution Fee: Used to cover potential damage costs to the short
@@ -179,7 +183,7 @@ const HighlightSection = ({ shortLet }: { shortLet: ShortLet }) => {
       <div className=" grid grid-cols-2  gap-6 gap-y-8 xl:gap-8 pt-6 mt-6 md:mt-0 border-t border-mid-grey md:border-t-0 ">
         <div className=" flex flex-col xl:flex-row items-start gap-4 pr-6 md:px-8 border-r md:border-r-0 border-mid-grey">
           <span className="w-11 flex-shrink-0">
-            <PeopleIcon className=" w-[35px] h-[23px] md:w-[37px] md:h-[28px] shrink-0" />
+            <VerificationIcon className=" size-[28px] md:sixe-[32px]  shrink-0" />
           </span>
           <div className=" text-black space-y-2">
             <p className="font-bold text-body-md xl:text-body-xl">Verified.</p>

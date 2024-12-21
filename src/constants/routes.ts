@@ -1,7 +1,7 @@
 // for route names, this route names must match the folder structure in the app folder
 
 export const AppRoutes = {
-  Home: "/",
+  HOME: "/",
   // account
   SIGNUP: "/signup",
   LOGIN: "/login",
@@ -10,6 +10,7 @@ export const AppRoutes = {
 
   // short lets
   SHORT_LETS: "/short-lets",
+  BOOK_SHORT_LET: "/[id]/booking",
 
   // profile
   PROFILE: "/profile",

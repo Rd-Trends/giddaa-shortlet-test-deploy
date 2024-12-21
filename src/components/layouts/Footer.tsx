@@ -43,7 +43,7 @@ const Footer = () => {
 
   return (
     <footer className="w-full bg-cover bg-center bg-no-repeat bottom-0">
-      <Container className=" relative bg-[#2c4c26] pt-[65px] pb-[66px] text-white">
+      <Container className=" relative bg-[#2c4c26] pt-[65px] pb-20 text-white">
         {/* <SvgStrip className=" absolute bottom-0 -left-1 " /> */}
 
         <div className="flex md:justify-between flex-col md:flex-row items-center gap-6">
@@ -247,7 +247,6 @@ const Footer = () => {
             </h4>
           </div>
         </div>
-        <div className="mt-32 md:mt-0" />
       </Container>
     </footer>
   );

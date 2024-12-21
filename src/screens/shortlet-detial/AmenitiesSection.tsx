@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/Button";
 import ArrowOpenIcon from "@/svgs/ArrowOpenIcon";
 import { ShortLet } from "@/types/short-let";
 import { useMemo, useState } from "react";
-import { AmmenitiesIconMap } from "@/constants/shortlet-amenities-icon-map";
+import { SHORT_LET_AMENITIES_ICON_MAP } from "@/constants/shortlet-amenities-icon-map";
 import {
   Drawer,
   DrawerContent,
@@ -13,7 +13,7 @@ import {
 import Container from "@/components/layouts/Container";
 import { useScrollableContainerNavigation } from "@/hooks/useContainerScrollNavigation";
 import { cn } from "@/utils/classname";
-import { shortLetFeatures } from "@/constants/short-let-features";
+import { SHORT_LET_FEATURES } from "@/constants/short-let-features";
 import { convertCamelCaseToTitleCase } from "@/utils/convert-camel-case-to-title-case";
 
 const AmenitiesSection = ({ shortLet }: { shortLet: ShortLet }) => {
@@ -40,7 +40,11 @@ const AmenitiesSection = ({ shortLet }: { shortLet: ShortLet }) => {
         {firstTenAvailableAmenities.map((amenity) => (
           <div key={amenity} className=" flex items-start space-x-4">
             <span className=" w-7 flex-shrink-0">
-              {AmmenitiesIconMap[amenity as keyof typeof AmmenitiesIconMap]}
+              {
+                SHORT_LET_AMENITIES_ICON_MAP[
+                  amenity as keyof typeof SHORT_LET_AMENITIES_ICON_MAP
+                ]
+              }
             </span>
             <p className=" text-body-sm md:text-body-md ">
               {convertCamelCaseToTitleCase(amenity)}
@@ -85,14 +89,14 @@ const TourASectionDrawer = ({
   city: ShortLet["city"];
 }) => {
   const sections = useMemo(() => {
-    const amenities = {} as Record<keyof typeof shortLetFeatures, string[]>;
+    const amenities = {} as Record<keyof typeof SHORT_LET_FEATURES, string[]>;
     const data = Object.entries(features).reduce((acc, [key, value]) => {
       if (value && key !== "id" && key !== "name" && key !== "icon") {
-        const category = Object.keys(shortLetFeatures).find((category) =>
-          shortLetFeatures[category as keyof typeof shortLetFeatures].includes(
-            key
-          )
-        ) as keyof typeof shortLetFeatures;
+        const category = Object.keys(SHORT_LET_FEATURES).find((category) =>
+          SHORT_LET_FEATURES[
+            category as keyof typeof SHORT_LET_FEATURES
+          ].includes(key)
+        ) as keyof typeof SHORT_LET_FEATURES;
         if (category) {
           if (!acc[category]) {
             acc[category] = [];
@@ -149,12 +153,12 @@ const TourASectionDrawer = ({
 
         <Container
           onScroll={handleScroll}
-          className="flex-1 overflow-y-auto grid grid-cols-1 gap-10 md:grid-cols-2 ">
+          className="flex-1 overflow-y-auto grid grid-cols-1 gap-10 xl:gap-x-20 md:grid-cols-2 md:[&>div:nth-child(even)]:pl-10 xl:[&>div:nth-child(even)]:pl-20 md:[&>div:nth-child(even)]:border-l md:[&>div:nth-child(even)]:border-mid-grey pb-8">
           {sections.map((section) => (
             <div
               id={section.id}
               key={section.id}
-              className="pt-6 "
+              className="mt-6 "
               ref={(el) => {
                 sectionRefs.current[section.id] = el;
               }}>
@@ -162,13 +166,13 @@ const TourASectionDrawer = ({
                 {section.label.split("_").join(" ")}
               </p>
 
-              <div className="mt-6 grid grid-cols-2 gap-6 md:grid-cols-2 xl:grid-cols-3 pb-4">
+              <div className="mt-6 grid grid-cols-2 gap-6 md:grid-cols-2 xl:grid-cols-3">
                 {section.amenities.map((amenity) => (
                   <div key={amenity} className=" flex items-start space-x-4">
                     <span className=" w-7 flex-shrink-0">
                       {
-                        AmmenitiesIconMap[
-                          amenity as keyof typeof AmmenitiesIconMap
+                        SHORT_LET_AMENITIES_ICON_MAP[
+                          amenity as keyof typeof SHORT_LET_AMENITIES_ICON_MAP
                         ]
                       }
                     </span>

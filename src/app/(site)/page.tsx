@@ -1,6 +1,7 @@
 import React from "react";
 import AllShortLetPage from "@/screens/home";
 import { Metadata } from "next";
+import { FilterStoreProvider } from "../providers/home-page-filter-provider";
 
 export const metadata: Metadata = {
   title: "Book Affordable Short Lets & Stays in Nigeria",
@@ -9,5 +10,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  return <AllShortLetPage />;
+  return (
+    <FilterStoreProvider>
+      <AllShortLetPage />
+    </FilterStoreProvider>
+  );
 }

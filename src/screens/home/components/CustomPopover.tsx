@@ -25,6 +25,7 @@ type CustomPopoverAsDropdownMenuProp = {
   sameWidthAsTrigger?: boolean;
   align?: PopoverContentProps["align"];
   triggerClassName?: string;
+  contentClassName?: string;
   wrapperClassName?: string;
 };
 
@@ -45,13 +46,14 @@ const CustomPopoverAsDropdownMenu = forwardRef<
       sameWidthAsTrigger,
       align = "start",
       triggerClassName,
+      contentClassName,
       wrapperClassName,
     },
     ref
   ) => {
     const [open, setOpen] = useState(false);
     return (
-      <div className="w-fit flex flex-col space-y-1.5">
+      <div className={cn("w-full flex flex-col space-y-1.5", wrapperClassName)}>
         {label && (
           <label className="text-sm font-medium text-offBlack" htmlFor={label}>
             <FieldLabelText label={label} required={required} />
@@ -74,7 +76,7 @@ const CustomPopoverAsDropdownMenu = forwardRef<
                   "text-charcoal-grey": !value,
                 }
               )}>
-              <span className=" line-clamp-1">{value ?? placeholder}</span>
+              <span className=" truncate">{value || placeholder}</span>
               <BiChevronDown className=" size-5 opacity-50 shrink-0 transition-transform duration-200" />
             </button>
           </PopoverTrigger>
@@ -83,7 +85,7 @@ const CustomPopoverAsDropdownMenu = forwardRef<
             sameWidthAsTrigger={sameWidthAsTrigger}
             wrapperClassName={cn(
               " p-[1px] bg-mid-grey shadow-[0px_12px_16px_-4px_rgba(16,_24,_40,_0.08),_0px_4px_6px_-2px_rgba(16,_24,_40,_0.03)]  ",
-              wrapperClassName
+              contentClassName
             )}
             className=" p-0">
             {children}

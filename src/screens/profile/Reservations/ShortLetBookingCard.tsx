@@ -94,22 +94,23 @@ const ShortletBookingCard = ({
           {formatDate(booking.checkOutDate, "MMM dd")} -{" "}
           {formatDate(booking.checkInDate, "MMM dd")})
         </p>
-        <p>
+        <div className="flex items-center ">
           <b className=" text-body-md font-bold text-primary">
             {formatCurrency(shortlet.listingPrice)}
-          </b>{" "}
-          <span className=" text-body-xs">Per night</span>
-        </p>
-        {isLoadingExchangeRates && (
-          <SkeletonLoader className=" h-4 w-12 rounded-md" />
-        )}
-        {exchangeRates && (
-          <p className=" text-body-xs text-primary font-semibold">
-            {formatCurrency(shortlet.listingPrice / exchangeRates.dollar, {
-              currency: "USD",
-            })}
-          </p>
-        )}
+          </b>
+          {exchangeRates && (
+            <span className="text-body-sm font-semibold ">
+              /
+              {formatCurrency(shortlet.listingPrice / exchangeRates?.dollar, {
+                currency: "USD",
+              })}
+            </span>
+          )}
+          {isLoadingExchangeRates && (
+            <SkeletonLoader className=" ml-1 h-5 w-8 rounded-xl" />
+          )}
+          <span className="ml-1 text-body-xs">Per Night</span>
+        </div>
 
         {booking.isPaid && (
           <Link

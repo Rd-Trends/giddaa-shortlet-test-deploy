@@ -2,6 +2,14 @@ export type GetRequestParamsType = {
   pageNumber?: number;
   pageSize?: number;
   search?: string;
+  advancedSearch?: string | null;
+};
+
+export type Filter = {
+  connector: "OR" | "AND";
+  field: string;
+  action: "equals" | "greatThan" | "lessThan" | "contains";
+  value: string | number | boolean | string[];
 };
 
 export type PaginatedResponseType<T> = {

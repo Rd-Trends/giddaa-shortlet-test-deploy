@@ -22,79 +22,6 @@ import HouseLocation from "./Location";
 import StickyFooter from "./StickyFooter";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 
-const dummyImages = [
-  {
-    id: "living-room-1",
-    document: "https://picsum.photos/200/300?random=" + 1,
-    optionId: "LIVING_ROOM_SHORTLET_IMAGE_TYPE",
-  },
-  {
-    id: "living-room-2",
-    document: "https://picsum.photos/200/300?random=" + 2,
-    optionId: "LIVING_ROOM_SHORTLET_IMAGE_TYPE",
-  },
-  {
-    id: "master-bedroom-1",
-    document: "https://picsum.photos/200/300?random=" + 3,
-    optionId: "MASTER_BED_ROOM_SHORTLET_IMAGE_TYPE",
-  },
-  {
-    id: "master-bedroom-2",
-    document: "https://picsum.photos/200/300?random=" + 4,
-    optionId: "MASTER_BED_ROOM_SHORTLET_IMAGE_TYPE",
-  },
-  {
-    id: "bedroom-1",
-    document: "https://picsum.photos/200/300?random=" + 5,
-    optionId: "BED_ROOM_SHORTLET_IMAGE_TYPE",
-  },
-  {
-    id: "bedroom-2",
-    document: "https://picsum.photos/200/300?random=" + 6,
-    optionId: "BED_ROOM_SHORTLET_IMAGE_TYPE",
-  },
-  {
-    id: "kitchen-1",
-    document: "https://picsum.photos/200/300?random=" + 6,
-    optionId: "KITCHEN_SHORTLET_IMAGE_TYPE",
-  },
-  {
-    id: "kitchen-2",
-    document: "https://picsum.photos/200/300?random=" + 7,
-    optionId: "KITCHEN_SHORTLET_IMAGE_TYPE",
-  },
-  {
-    id: "bathroom-1",
-    document: "https://picsum.photos/200/300?random=" + 8,
-    optionId: "BATH_ROOM_SHORTLET_IMAGE_TYPE",
-  },
-  {
-    id: "bathroom-2",
-    document: "https://picsum.photos/200/300?random=" + 9,
-    optionId: "BATH_ROOM_SHORTLET_IMAGE_TYPE",
-  },
-  {
-    id: "outside-1",
-    document: "https://picsum.photos/200/300?random=" + 10,
-    optionId: "OUTSIDE_SHORTLET_IMAGE_TYPE",
-  },
-  {
-    id: "outside-2",
-    document: "https://picsum.photos/200/300?random=" + 11,
-    optionId: "OUTSIDE_SHORTLET_IMAGE_TYPE",
-  },
-  {
-    id: "balcony-1",
-    document: "https://picsum.photos/200/300?random=" + 12,
-    optionId: "BALCONY_SHORTLET_IMAGE_TYPE",
-  },
-  {
-    id: "balcony-2",
-    document: "https://picsum.photos/200/300?random=" + 13,
-    optionId: "BALCONY_SHORTLET_IMAGE_TYPE",
-  },
-];
-
 const dummyFeatures = {
   id: "example_id",
   name: "Luxurious Villa",
@@ -171,7 +98,7 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
         pageTitle: "Take a Tour",
         content: (
           <TakeATour
-            images={dummyImages}
+            images={shortLet.images}
             videoUrl={shortLet.videoUrl}
             // videoUrl="https://www.youtube.com/embed/pYKAngWoyVw?si=L8dHnwrG54FIH_XZ"
             name={shortLet.name}
@@ -182,7 +109,7 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
       {
         id: "Location",
         label: "Location",
-        pageTitle: "Where you will stay",
+        pageTitle: "Where You’ll Stay",
         content: (
           <HouseLocation
             name={shortLet.name}
@@ -231,6 +158,8 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
     }
   );
 
+  console.log("shortLet", shortLet);
+
   return (
     <div className="container px-0 bg-background min-h-screen h-full">
       <Container className="!px-0 fixed left-0 right-0 top-0 w-screen bg-background pt-6 space-y-4 z-10">
@@ -249,7 +178,7 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
       </Container>
 
       <ImageSection
-        images={dummyImages}
+        images={shortLet.images}
         type={shortLet.type}
         city={shortLet.city}
         // videoUrl={shortLet.videoUrl}

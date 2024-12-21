@@ -1,4 +1,4 @@
-export const stayTypes = [
+export const SHORT_LET_STAY_TYPES = [
   { id: "ROOM_IN_A_HOUSE", name: "Room in a house" },
   { id: "ENTIRE_PLACE", name: "Entire Place" },
   {

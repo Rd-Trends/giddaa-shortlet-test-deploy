@@ -10,7 +10,7 @@ export default async function Page({
   const id = (await params).id;
   const booking = await getBookingById(id);
 
-  if (!booking) {
+  if (!booking || !booking.transaction || booking.transaction.isPaid) {
     return notFound();
   }
   return <ShortLetPay booking={booking} />;

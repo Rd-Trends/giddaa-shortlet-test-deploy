@@ -15,10 +15,9 @@ import { ShortLetBooking } from "@/types/short-let";
 import { cn } from "@/utils/classname";
 import { formatCurrency } from "@/utils/format-currency";
 import pluralize from "pluralize";
-import { useState } from "react";
 import { use100vh } from "react-div-100vh";
 import { BsArrowUpRightCircleFill } from "react-icons/bs";
-import { usePaystackPayment } from "react-paystack";
+import Paystack from "@paystack/inline-js";
 
 type SelectPaymentMethodModalProps = {
   isOpen: boolean;
@@ -32,21 +31,28 @@ const HandlePaymentModal = ({
   booking,
 }: SelectPaymentMethodModalProps) => {
   const maxHeight = use100vh() || "700";
-  const [selectedPaymentMethod, setSelectedPaymentMethod] =
-    useState<string>("");
 
   const verifyPayment = useVerifyBookingPayment();
 
-  const config = {
-    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-    email: booking.guest.email,
-    phone: booking.guest.phoneNumber,
-    firstName: booking.guest.firstName,
-    lastName: booking.guest.lastName,
-    channels: selectedPaymentMethod === "others" ? [] : [selectedPaymentMethod],
-    amount: 20000, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+  const initializePayment = async () => {
+    if (!booking?.transaction?.rrr) {
+      return;
+    }
+
+    const popup = new Paystack();
+    const status = popup
+      .resumeTransaction({
+        accessCode: booking?.transaction?.rrr,
+      })
+      .getStatus().status;
+
+    if (status === "success") {
+      handlePaymentSuccess();
+    }
+    if (status === "failed") {
+      handlePaymentFailure();
+    }
   };
-  const initializePayment = usePaystackPayment(config);
 
   const handlePaymentSuccess = async () => {
     await verifyPayment.mutateAsync(booking.id, {
@@ -80,7 +86,7 @@ const HandlePaymentModal = ({
         wrapperClassName=" rounded-[22px] w-full max-w-[calc(100vw-2rem)] lg:max-w-[911px] flex flex-col overflow-y-auto ">
         <ModalHeader className=" border-b border-mid-grey text-center p-4">
           <ModalTitle className=" font-secondary text-heading-4 text-primary text-center">
-            Select Payment Method
+            Available Payment Method
           </ModalTitle>
           <ModalDescription className=" text-body-sm text-center">
             You will pay <b>{formatCurrency(booking.totalFee)}</b> for a{" "}
@@ -95,23 +101,14 @@ const HandlePaymentModal = ({
           </ModalDescription>
         </ModalHeader>
         <div className=" flex-1 space-y-4 overflow-y-auto p-4 relative z-0 px-4 xl:px-10 ">
-          <label
+          <div
             className={cn(
-              " flex w-full cursor-pointer relative rounded-2xl bg-background p-0.5",
-              {
-                " bg-primary-gradient shadow-[0px_4px_4px_2px_rgba(0,_0,_0,_0.10)] ":
-                  selectedPaymentMethod === "bank_transfer",
-              }
+              " flex w-full cursor-pointer relative rounded-2xl bg-background p-0.5"
+              // {
+              //   " bg-primary-gradient shadow-[0px_4px_4px_2px_rgba(0,_0,_0,_0.10)] "
+
+              // }
             )}>
-            <input
-              type="radio"
-              onChange={(e) => {
-                setSelectedPaymentMethod(e.target.value);
-              }}
-              name="payment-method"
-              value="bank_transfer"
-              className=" sr-only"
-            />
             <div className=" w-full flex flex-row items-start space-x-5 p-4 bg-background rounded-[14px]">
               <img
                 src="/icons/bank-transfer.png"
@@ -138,27 +135,18 @@ const HandlePaymentModal = ({
                 </div>
               </div>
             </div>
-          </label>
+          </div>
 
           <hr className=" border-mid-grey" />
 
-          <label
+          <div
             className={cn(
-              " flex w-full cursor-pointer relative rounded-2xl bg-background p-0.5",
-              {
-                " bg-primary-gradient shadow-[0px_4px_4px_2px_rgba(0,_0,_0,_0.10)] ":
-                  selectedPaymentMethod === "card",
-              }
+              " flex w-full cursor-pointer relative rounded-2xl bg-background p-0.5"
+              // {
+              //   " bg-primary-gradient shadow-[0px_4px_4px_2px_rgba(0,_0,_0,_0.10)] ":
+
+              // }
             )}>
-            <input
-              type="radio"
-              onChange={(e) => {
-                setSelectedPaymentMethod(e.target.value);
-              }}
-              name="payment-method"
-              value="card"
-              className=" sr-only"
-            />
             <div className=" w-full flex flex-row items-start space-x-5 p-4 bg-background rounded-[14px]">
               <img
                 src="/icons/card-payment.png"
@@ -183,27 +171,17 @@ const HandlePaymentModal = ({
                 </div>
               </div>
             </div>
-          </label>
+          </div>
 
           <hr className=" border-mid-grey" />
 
           <label
             className={cn(
-              " flex w-full cursor-pointer relative rounded-2xl bg-background p-0.5",
-              {
-                " bg-primary-gradient shadow-[0px_4px_4px_2px_rgba(0,_0,_0,_0.10)] ":
-                  selectedPaymentMethod === "others",
-              }
+              " flex w-full cursor-pointer relative rounded-2xl bg-background p-0.5"
+              // {
+              //   " bg-primary-gradient shadow-[0px_4px_4px_2px_rgba(0,_0,_0,_0.10)] "
+              // }
             )}>
-            <input
-              type="radio"
-              onChange={(e) => {
-                setSelectedPaymentMethod(e.target.value);
-              }}
-              name="payment-method"
-              value="others"
-              className=" sr-only"
-            />
             <div className="w-full flex flex-row items-start space-x-5 p-4 bg-background rounded-[14px]">
               <img
                 src="/icons/others-payment.png"
@@ -235,21 +213,13 @@ const HandlePaymentModal = ({
             Cancel
           </Button>
           <Button
-            disabled={!selectedPaymentMethod}
             onClick={() => {
               setIsOpen(false);
-              initializePayment({
-                onSuccess: handlePaymentSuccess,
-                onClose: handlePaymentFailure,
-              });
+              initializePayment();
             }}
             className=" font-bold md:px-8">
             Continue to Payment{" "}
-            <BsArrowUpRightCircleFill
-              className={cn(" size-5 fill-white", {
-                " fill-dark-grey": !selectedPaymentMethod,
-              })}
-            />
+            <BsArrowUpRightCircleFill className={cn(" size-5 fill-white")} />
           </Button>
         </ModalFooter>
       </ModalContent>
