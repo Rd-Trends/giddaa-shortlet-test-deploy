@@ -3,15 +3,8 @@
 import { cn } from "@/utils/classname";
 import * as React from "react";
 import { DayPicker } from "react-day-picker";
-import { BiChevronDown, BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { buttonVariants } from "./Button";
-import {
-  Select,
-  SelectIcon,
-  SelectTrigger,
-  SelectValue,
-} from "@radix-ui/react-select";
-import { SelectContent, SelectItem } from "./Select";
 import Combobox from "./Combobox";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;

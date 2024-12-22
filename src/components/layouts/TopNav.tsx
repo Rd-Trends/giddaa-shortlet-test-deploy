@@ -44,7 +44,7 @@ const Navbar = () => {
 
   useEffect(() => {
     setSearch("");
-  }, [pathname]);
+  }, [pathname, setSearch]);
 
   return (
     // <Container>
