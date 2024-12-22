@@ -57,7 +57,7 @@ const FilterNav = ({ totalShortLets, isFetching }: FilterNavProps) => {
 
   return (
     <>
-      <Container className=" border-b border-mid-grey py-4 flex items-center gap-2 sticky top-[5rem] z-10 bg-background overflow-x-auto ">
+      <Container className=" border-b border-mid-grey py-4 flex items-center gap-2 sticky top-[5rem] z-50 bg-background overflow-x-auto ">
         <SelectPlaceTypes />
         <Combobox
           wrapperClassName=" hidden xl:flex"

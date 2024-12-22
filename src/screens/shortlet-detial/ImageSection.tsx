@@ -39,7 +39,7 @@ const ImageSection = ({
   const hasFourImages = images.length >= 4;
 
   return (
-    <Container className="px-0 pt-[147px] md:pt-44">
+    <Container className="px-0 md:pt-4">
       <div className="flex gap-4 md:h-[498px] relative">
         <ImageWithSkeletonLoader
           src={images[0].document}

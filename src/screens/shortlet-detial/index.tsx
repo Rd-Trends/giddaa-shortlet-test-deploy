@@ -22,51 +22,51 @@ import HouseLocation from "./Location";
 import StickyFooter from "./StickyFooter";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 
-const dummyFeatures = {
-  id: "example_id",
-  name: "Luxurious Villa",
-  icon: "villa_icon.png",
-  hasWashingMachine: true,
-  hasPoPCeiling: true,
-  hasDryer: true,
-  hasAirConditioning: true,
-  hasHighSpeedInternet: true,
-  hasWineCeller: true,
-  hasEnsuite: true,
-  hasWifi: true,
-  hasSmartHomeTechnology: true,
-  hasPresingIron: true,
-  hasOpenFloorPlan: true,
-  hasLargeWindwos: true,
-  hasBuiltInHouseTheater: true,
-  hasTelevision: true,
-  hasPoolOrSnookerTable: true,
-  hasKettle: true,
-  hasRefrigerator: true,
-  hasGrantieCountertops: true,
-  hasBreakfastBar: true,
-  hasCookingGas: true,
-  hasMicrowave: true,
-  hasOven: true,
-  hasMarbleWalls: true,
-  hasBathtub: true,
-  hasStandingShower: true,
-  hasHeaterAndHotWater: true,
-  hasPrivateBackyard: true,
-  hasPatioOrDarkSpace: true,
-  hasLandscapedGarden: true,
-  hasSwimmingPool: true,
-  hasSnokerArea: true,
-  hasHomeOfficeSpace: true,
-  hasBuiltInShelfOrBookSpace: true,
-  hasAmpleNaturalLight: true,
-  hasCCTVSurveillanceSystem: true,
-  hasGatedCompound: true,
-  hasHighBrowArea: true,
-  hasArmedGuards: true,
-  hasBulletProofDoors: true,
-  hasBurglaryProofWindows: true,
-};
+// const dummyFeatures = {
+//   id: "example_id",
+//   name: "Luxurious Villa",
+//   icon: "villa_icon.png",
+//   hasWashingMachine: true,
+//   hasPoPCeiling: true,
+//   hasDryer: true,
+//   hasAirConditioning: true,
+//   hasHighSpeedInternet: true,
+//   hasWineCeller: true,
+//   hasEnsuite: true,
+//   hasWifi: true,
+//   hasSmartHomeTechnology: true,
+//   hasPresingIron: true,
+//   hasOpenFloorPlan: true,
+//   hasLargeWindwos: true,
+//   hasBuiltInHouseTheater: true,
+//   hasTelevision: true,
+//   hasPoolOrSnookerTable: true,
+//   hasKettle: true,
+//   hasRefrigerator: true,
+//   hasGrantieCountertops: true,
+//   hasBreakfastBar: true,
+//   hasCookingGas: true,
+//   hasMicrowave: true,
+//   hasOven: true,
+//   hasMarbleWalls: true,
+//   hasBathtub: true,
+//   hasStandingShower: true,
+//   hasHeaterAndHotWater: true,
+//   hasPrivateBackyard: true,
+//   hasPatioOrDarkSpace: true,
+//   hasLandscapedGarden: true,
+//   hasSwimmingPool: true,
+//   hasSnokerArea: true,
+//   hasHomeOfficeSpace: true,
+//   hasBuiltInShelfOrBookSpace: true,
+//   hasAmpleNaturalLight: true,
+//   hasCCTVSurveillanceSystem: true,
+//   hasGatedCompound: true,
+//   hasHighBrowArea: true,
+//   hasArmedGuards: true,
+//   hasBulletProofDoors: true,
+//   hasBurglaryProofWindows: true,
+// };
 
 const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
   const sections = useMemo(() => {
@@ -86,11 +86,7 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
         id: "Amenities",
         label: "Amenities",
         pageTitle: "Amenities",
-        content: (
-          <AmenitiesSection
-            shortLet={{ ...shortLet, features: [dummyFeatures] }}
-          />
-        ),
+        content: <AmenitiesSection shortLet={shortLet} />,
       },
       {
         id: "Take-a-Tour",
@@ -158,11 +154,9 @@ const RenderShortLetPage = ({ shortLet }: { shortLet: ShortLet }) => {
     }
   );
 
-  console.log("shortLet", shortLet);
-
   return (
     <div className="container px-0 bg-background min-h-screen h-full">
-      <Container className="!px-0 fixed left-0 right-0 top-0 w-screen bg-background pt-6 space-y-4 z-10">
+      <Container className="!px-0 sticky top-0 bg-background pt-6 space-y-4 z-10">
         <Nav
           name={shortLet.name}
           id={shortLet.id}
