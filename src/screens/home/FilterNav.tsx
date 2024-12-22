@@ -1,3 +1,5 @@
+"use client";
+
 import Container from "@/components/layouts/Container";
 import { Button } from "@/components/ui/Button";
 import FilterIcon from "@/svgs/Filtericon";
@@ -55,10 +57,10 @@ const FilterNav = ({ totalShortLets, isFetching }: FilterNavProps) => {
 
   return (
     <>
-      <Container className=" border-b border-mid-grey py-4 flex items-center gap-2 sticky top-[5rem] z-10 bg-background ">
+      <Container className=" border-b border-mid-grey py-4 flex items-center gap-2 sticky top-[5rem] z-10 bg-background overflow-x-auto ">
         <SelectPlaceTypes />
         <Combobox
-          wrapperClassName=" hidden md:flex"
+          wrapperClassName=" hidden xl:flex"
           open={isStateDropdownOpen}
           onOpenChange={setIsStateDropdownOpen}
           triggerClassName=" h-[35px] gap-2"
@@ -74,7 +76,7 @@ const FilterNav = ({ totalShortLets, isFetching }: FilterNavProps) => {
           onSelect={(value) => setSelectedState(value)}
         />
         <Combobox
-          wrapperClassName=" hidden md:flex"
+          wrapperClassName=" hidden xl:flex"
           open={isCityDropdownOpen}
           onOpenChange={setIsCityDropdownOpen}
           triggerClassName=" h-[35px] gap-2"
@@ -94,7 +96,7 @@ const FilterNav = ({ totalShortLets, isFetching }: FilterNavProps) => {
         <PriceFilter />
 
         <DropdownInput
-          wrapperClassName=" hidden md:flex"
+          wrapperClassName=" hidden xl:flex"
           triggerClassName=" h-[35px]  gap-2"
           contentClassName="max-h-[320px] w-[220px]"
           options={[
@@ -116,7 +118,7 @@ const FilterNav = ({ totalShortLets, isFetching }: FilterNavProps) => {
           }}
         />
         <DropdownInput
-          wrapperClassName=" hidden md:flex"
+          wrapperClassName=" hidden xl:flex"
           triggerClassName=" h-[35px]  gap-2"
           contentClassName="max-h-[320px] w-[220px]"
           placeholder="Baths"
@@ -247,7 +249,7 @@ const SelectHouseTypes = () => {
   const filterCount = isAllSelected ? 0 : types.length;
 
   return (
-    <DisplayFilterCount count={filterCount} className=" hidden md:flex">
+    <DisplayFilterCount count={filterCount} className=" hidden xl:flex">
       <CustomPopoverAsDropdownMenu
         placeholder="House Type"
         triggerClassName=" h-[35px] w-full gap-2 "

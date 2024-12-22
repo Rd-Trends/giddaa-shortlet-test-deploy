@@ -38,13 +38,13 @@ const Nav = ({
 
   return (
     <Container className=" bg-background">
-      <nav className=" px-4 md:px-6 border border-mid-grey bg-background py-1.5 rounded-2xl flex items-center justify-between space-x-4">
-        <div className=" flex items-start gap-6">
+      <nav className=" px-4 md:px-6 border border-mid-grey bg-background py-1.5 rounded-2xl flex items-start md:items-center justify-between space-x-4">
+        <div className=" flex items-start gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
                 href={`/?viewed=${id}`}
-                className=" inline-flex items-center space-x-2 text-body-sm font-bold text-primary pb-2">
+                className=" inline-flex items-center space-x-2 text-body-sm font-bold text-primary pb-4 pr-4  lg:pb-2">
                 <FaArrowLeftLong className=" size-5" />
               </Link>
             </TooltipTrigger>

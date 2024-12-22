@@ -66,6 +66,7 @@ export default {
         slideUp: "slideUp 1.5s cubic-bezier(1, -0.16, 0, 0.94) forwards",
         slideDown: "slideDown 1.5s cubic-bezier(1, -0.16, 0, 0.94) forwards",
         scroll: "scroll 15s linear infinite",
+        "bouncing-loader": "bouncing-loader 0.3s infinite alternate",
       },
       keyframes: {
         slideUp: {
@@ -91,6 +92,11 @@ export default {
         scroll: {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
+        },
+        "bouncing-loader": {
+          to: {
+            transform: "translate3d(0, -8px, 0)",
+          },
         },
       },
     },
