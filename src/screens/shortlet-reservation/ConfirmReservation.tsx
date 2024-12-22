@@ -47,6 +47,24 @@ const ConfirmReservation = ({
   const grandTotal = bookingFee + cautionFee;
 
   const handleConfirmReservation = () => {
+    console.log({
+      guest: {
+        firstName: formDetails.firstName,
+        lastName: formDetails.lastName,
+        email: formDetails.email,
+        phoneNumber: formDetails.phoneNumber,
+      },
+      checkInDate: formDetails.checkInDate,
+      checkOutDate: formDetails.checkOutDate,
+      numberOfGuests: formDetails.numberOfGuests,
+      cautionFee,
+      bookingFee,
+      numberOfDays: nights,
+      shortletId: shortLet.id,
+      isPaid: false,
+      contactMethod: "EMAIL",
+      parentBookingId: "",
+    });
     reserveShortLet.mutate(
       {
         guest: {

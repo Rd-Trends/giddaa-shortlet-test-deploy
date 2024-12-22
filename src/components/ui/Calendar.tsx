@@ -3,10 +3,16 @@
 import { cn } from "@/utils/classname";
 import * as React from "react";
 import { DayPicker } from "react-day-picker";
-import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-import { SingleValue } from "react-select";
-import DropdownInput from "./DropdownInput";
+import { BiChevronDown, BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { buttonVariants } from "./Button";
+import {
+  Select,
+  SelectIcon,
+  SelectTrigger,
+  SelectValue,
+} from "@radix-ui/react-select";
+import { SelectContent, SelectItem } from "./Select";
+import Combobox from "./Combobox";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
@@ -16,76 +22,9 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
-  const [month, setMonth] = React.useState(new Date());
-
-  const handleMonthChange = (
-    selectedOption: SingleValue<{ label: string; value: string }>
-  ) => {
-    if (selectedOption) {
-      const newMonth = selectedOption.value;
-      const updatedMonth = new Date(month.setMonth(Number(newMonth)));
-      setMonth(new Date(updatedMonth));
-    }
-  };
-
-  const handleYearChange = (
-    selectedOption: SingleValue<{ label: string; value: string }>
-  ) => {
-    if (selectedOption) {
-      const newYear = selectedOption.value;
-      const updatedYear = new Date(month.setFullYear(Number(newYear)));
-      setMonth(new Date(updatedYear));
-    }
-  };
-
-  const years = Array.from({ length: 10 }, (_, index) => {
-    const year = new Date().getFullYear() - 5 + index;
-    return { label: year.toString(), value: year };
-  });
-
-  const months = Array.from({ length: 12 }, (_, index) => ({
-    label: new Date(0, index).toLocaleString("default", { month: "long" }),
-    value: index,
-  }));
-
-  const currentMonthOption = months.find((m) => m.value === month.getMonth());
-  const currentYearOption = years.find((y) => y.value === month.getFullYear());
-
   return (
     <div className="relative">
-      <div className="grid grid-cols-2 space-x-2 px-3">
-        <DropdownInput
-          value={
-            currentMonthOption && {
-              label: currentMonthOption?.label,
-              value: currentMonthOption?.value.toString(),
-            }
-          }
-          onChange={handleMonthChange}
-          options={months.map((month) => ({
-            ...month,
-            value: month.value.toString(),
-          }))}
-          placeholder="Month..."
-        />
-        <DropdownInput
-          value={
-            currentYearOption && {
-              label: currentYearOption?.label,
-              value: currentYearOption?.value.toString(),
-            }
-          }
-          onChange={handleYearChange}
-          options={years.map((month) => ({
-            ...month,
-            value: month.value.toString(),
-          }))}
-          placeholder="Year..."
-        />
-      </div>
       <DayPicker
-        month={month}
-        onMonthChange={setMonth}
         showOutsideDays={showOutsideDays}
         className={cn("p-3", className)}
         classNames={{
@@ -94,7 +33,7 @@ function Calendar({
           month: "space-y-4",
           month_caption: "flex justify-center pt-1 relative items-center",
           dropdowns: "flex items-center gap-4 w-full",
-          caption_label: "text-sm font-medium",
+          caption_label: "text-body-sm font-medium",
           nav: "space-x-1 flex items-center",
           button_previous: cn(
             buttonVariants({ variant: "ghost" }),
@@ -107,7 +46,7 @@ function Calendar({
           month_grid: "w-full border-collapse space-y-1",
           weekdays: "flex",
           weekday:
-            "text-black font-semibold rounded-md w-full text-center font-normal text-[0.8rem]",
+            "text-black font-semibold rounded-md w-full text-center text-[0.8rem]",
           week: "flex w-full mt-2",
           day: "w-full h-9 mx-[3px] flex items-center justify-center text-center text-sm p-0 relative rounded-md focus-within:relative focus-within:z-20",
           day_button: cn(
@@ -125,6 +64,29 @@ function Calendar({
           ...classNames,
         }}
         components={{
+          Dropdown: ({ options, onChange, value }) => (
+            <Combobox
+              triggerClassName="h-9 rounded-lg"
+              align="start"
+              onSelect={(value) =>
+                onChange?.({
+                  // @ts-expect-error: value is a string
+                  target: { value },
+                })
+              }
+              defaultValue={
+                typeof value === "number"
+                  ? value.toString()
+                  : (value as unknown as string)
+              }
+              options={
+                options?.map((option) => ({
+                  label: option.label,
+                  value: option.value.toString(),
+                })) || []
+              }
+            />
+          ),
           Chevron: (props) => {
             if (props.orientation === "left") {
               return <BiChevronLeft {...props} />;
@@ -133,6 +95,9 @@ function Calendar({
             return <BiChevronRight {...props} />;
           },
         }}
+        hideNavigation
+        captionLayout="dropdown"
+        autoFocus
         {...props}
       />
     </div>

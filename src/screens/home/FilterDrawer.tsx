@@ -690,14 +690,14 @@ const UsesSection = () => {
                     } else {
                       if (selectedUses.includes("all")) {
                         updateFilter({
-                          uses: SHORTLET_SERVICES.filter(
-                            (selectedService) => selectedService.id !== use.id
-                          ).map((selectedService) => selectedService.id),
+                          uses: shortletUses.filter(
+                            (selectedUse) => selectedUse.id !== use.id
+                          ).map((selectedUse) => selectedUse.id),
                         });
                       } else {
                         updateFilter({
                           uses: selectedUses.filter(
-                            (selectedService) => selectedService !== use.id
+                            (selectedUse) => selectedUse !== use.id
                           ),
                         });
                       }

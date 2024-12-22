@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { format } from "date-fns";
+import { format, formatDate } from "date-fns";
 import { PopoverTrigger, Popover, PopoverContent } from "./Popover";
 import { cn } from "@/utils/classname";
 import { BiCalendar } from "react-icons/bi";
@@ -78,11 +78,11 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, Props>(
                 onSelect={(date) => {
                   setDate(date);
                   if (date) {
-                    onValueChange?.(date.toISOString());
+                    onValueChange?.(formatDate(date, "yyyy-MM-dd"));
                   }
                   setIsOpen(false);
                 }}
-                initialFocus
+                autoFocus
               />
             </PopoverContent>
           </Popover>

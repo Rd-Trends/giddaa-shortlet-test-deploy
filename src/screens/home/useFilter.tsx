@@ -27,7 +27,7 @@ export const useFilter = () => {
       });
     }
 
-    if (services.length > 0) {
+    if (services.length > 0 && !services.includes("all")) {
       filter.push({
         connector: "AND",
         field: "Services.Service",
@@ -36,7 +36,7 @@ export const useFilter = () => {
       });
     }
 
-    if (uses.length > 0) {
+    if (uses.length > 0 && !uses.includes("all")) {
       filter.push({
         connector: "AND",
         field: "Uses.Use",

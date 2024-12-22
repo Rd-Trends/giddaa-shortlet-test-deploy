@@ -11,9 +11,11 @@ import ScrollToTop from "@/components/ui/ScrollToTop";
 import Container from "@/components/layouts/Container";
 import FilterNav from "./FilterNav";
 import { useFilter } from "./useFilter";
+import { useNavStore } from "@/app/providers/nav-provider";
 
 const AllShortLetPage = () => {
   const { isIntersecting, ref } = useIntersectionObserver();
+  const search = useNavStore((state) => state.search);
   const filter = useFilter();
 
   const {
@@ -28,6 +30,7 @@ const AllShortLetPage = () => {
     pageNumber: 1,
     pageSize: 8,
     advancedSearch: filter.length ? JSON.stringify(filter) : null,
+    search,
   });
 
   useEffect(() => {

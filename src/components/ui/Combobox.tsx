@@ -147,6 +147,7 @@ const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
                     <CommandItem
                       key={option.value}
                       value={option.value}
+                      keywords={[option.label]}
                       onSelect={(currentValue) => {
                         const newValue =
                           currentValue === value ? "" : currentValue;

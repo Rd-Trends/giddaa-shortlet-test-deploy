@@ -27,12 +27,24 @@ import MobileMenu from "./MobileNav";
 import UserDropdown from "./UserDropdown";
 import CurrencyDropdown from "./CurrencyDropdown";
 import { getInitials } from "@/utils/get-initials";
+import { useNavStore } from "@/app/providers/nav-provider";
+import { useEffect } from "react";
+import { useDebouncedCallback } from "use-debounce";
 
 const Navbar = () => {
   const { user, isAuthenticated } = useAuth();
+  const setSearch = useNavStore((state) => state.setSearch);
   const pathname = usePathname();
 
   const userAvatar = user?.profilePicture;
+
+  const handleSearch = useDebouncedCallback((value: string) => {
+    setSearch(value);
+  }, 500);
+
+  useEffect(() => {
+    setSearch("");
+  }, [pathname]);
 
   return (
     // <Container>
@@ -51,6 +63,7 @@ const Navbar = () => {
               placeholder="Search by location..."
               type="search"
               className="bg-white"
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
 

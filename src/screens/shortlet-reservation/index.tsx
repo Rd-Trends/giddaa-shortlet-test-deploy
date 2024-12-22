@@ -50,20 +50,24 @@ const ReservationForm = ({ shortLet }: { shortLet: ShortLet }) => {
 
   return (
     <Container className=" bg-background min-h-screen py-10">
-      <Link href="/">
-        <Logo />
-      </Link>
-      <div className=" text-center py-10">
-        <h1 className=" text-heading-2 font-secondary text-primary">
-          Make a Reservation
-        </h1>
-        <p className=" text-body-sm mt-1">
-          Reserve <b>{shortLet.name}</b> in{" "}
-          <b>
-            {shortLet.city.name}, {shortLet.city.state.name}
-          </b>
-          . Once we confirm availability and your booking, you then pay.
-        </p>
+      <div className=" ">
+        <div className=" relative ">
+          <Link href="/" className="block md:absolute left-0 top-0 mb-6 md:mb-0">
+            <Logo />
+          </Link>
+          <h1 className=" text-heading-2 font-secondary text-primary text-center">
+            Make a Reservation
+          </h1>
+          <p className=" text-body-sm mt-1 text-center">
+            Reserve <b>{shortLet.name}</b> in{" "}
+            <b>
+              {shortLet.city.name}, {shortLet.city.state.name}
+            </b>
+            . Once we confirm availability and your booking, you then pay.
+          </p>
+        </div>
+
+        <hr className=" max-w-[826px] mx-auto border-mid-grey mt-4" />
 
         <div className="relative flex items-center justify-center gap-4 mt-6">
           {step > 0 && !isMobile && (

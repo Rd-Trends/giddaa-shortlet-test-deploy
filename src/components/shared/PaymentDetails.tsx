@@ -70,8 +70,8 @@ const PaymentDetails = ({ booking }: { booking: ShortLetBooking }) => {
           <p className=" text-body-sm  font-medium text-black">
             For{" "}
             <b>
-              {getName(booking.guest.firstName, booking.guest.lastName)}{" "}
-              {booking.guest?.phoneNumber ?? ""} {booking.guest?.email ?? ""}
+              {getName(booking.guest.firstName, booking.guest.lastName)},{" "}
+              {booking.guest?.phoneNumber ?? ""}, {booking.guest?.email ?? ""}
             </b>
           </p>
           <p className=" text-body-xs text-charcoal-grey">

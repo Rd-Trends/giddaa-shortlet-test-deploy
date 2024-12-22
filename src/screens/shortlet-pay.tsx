@@ -23,23 +23,24 @@ const ShortLetPay = ({ booking }: { booking: ShortLetBooking }) => {
 
   console.log("booking", booking);
   return (
-    <Container className=" bg-background min-h-screen py-10">
-      <Link href="/">
-        <Logo />
-      </Link>
-      <div className=" max-w-[911px] mx-auto py-10">
-        <div className=" border-b border-mid-grey pb-3">
-          <h1 className=" text-center text-heading-4 text-primary font-secondary">
-            {booking.guest.firstName ?? ""} {booking.guest.lastName ?? ""}{" "}
-            Payment Link
-          </h1>
-          <p className=" text-body-sm font-normal text-center pt-1">
-            Make your payment to confirm the reservation for your stay.
-          </p>
-        </div>
+    <Container className=" bg-background py-10 min-h-screen">
+      <div className=" relative ">
+        <Link href="/" className="block md:absolute left-0 top-0 mb-6 md:mb-0">
+          <Logo />
+        </Link>
+        <h1 className=" text-heading-4 md:text-heading-2 font-secondary text-primary text-center">
+          {booking.guest.firstName ?? ""} {booking.guest.lastName ?? ""} Payment
+          Link
+        </h1>
+        <p className=" text-body-sm mt-1 text-center">
+          Make your payment to confirm the reservation for your stay.
+        </p>
+      </div>
 
+      <hr className=" max-w-[911px] mx-auto border-mid-grey mt-4" />
+
+      <div className=" max-w-[911px] mx-auto">
         <PaymentDetails booking={booking} />
-
         <div className=" flex items-center justify-center p-4 space-x-4 border-t border-mid-grey mt-10">
           <Button
             size={isMobile ? "medium" : "large"}
